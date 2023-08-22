@@ -41,8 +41,18 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
+            'role' => '1',
             'password' => Hash::make($request->password),
         ]);
+
+        if (!empty($request->company_name)) {
+            $company = Company::create([
+                'company_name' => $request->company_name,
+                'company_email' => $request->company_email,
+                'company_address' => $request->company_address,
+                'company_phone' => $request->company_phone,
+            ]);
+        }
 
         event(new Registered($user));
 

@@ -23,15 +23,28 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(LoginRequest $request)
     {
         $request->authenticate();
 
         $request->session()->regenerate();
 
+        $user = Auth::user();
+
+        if (!$user->status) {
+            Auth::logout();
+
+            $notification = array(
+                'message' => 'Your account is inactive. Please contact the administrator.',
+                'alert-type' => 'error',
+            );
+
+            return redirect()->route('login')->with($notification);
+        }
+
         $notification = array(
             'message' => 'User Login Successfully',
-            'alert-type' => 'success'
+            'alert-type' => 'success',
         );
 
         return redirect()->intended(RouteServiceProvider::HOME)->with($notification);

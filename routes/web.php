@@ -4,6 +4,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\EmployeeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,7 +18,7 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::middleware('auth')->group(function () {
@@ -31,6 +33,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/change/password', 'ChangePassword')->name('change.password');
         Route::post('/update/password', 'UpdatePassword')->name('update.password');
 
+    });
+
+     //Employee Routes
+     Route::controller(EmployeeController::class)->group(function () {
+        Route::get('/employee/all', 'EmployeeAll')->name('employee.all')->middleware('employee');
+        Route::get('/employee/add', 'EmployeeAdd')->name('employee.add')->middleware('employee');
+        Route::post('employee/store', 'EmployeeStore')->name('employee.store')->middleware('employee');
+        Route::get('/employee/edit/{id}', 'EmployeeEdit')->name('employee.edit')->middleware('employee');
+        Route::post('/employee/update', 'EmployeeUpdate')->name('employee.update')->middleware('employee');
+        Route::get('/employee/delete/{id}', 'EmployeeDelete')->name('employee.delete')->middleware('employee');
     });
 
     

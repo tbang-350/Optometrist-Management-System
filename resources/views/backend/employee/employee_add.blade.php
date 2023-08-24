@@ -1,6 +1,6 @@
 @extends('admin.admin_master')
 @section('admin')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
 
     <div class="page-content">
@@ -39,9 +39,24 @@
                                 <!-- end row -->
 
                                 <div class="row mb-3">
-                                    <label for="example-text-input" class="col-sm-2 col-form-label">UserName</label>
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">User Name</label>
                                     <div class=" form-group col-sm-10">
                                         <input name="username" class="form-control" type="text">
+                                    </div>
+                                </div>
+                                <!-- end row -->
+
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Role</label>
+                                    <div class=" form-group col-sm-10">
+                                        <select name="unit_id" class="form-select" aria-label="Default select example">
+                                            <option selected="">Open this select menu</option>
+
+
+                                            <option value="2">Receptionist</option>
+                                            <option value="3">Doctor</option>
+
+                                        </select>
                                     </div>
                                 </div>
                                 <!-- end row -->

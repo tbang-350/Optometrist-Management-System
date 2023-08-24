@@ -3,8 +3,8 @@
     <div data-simplebar class="h-100">
 
         @php
-             $role = Auth::user()->role;
-         @endphp
+            $role = Auth::user()->role;
+        @endphp
 
         <!--- Sidemenu -->
         <div id="sidebar-menu">
@@ -20,17 +20,19 @@
                 </li>
 
                 @if ($role == '1')
-                     <li>
-                         <a href="javascript: void(0);" class="has-arrow waves-effect">
-                             <i class="ri-shield-user-fill"></i>
-                             <span>Manage Employees</span>
-                         </a>
-                         <ul class="sub-menu" aria-expanded="false">
-                             <li><a href="{{ route('employee.all') }}">All Employees</a></li>
-                         </ul>
-                     </li>
-                 @endif
-                
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="ri-shield-user-fill"></i>
+                            <span>Manage Employees</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="{{ route('employee.all') }}">Employees</a></li>
+                            <li><a href="{{ route('location.all') }}">Locations</a></li>
+                        </ul>
+
+                    </li>
+                @endif
+
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-mail-send-line"></i>
@@ -42,7 +44,7 @@
                     </ul>
                 </li>
 
-                
+
 
                 <li class="menu-title">Pages</li>
 
@@ -74,7 +76,7 @@
                     </ul>
                 </li>
 
-                
+
 
             </ul>
         </div>

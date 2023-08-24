@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\LocationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/employee/edit/{id}', 'EmployeeEdit')->name('employee.edit')->middleware('employee');
         Route::post('/employee/update', 'EmployeeUpdate')->name('employee.update')->middleware('employee');
         Route::get('/employee/delete/{id}', 'EmployeeDelete')->name('employee.delete')->middleware('employee');
+    });
+
+
+    //Location Routes
+    Route::controller(LocationController::class)->group(function () {
+        Route::get('/location/all', 'LocationAll')->name('location.all')->middleware('employee');
+        Route::get('/location/add', 'LocationAdd')->name('location.add')->middleware('employee');
+        Route::post('location/store', 'LocationStore')->name('location.store')->middleware('employee');
+        Route::get('/location/edit/{id}', 'LocationEdit')->name('location.edit')->middleware('employee');
+        Route::post('/location/update', 'LocationUpdate')->name('location.update')->middleware('employee');
+        Route::get('/location/delete/{id}', 'LocationDelete')->name('location.delete')->middleware('employee');
     });
 
     

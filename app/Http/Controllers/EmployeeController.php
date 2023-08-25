@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Location;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -12,16 +13,16 @@ class EmployeeController extends Controller
 {
     public function EmployeeAll()
     {
-        $users = User::latest()->where('role', '2')->get();
+        $users = User::latest()->where('role', '<>', '1')->get();
 
         return view('backend.employee.employee_all', compact('users'));
-
     } // End Method
 
     public function EmployeeAdd()
     {
+        $locations = Location::all();
 
-        return view('backend.employee.employee_add');
+        return view('backend.employee.employee_add', compact('locations'));
 
     } // End Method
 
@@ -33,13 +34,16 @@ class EmployeeController extends Controller
             'username' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'integer'],
+            'location_id' => ['required', 'integer'],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
-            'role' => '2',
+            'role' => $request->role,
+            'location_id' => $request->location_id, // Save location_id
             'password' => Hash::make($request->password),
         ]);
 

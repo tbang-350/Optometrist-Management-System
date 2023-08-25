@@ -26,8 +26,8 @@
                             <span>Manage Employees</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="{{ route('employee.all') }}">Employees</a></li>
                             <li><a href="{{ route('location.all') }}">Locations</a></li>
+                            <li><a href="{{ route('employee.all') }}">Employees</a></li>
                         </ul>
 
                     </li>

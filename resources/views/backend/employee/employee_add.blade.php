@@ -49,8 +49,8 @@
                                 <div class="row mb-3">
                                     <label for="example-text-input" class="col-sm-2 col-form-label">Role</label>
                                     <div class=" form-group col-sm-10">
-                                        <select name="unit_id" class="form-select" aria-label="Default select example">
-                                            <option selected="">Open this select menu</option>
+                                        <select name="role" class="form-select" aria-label="Default select example">
+                                            <option selected="">Select a role</option>
 
 
                                             <option value="2">Receptionist</option>
@@ -59,6 +59,21 @@
                                         </select>
                                     </div>
                                 </div>
+                                <!-- end row -->
+
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Location</label>
+                                    <div class="form-group col-sm-10">
+                                        <select name="location_id" class="form-select" aria-label="Default select example">
+                                            <option value="" selected>Select a location</option>
+                                
+                                            @foreach ($locations as $location)
+                                                <option value="{{ $location->id }}">{{ $location->location_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                
                                 <!-- end row -->
 
                                 <div class="row mb-3">

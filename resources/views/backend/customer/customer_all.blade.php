@@ -21,8 +21,8 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <a href="  "
-                                class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right">
+                            <a href="{{ route('customer.add') }}" class="btn btn-dark btn-rounded waves-effect waves-light"
+                                style="float:right">
                                 <i class="fas fa-plus-circle">
                                     Add Customer
                                 </i>
@@ -45,6 +45,7 @@
                                         <th>Sex</th>
                                         <th>Phone Number</th>
                                         <th>Address</th>
+                                        <th>Location</th>
                                         <th>Action</th>
 
                                 </thead>
@@ -52,13 +53,15 @@
 
                                 <tbody>
 
-                                    {{-- @foreach ($customers as $key => $item)
+                                    @foreach ($customer as $key => $item)
                                         <tr>
                                             <td> {{ $key + 1 }} </td>
                                             <td> {{ $item->name }} </td>
-                                            <td> {{ $item->mobile_no }} </td>
+                                            <td> {{ $item->age }} </td>
+                                            <td> {{ $item->sex }} </td>
+                                            <td> {{ $item->phonenumber }} </td>
                                             <td> {{ $item->address }} </td>
-                                            <td> {{ $item->email }} </td>
+                                            <td> {{ $item->location_id }} </td>
 
                                             <td>
                                                 <a href=" {{ route('customer.edit', $item->id) }} " class="btn btn-info sm"
@@ -74,7 +77,7 @@
                                             </td>
 
                                         </tr>
-                                    @endforeach --}}
+                                    @endforeach
 
                                 </tbody>
                             </table>

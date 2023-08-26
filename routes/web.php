@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(LocationController::class)->group(function () {
         Route::get('/location/all', 'LocationAll')->name('location.all')->middleware('employee');
         Route::get('/location/add', 'LocationAdd')->name('location.add')->middleware('employee');
-        Route::post('location/store', 'LocationStore')->name('location.store')->middleware('employee');
+        Route::post('/location/store', 'LocationStore')->name('location.store')->middleware('employee');
         Route::get('/location/edit/{id}', 'LocationEdit')->name('location.edit')->middleware('employee');
         Route::post('/location/update', 'LocationUpdate')->name('location.update')->middleware('employee');
         Route::get('/location/delete/{id}', 'LocationDelete')->name('location.delete')->middleware('employee');
@@ -62,11 +62,11 @@ Route::middleware('auth')->group(function () {
     //Customer Routes
     Route::controller(CustomerController::class)->group(function () {
         Route::get('/customer/all', 'CustomerAll')->name('customer.all');
-        // Route::get('/location/add', 'LocationAdd')->name('location.add');
-        // Route::post('location/store', 'LocationStore')->name('location.store');
-        // Route::get('/location/edit/{id}', 'LocationEdit')->name('location.edit');
-        // Route::post('/location/update', 'LocationUpdate')->name('location.update');
-        // Route::get('/location/delete/{id}', 'LocationDelete')->name('location.delete');
+        Route::get('/customer/add', 'CustomerAdd')->name('customer.add');
+        Route::post('/customer/store', 'CustomerStore')->name('customer.store');
+        Route::get('/customer/edit/{id}', 'CustomerEdit')->name('customer.edit');
+        Route::post('/customer/update', 'CustomerUpdate')->name('customer.update');
+        Route::get('/customer/delete/{id}', 'CustomerDelete')->name('customer.delete');
     });
 
     

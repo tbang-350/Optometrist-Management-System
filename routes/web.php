@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +70,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/customer/delete/{id}', 'CustomerDelete')->name('customer.delete');
     });
 
+
+    //Service Routes
+    Route::controller(ServiceController::class)->group(function () {
+        Route::get('/service/all', 'ServiceAll')->name('service.all');
+        Route::get('/service/add', 'ServiceAdd')->name('service.add');
+        Route::post('/service/store', 'ServiceStore')->name('service.store');
+        Route::get('/service/edit/{id}', 'ServiceEdit')->name('service.edit');
+        Route::post('/service/update', 'ServiceUpdate')->name('service.update');
+        Route::get('/service/delete/{id}', 'ServiceDelete')->name('service.delete');
+    });
     
 
 });

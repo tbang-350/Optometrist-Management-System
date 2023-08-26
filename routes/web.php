@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +56,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/location/edit/{id}', 'LocationEdit')->name('location.edit')->middleware('employee');
         Route::post('/location/update', 'LocationUpdate')->name('location.update')->middleware('employee');
         Route::get('/location/delete/{id}', 'LocationDelete')->name('location.delete')->middleware('employee');
+    });
+
+
+    //Customer Routes
+    Route::controller(CustomerController::class)->group(function () {
+        Route::get('/customer/all', 'CustomerAll')->name('customer.all');
+        // Route::get('/location/add', 'LocationAdd')->name('location.add');
+        // Route::post('location/store', 'LocationStore')->name('location.store');
+        // Route::get('/location/edit/{id}', 'LocationEdit')->name('location.edit');
+        // Route::post('/location/update', 'LocationUpdate')->name('location.update');
+        // Route::get('/location/delete/{id}', 'LocationDelete')->name('location.delete');
     });
 
     

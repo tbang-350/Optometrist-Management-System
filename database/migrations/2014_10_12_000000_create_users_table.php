@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('profile_image')->nullable()->default('NULL');
             $table->tinyInteger('role')->default(1)->comment('1 = admin , 2 = receptionist , 3 = Doctor');
             $table->tinyInteger('status')->default(1)->comment('1 = active , 0 = inactive');
-            $table->integer('location_id')->default(0)->comment('0 = head office');
+            $table->integer('location_id')->nullable()->default('1')->comment('1 = head office');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

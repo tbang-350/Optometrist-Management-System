@@ -47,6 +47,8 @@ class EmployeeController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        // dd($request->location_id);
+
         $notification = array(
             'message' => 'Employee Updated Successfully',
             'alert-type' => 'success',

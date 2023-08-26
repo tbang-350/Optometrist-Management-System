@@ -10,4 +10,10 @@ class Location extends Model
     use HasFactory;
 
     protected $guarded =[];
+
+    // public function users()
+    // {
+    //     return $this->hasMany(User::class, 'location_id','id');
+    // }
+
 }

@@ -22,6 +22,9 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'role',
+        'profile_image',
+        'location_id'
     ];
 
     /**
@@ -33,6 +36,23 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    // public function location()
+    // {
+    //     return $this->belongsTo(Location::class, 'location_id' , 'id');
+    // }
+
+    // /**
+    //  * Get the location that owns the User
+    //  *
+    //  * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    //  */
+    // public function location(): BelongsTo
+    // {
+    //     return $this->belongsTo(Location::class, 'id', 'location_id');
+    // }
+
+    
 
     /**
      * The attributes that should be cast.

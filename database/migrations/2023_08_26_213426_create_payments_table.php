@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('prescriptions', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('prescription_no')->nullable();
-            $table->date('date')->nullable();
-            $table->text('description')->nullable();
-            $table->tinyInteger('status')->default('0')->comment('0 = pending , 1 = paid');
+            $table->integer('prescription_id')->nullable();
+            $table->integer('customer_id')->nullable();
+            $table->string('payment_option')->nullable();
+            $table->string('paid_status')->nullable();
+            $table->double('total_amount')->nullable();
+            $table->double('discount_amount')->nullable();
             $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('prescriptions');
+        Schema::dropIfExists('payments');
     }
 };

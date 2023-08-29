@@ -8,6 +8,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\PrescriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +80,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/service/edit/{id}', 'ServiceEdit')->name('service.edit');
         Route::post('/service/update', 'ServiceUpdate')->name('service.update');
         Route::get('/service/delete/{id}', 'ServiceDelete')->name('service.delete');
+    });
+
+
+    //Prescription Routes
+    Route::controller(PrescriptionController::class)->group(function () {
+        Route::get('/prescription/all', 'PrescriptionAll')->name('prescription.all');
+        Route::get('/prescription/add', 'PrescriptionAdd')->name('prescription.add');
+        Route::post('/prescription/store', 'PrescriptionStore')->name('prescription.store');
+        // Route::get('/service/edit/{id}', 'ServiceEdit')->name('service.edit');
+        // Route::post('/service/update', 'ServiceUpdate')->name('service.update');
+        // Route::get('/service/delete/{id}', 'ServiceDelete')->name('service.delete');
     });
     
 

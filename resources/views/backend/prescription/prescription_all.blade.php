@@ -44,6 +44,8 @@
                                         <th>Prescrption No</th>
                                         <th>Date</th>
                                         <th>Total Amount</th>
+                                        <th>Paid Amount</th>
+                                        <th>Due Amount</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -51,13 +53,12 @@
 
                                 <tbody>
 
-                                    {{-- @foreach ($allData as $key => $item)
+                                    @foreach ($allData as $key => $item)
                                         <tr>
                                             <td> {{ $key + 1 }} </td>
                                             <td> {{ $item['payment']['customer']['name'] }} </td>
-                                            <td> #{{ $item->invoice_no }} </td>
+                                            <td> #{{ $item->prescription_no }} </td>
                                             <td> {{ date('d-m-Y', strtotime($item->date)) }} </td>
-                                            <td> {{ $item->description }} </td>
                                             <td> Tsh {{ $item['payment']['total_amount'] }} </td>
                                             <td> Tsh {{ $item['payment']['paid_amount'] }} </td>
 
@@ -67,14 +68,14 @@
                                                 <td> Tsh {{ $item['payment']['due_amount'] }} </td>
                                             @endif
 
-                                            <td>
+                                            {{-- <td>
                                                 <a href=" {{ route('print.invoice', $item->id) }} " class="btn btn-dark sm"
                                                     title="Print Invoice"> <i class="fas fa-print"></i>
                                                 </a>
-                                            </td>
+                                            </td> --}}
 
                                         </tr>
-                                    @endforeach --}}
+                                    @endforeach
 
                                 </tbody>
                             </table>

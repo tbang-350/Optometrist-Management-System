@@ -19,9 +19,9 @@ class PrescriptionController extends Controller
     public function PrescriptionAll()
     {
 
-        $prescription = Prescription::latest()->get();
+        $allData = Prescription::orderBy('date', 'desc')->orderBy('id', 'desc')->get();
 
-        return view('backend.prescription.prescription_all', compact('prescription'));
+        return view('backend.prescription.prescription_all',compact('allData'));
 
     }
 

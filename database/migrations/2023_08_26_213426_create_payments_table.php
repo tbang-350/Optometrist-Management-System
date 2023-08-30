@@ -19,6 +19,8 @@ return new class extends Migration
             $table->integer('customer_id')->nullable();
             $table->string('payment_option')->nullable();
             $table->string('paid_status')->nullable();
+            $table->double('paid_amount')->nullable();
+            $table->double('due_amount')->nullable();
             $table->double('total_amount')->nullable();
             $table->double('discount_amount')->nullable();
             $table->integer('created_by')->nullable();

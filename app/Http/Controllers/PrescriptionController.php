@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Payment;
-use App\Models\PaymentDetail;
+use App\Models\PaymentDetails;
 use App\Models\Prescription;
-use App\Models\PrescriptionDetail;
+use App\Models\PrescriptionDetails;
 use App\Models\Service;
 use Auth;
 use DB;
@@ -73,6 +73,9 @@ class PrescriptionController extends Controller
                 $prescription->status = '0';
                 $prescription->created_by = Auth::user()->id;
                 $prescription->created_at = Carbon::now();
+                // $prescription->save();
+
+                // dd($request->prescription_no);
 
                 DB::transaction(function () use ($request, $prescription) {
 
@@ -82,7 +85,7 @@ class PrescriptionController extends Controller
 
                         for ($i = 0; $i < $count_service; $i++) {
 
-                            $prescription_detail = new PrescriptionDetail();
+                            $prescription_detail = new PrescriptionDetails();
                             $prescription_detail->date = date('Y-m-d', strtotime($request->date));
                             $prescription_detail->prescription_id = $prescription->id;
                             $prescription_detail->service_id = $request->service_id[$i];
@@ -112,7 +115,7 @@ class PrescriptionController extends Controller
                         }
 
                         $payment = new Payment();
-                        $payment_details = new PaymentDetail();
+                        $payment_details = new PaymentDetails();
 
                         $payment->prescription_id = $prescription->id;
                         $payment->customer_id = $customer_id;
@@ -162,7 +165,7 @@ class PrescriptionController extends Controller
             'alert-type' => 'success',
         );
 
-        return redirect()->route('invoice.pending.list')->with($notification);
+        return redirect()->route('prescription.all')->with($notification);
 
     }
 

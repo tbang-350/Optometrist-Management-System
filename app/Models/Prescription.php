@@ -10,4 +10,6 @@ class Prescription extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    
 }

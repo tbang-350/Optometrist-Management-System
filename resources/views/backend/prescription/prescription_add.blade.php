@@ -22,8 +22,8 @@
                                     <div class="md-3">
                                         <label for="example-text-input" class="form-label">Prsc No</label>
                                         <div class=" form-group col-sm-10">
-                                            <input name="invoice_no" class="form-control example-date-input" type="text"
-                                                id="invoice_no" value="{{ $prescription_no }}" readonly
+                                            <input name="prescription_no" class="form-control example-date-input" type="text"
+                                                id="prescription_no" value="{{ $prescription_no }}" readonly
                                                 style="background-color: #ddd">
                                         </div>
                                     </div>
@@ -177,7 +177,7 @@
                                                 class="form-control paid_amount" placeholder="Enter Paid Amount..."
                                                 style="display: none">
     
-                                            <br>
+                                        
     
                                         </div>
     
@@ -234,7 +234,7 @@
                                     </div>
 
                                     <div class="form-group col-md-4">
-                                        <input type="text" name="mobile_no" id="mobile_no" class="form-control"
+                                        <input type="text" name="phonenumber" id="phonenumber" class="form-control"
                                             placeholder="Enter Customer Phonenumber">
                                     </div>
 
@@ -246,10 +246,10 @@
                                 </div>
                                 {{-- Hidden New Customer Form --}}
 
-                                <br>
+                                
 
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-info" id="storeButton">Save Invoice</button>
+                                    <button type="submit" class="btn btn-info" id="storeButton">Save Prescription</button>
                                 </div>
 
                             </form>
@@ -289,7 +289,7 @@
 
         
             <td>
-                <input type="number" class="form-control service_selling_price text-right" id="service_selling_price[]" name="selling_price[]" value="0" readonly>
+                <input type="number" class="form-control service_selling_price text-right" id="service_selling_price" name="service_selling_price[]" value="0" readonly>
             </td>
 
             <!--
@@ -384,7 +384,6 @@
 
                 var date = $('#date').val();
                 var prescription_no = $('#prescription_no').val();
-
                 var service_id = $('#service_id').val();
                 var service_name = $('#service_id').find('option:selected').text();
 

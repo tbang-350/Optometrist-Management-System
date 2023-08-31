@@ -61,7 +61,7 @@
                                             <td> {{ $item->sex }} </td>
                                             <td> {{ $item->phonenumber }} </td>
                                             <td> {{ $item->address }} </td>
-                                            <td> {{ $item->location_id }} </td>
+                                            <td> {{ $item['location']['location_name'] }} </td>
 
                                             <td>
                                                 <a href=" {{ route('customer.edit', $item->id) }} " class="btn btn-info sm"

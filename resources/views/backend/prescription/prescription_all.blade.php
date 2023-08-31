@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">All Invoices</h4>
+                        <h4 class="mb-sm-0">All Prescriptions</h4>
 
 
 
@@ -43,6 +43,7 @@
                                         <th>Customer Name</th>
                                         <th>Prescrption No</th>
                                         <th>Date</th>
+                                        <th>Payment Method</th>
                                         <th>Total Amount</th>
                                         <th>Paid Amount</th>
                                         <th>Due Amount</th>
@@ -59,6 +60,7 @@
                                             <td> {{ $item['payment']['customer']['name'] }} </td>
                                             <td> #{{ $item->prescription_no }} </td>
                                             <td> {{ date('d-m-Y', strtotime($item->date)) }} </td>
+                                            <td> {{ $item['payment']['payment_option'] }} </td>
                                             <td> Tsh {{ $item['payment']['total_amount'] }} </td>
                                             <td> Tsh {{ $item['payment']['paid_amount'] }} </td>
 
@@ -68,11 +70,11 @@
                                                 <td> Tsh {{ $item['payment']['due_amount'] }} </td>
                                             @endif
 
-                                            {{-- <td>
-                                                <a href=" {{ route('print.invoice', $item->id) }} " class="btn btn-dark sm"
-                                                    title="Print Invoice"> <i class="fas fa-print"></i>
+                                            <td>
+                                                <a href=" {{ route('print.prescription', $item->id) }} " class="btn btn-dark sm"
+                                                    title="Print Prescription"> <i class="fas fa-print"></i>
                                                 </a>
-                                            </td> --}}
+                                            </td>
 
                                         </tr>
                                     @endforeach

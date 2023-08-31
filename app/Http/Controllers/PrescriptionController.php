@@ -161,11 +161,25 @@ class PrescriptionController extends Controller
         }
 
         $notification = array(
-            'message' => 'Invoice Created Successfully',
+            'message' => 'Prescription Created Successfully',
             'alert-type' => 'success',
         );
 
         return redirect()->route('prescription.all')->with($notification);
+
+    }
+
+
+    public function PrintPrescription($id)
+    {
+
+        // Find the prescription by ID with its related prescription details
+        $prescription = Prescription::with('prescription_details')->findOrFail($id);
+
+        // dd($prescription);
+
+        // Return the view with the prescription data for generating the PDF
+        return view('backend.pdf.prescription_pdf', compact('prescription'));
 
     }
 

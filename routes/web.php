@@ -88,6 +88,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/prescription/all', 'PrescriptionAll')->name('prescription.all');
         Route::get('/prescription/add', 'PrescriptionAdd')->name('prescription.add');
         Route::post('/prescription/store', 'PrescriptionStore')->name('prescription.store');
+        Route::get('/print/prescription/{id}', 'PrintPrescription')->name('print.prescription');
         // Route::get('/service/edit/{id}', 'ServiceEdit')->name('service.edit');
         // Route::post('/service/update', 'ServiceUpdate')->name('service.update');
         // Route::get('/service/delete/{id}', 'ServiceDelete')->name('service.delete');

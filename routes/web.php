@@ -37,6 +37,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/change/password', 'ChangePassword')->name('change.password');
         Route::post('/update/password', 'UpdatePassword')->name('update.password');
 
+        Route::get('/view/company/detail', 'ViewCompanyDetail')->name('view.company.detail');
+        Route::get('/edit/company/detail', 'EditCompanyDetail')->name('edit.company.detail');
+        Route::post('/store/company/detail', 'StoreCompanyDetail')->name('store.company.detail');
+
+
     });
 
      //Employee Routes

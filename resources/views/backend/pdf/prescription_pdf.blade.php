@@ -26,11 +26,11 @@
                     <div class="card">
                         <div class="card-body">
 
-                            {{-- @php
+                            @php
                                 
                                 $company_info = App\Models\Company::first();
                                 
-                            @endphp --}}
+                            @endphp
 
                             <div class="row">
                                 <div class="col-12">
@@ -39,7 +39,7 @@
                                                 {{ $prescription->prescription_no }}</strong></h4>
                                         <h3>
                                             <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="logo"
-                                                height="24" /> {{-- {{ $company_info->company_name }} --}}
+                                                height="24" /> {{ $company_info->company_name }}
                                         </h3>
                                     </div>
                                     <hr>
@@ -48,12 +48,12 @@
 
                                     <div class="row">
                                         <div class="col-6 mt-4">
-                                            {{-- <address>
+                                            <address>
                                                 <strong>{{ $company_info->company_name }}:</strong><br>
                                                 {{ $company_info->company_address }}<br>
                                                 {{ $company_info->company_email }}<br>
                                                 {{ $company_info->company_phone }}<br>
-                                            </address> --}}
+                                            </address>
                                         </div>
                                         <div class="col-6 mt-4 text-end">
                                             <address>

@@ -166,7 +166,6 @@
     
                                                 <option value="">Select Payment Status</option>
                                                 <option value="full_paid">Fully Paid</option>
-                                                <option value="full_due">Full Due</option>
                                                 <option value="partial_paid">Partially Paid</option>
     
                                             </select>

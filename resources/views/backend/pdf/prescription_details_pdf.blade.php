@@ -7,12 +7,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Prescription</h4>
+                        <h4 class="mb-sm-0">Customer Payment Report</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
 
-                                <li class="breadcrumb-item active">Prescription</li>
+                                <li class="breadcrumb-item active">Customer Payment Report</li>
                             </ol>
                         </div>
 
@@ -35,8 +35,8 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="prescription-title">
-                                        <h4 class="float-end font-size-16"><strong>Prescription No #
-                                                {{ $prescription->prescription_no }}</strong></h4>
+                                        <h4 class="float-end font-size-16"><strong>prescription No #
+                                                {{ $payment['prescription']['prescription_no'] }}</strong></h4>
                                         <h3>
                                             <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="logo"
                                                 height="24" /> {{ $company_info->company_name }}
@@ -57,8 +57,8 @@
                                         </div>
                                         <div class="col-6 mt-4 text-end">
                                             <address>
-                                                <strong>Prescription Date:</strong><br>
-                                                {{ date('d-m-Y', strtotime($prescription->date)) }}<br><br>
+                                                <strong>prescription Date:</strong><br>
+                                                {{ date('d-m-Y', strtotime($payment['prescription']['date'])) }}<br><br>
                                             </address>
                                         </div>
                                     </div>
@@ -66,82 +66,34 @@
                             </div>
 
                             @php
-                                $payment = App\Models\Payment::where('prescription_id', $prescription->id)->first();
+                                $payment = App\Models\Payment::where('prescription_id', $payment->prescription_id)->first();
                             @endphp
 
                             <div class="row">
                                 <div class="col-12">
                                     <div>
                                         <div class="p-2">
-                                            <h3 class="font-size-16"><strong>Customer Prescription</strong></h3>
+                                            <h3 class="font-size-16"><strong>Customer prescription</strong></h3>
                                         </div>
                                         <div class="">
                                             <div class="table-responsive">
-                                                <table class="table mb-">
+                                                <table class="table">
                                                     <thead>
                                                         <tr>
-
                                                             <td><strong>Customer Name</strong></td>
-                                                            <td class="text-center"><strong>Age</strong></td>
-                                                            <td class="text-center"><strong>Sex</strong></td>
                                                             <td class="text-center"><strong>Phone Number</strong></td>
                                                             <td class="text-center"><strong>Address</strong>
                                                             </td>
-                                                            
-
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <!-- foreach ($order->lineItems as $line) or some such thing here -->
                                                         <tr>
                                                             <td>{{ $payment['customer']['name'] }}</td>
-                                                            <td class="text-center">
-                                                                {{ $payment['customer']['age'] }}
-                                                            </td>
-                                                            <td class="text-center">
-                                                                {{ $payment['customer']['sex'] }}
-                                                            </td>
-                                                            <td class="text-center">
-                                                                {{ $payment['customer']['phonenumber'] }}
+                                                            <td class="text-center">{{ $payment['customer']['mobile_no'] }}
                                                             </td>
                                                             <td class="text-center">{{ $payment['customer']['address'] }}
                                                             </td>
-                                                            
-
-                                                        </tr>
-
-
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div> <!-- end row -->
-
-
-                            <div class="row">
-                                <div class="col-12">
-                                    <div>
-                                        <div class="">
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <h6>
-                                                                <td><strong>Description</strong>
-                                                                </td>
-                                                            </h6>
-
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <!-- foreach ($order->lineItems as $line) or some such thing here -->
-                                                        <tr>
-                                                            <td>{{ $prescription->description }}
-                                                            </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -151,6 +103,7 @@
 
                                 </div>
                             </div> <!-- end row -->
+
 
 
                             <div class="row">
@@ -171,7 +124,6 @@
                                                             </td>
                                                             <td class="text-center"><strong>Total Price(Tshs)</strong>
                                                             </td>
-
                                                         </tr>
                                                     </thead>
 
@@ -179,15 +131,20 @@
 
                                                         @php
                                                             $total_sum = '0';
+                                                            
+                                                            $prescription_details = App\Models\PrescriptionDetails::where('prescription_id', $payment->prescription_id)->get();
+                                                            
                                                         @endphp
 
-                                                        @foreach ($prescription['prescription_details'] as $key => $details)
+                                                        @foreach ($prescription_details as $key => $details)
                                                             <tr>
                                                                 <td class="text-center">{{ $key + 1 }}</td>
-                                                                <td class="text-center">{{ $details['service']['name'] }}
+                                                                <td class="text-center">
+                                                                    {{ $details['service']['name'] }}
                                                                 </td>
 
-                                                                <td class="text-center">{{ $details->service_price }}</td>
+                                                                <td class="text-center">{{ $details->service_price }}
+                                                                </td>
 
                                                             </tr>
 
@@ -225,6 +182,8 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
+
+
                                                             <td class="no-line"></td>
                                                             <td class="no-line text-center">
                                                                 <h6>
@@ -249,6 +208,8 @@
                                                                     {{ $payment->due_amount }}
                                                                 </h6>
                                                             </td>
+                                                            <input type="hidden" name="new_paid_amount"
+                                                                value="{{ $payment->due_amount }}">
                                                         </tr>
 
                                                         <tr>
@@ -262,6 +223,42 @@
                                                                 <h4 class="m-0">{{ $payment->total_amount }}</h4>
                                                             </td>
                                                         </tr>
+
+                                                        <tr>
+                                                            <td></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td colspan="3" style="text-align:center; font-weight:bold;">
+                                                                Payment History</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td colspan="2" style="text-align:center; font-weight:bold;">
+                                                                Date</td>
+
+                                                            <td  style="text-align:center; font-weight:bold;">
+                                                                Amount</td>
+                                                        </tr>
+
+                                                        @php
+                                                            
+                                                            $payment_details = App\Models\PaymentDetails::where('prescription_id', $payment->prescription_id)->get();
+                                                            
+                                                        @endphp
+
+                                                        @foreach ($payment_details as $key => $item)
+                                                            <tr>
+                                                                <td colspan="2"
+                                                                    style="text-align:center; font-weight:bold;">
+                                                                    {{ date('d-m-Y', strtotime($item->date)) }}</td>
+
+                                                                <td 
+                                                                    style="text-align:center; font-weight:bold;">
+                                                                    {{ $item->current_paid_amount }}</td>
+                                                            </tr>
+                                                        @endforeach
+
                                                     </tbody>
                                                 </table>
                                             </div>

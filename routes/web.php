@@ -80,8 +80,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/customer/edit/prescription/{prescription_id}', 'CustomerEditPrescription')->name('customer.edit.prescription');
         Route::post('/customer/update/prescription/{prescription_id}', 'CustomerUpdatePrescription')->name('customer.update.prescription');
         Route::get('/customer/prescription/details/{prescription_id}', 'CustomerPrescriptionDetails')->name('customer.prescription.details.pdf');
-        // Route::get('/paid/customer', 'PaidCustomer')->name('paid.customer');
-        // Route::get('/paid/customer/print/pdf', 'PaidCustomerPrintPdf')->name('paid.customer.print.pdf');
+        Route::get('/paid/customer', 'PaidCustomer')->name('paid.customer');
+        Route::get('/paid/customer/print/pdf', 'PaidCustomerPrintPdf')->name('paid.customer.print.pdf');
         // Route::get('/customer/wise/report', 'CustomerWiseReport')->name('customer.wise.report');
         // Route::get('/customer/wise/credit/report', 'CustomerWiseCreditReport')->name('customer.wise.credit.report');
         // Route::get('/customer/wise/paid/report', 'CustomerWisePaidReport')->name('customer.wise.paid.report');

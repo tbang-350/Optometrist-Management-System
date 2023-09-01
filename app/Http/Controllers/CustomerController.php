@@ -187,4 +187,21 @@ class CustomerController extends Controller
 
     } // End Method
 
+    public function PaidCustomer(){
+
+        $allData = Payment::whereIn('paid_status',['partial_paid','full_paid'])->get();
+
+        return view('backend.customer.customer_paid',compact('allData'));
+
+    } //End Method
+
+
+    public function PaidCustomerPrintPdf(){
+
+        $allData = Payment::whereIn('paid_status',['partial_paid','full_paid'])->get();
+
+        return view('backend.pdf.customer_paid_pdf',compact('allData'));
+
+    } // End Method
+
 }

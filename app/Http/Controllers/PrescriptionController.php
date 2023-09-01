@@ -184,5 +184,32 @@ class PrescriptionController extends Controller
     }
 
 
+    public function DailyPrescriptionReport()
+    {
+
+        return view('backend.prescription.daily_prescription_report');
+
+    } // End Method
+
+
+    public function DailyPrescriptionPdf(Request $request)
+    {
+
+        $sdate = date('Y-m-d', strtotime($request->start_date));
+        $edate = date('Y-m-d', strtotime($request->end_date));
+
+        $allData = Prescription::whereBetween('date', [$sdate, $edate])->get();
+
+        $start_date = date('Y-m-d', strtotime($request->start_date));
+        $end_date = date('Y-m-d', strtotime($request->end_date));
+
+        // dd($sdate,$edate);
+
+        // dd($allData);
+
+        return view('backend.pdf.daily_prescription_report_pdf', compact('allData', 'start_date', 'end_date'));
+
+    } // End Method
+
 
 }

@@ -82,9 +82,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/customer/prescription/details/{prescription_id}', 'CustomerPrescriptionDetails')->name('customer.prescription.details.pdf');
         Route::get('/paid/customer', 'PaidCustomer')->name('paid.customer');
         Route::get('/paid/customer/print/pdf', 'PaidCustomerPrintPdf')->name('paid.customer.print.pdf');
-        // Route::get('/customer/wise/report', 'CustomerWiseReport')->name('customer.wise.report');
-        // Route::get('/customer/wise/credit/report', 'CustomerWiseCreditReport')->name('customer.wise.credit.report');
-        // Route::get('/customer/wise/paid/report', 'CustomerWisePaidReport')->name('customer.wise.paid.report');
+        Route::get('/customer/wise/report', 'CustomerWiseReport')->name('customer.wise.report');
+        Route::get('/customer/wise/credit/report', 'CustomerWiseCreditReport')->name('customer.wise.credit.report');
+        Route::get('/customer/wise/paid/report', 'CustomerWisePaidReport')->name('customer.wise.paid.report');
 
     });
 
@@ -106,9 +106,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/prescription/add', 'PrescriptionAdd')->name('prescription.add');
         Route::post('/prescription/store', 'PrescriptionStore')->name('prescription.store');
         Route::get('/print/prescription/{id}', 'PrintPrescription')->name('print.prescription');
-        // Route::get('/service/edit/{id}', 'ServiceEdit')->name('service.edit');
-        // Route::post('/service/update', 'ServiceUpdate')->name('service.update');
-        // Route::get('/service/delete/{id}', 'ServiceDelete')->name('service.delete');
+        Route::get('/daily/prescription/report', 'DailyPrescriptionReport')->name('daily.prescription.report');
+        Route::get('/daily/prescription/pdf', 'DailyPrescriptionPdf')->name('daily.prescription.pdf');
+
     });
     
 

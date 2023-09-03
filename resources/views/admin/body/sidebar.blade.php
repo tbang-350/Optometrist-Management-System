@@ -96,6 +96,18 @@
                 </li>
 
 
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-profile-line"></i>
+                        <span>Payment</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('prescription.payment.report') }}">Payment Option Report</a></li>
+
+                    </ul>
+                </li>
+
+
 
             </ul>
         </div>

@@ -108,6 +108,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/print/prescription/{id}', 'PrintPrescription')->name('print.prescription');
         Route::get('/daily/prescription/report', 'DailyPrescriptionReport')->name('daily.prescription.report');
         Route::get('/daily/prescription/pdf', 'DailyPrescriptionPdf')->name('daily.prescription.pdf');
+        Route::get('prescription/payment/report', 'PrescriptionPaymentReport')->name('prescription.payment.report');
+        Route::get('/payment/option/report', 'PaymentOptionReport')->name('payment.option.report');
 
     });
     

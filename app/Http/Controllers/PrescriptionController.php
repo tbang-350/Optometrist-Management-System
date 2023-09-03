@@ -212,4 +212,24 @@ class PrescriptionController extends Controller
     } // End Method
 
 
+    public function PrescriptionPaymentReport(){
+
+        return view('backend.prescription.prescription_payment_report');
+
+    }
+
+
+    public function PaymentOptionReport(Request $request){
+
+        $payment_option = $request->payment_option;
+
+        $allData = Payment::where('payment_option',$request->payment_option)->get();
+
+        // dd($allData);
+
+        return view('backend.pdf.payment_option_report_pdf',compact('allData','payment_option'));
+
+    }
+
+
 }

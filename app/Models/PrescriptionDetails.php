@@ -5,16 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class PrescriptionDetails extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function location()
+    public function service()
     {
 
-        return $this->belongsTo(Location::class, 'location_id', 'id');
+        return $this->belongsTo(Service::class, 'service_id', 'id');
 
     }
+
 }

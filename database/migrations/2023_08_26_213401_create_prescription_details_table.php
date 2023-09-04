@@ -9,18 +9,18 @@ return new class extends Migration
     /**
      * Run the migrations.
      *
-     * @return void
+     * @return v
      */
     public function up()
     {
-        Schema::create('prescriptions', function (Blueprint $table) {
+        Schema::create('prescription_details', function (Blueprint $table) {
             $table->id();
-            $table->string('prescription_no')->nullable();
             $table->date('date')->nullable();
-            $table->text('description')->nullable();
-            $table->tinyInteger('status')->default('0')->comment('0 = pending , 1 = paid');
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
+            $table->integer('prescription_id')->nullable();
+            $table->integer('service_id')->nullable();
+            $table->double('service_price')->nullable();
+            $table->double('service_selling_price')->nullable();
+            $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('prescriptions');
+        Schema::dropIfExists('prescription_details');
     }
 };

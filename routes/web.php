@@ -8,6 +8,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\PrescriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/change/password', 'ChangePassword')->name('change.password');
         Route::post('/update/password', 'UpdatePassword')->name('update.password');
+
+        Route::get('/view/company/detail', 'ViewCompanyDetail')->name('view.company.detail');
+        Route::get('/edit/company/detail', 'EditCompanyDetail')->name('edit.company.detail');
+        Route::post('/store/company/detail', 'StoreCompanyDetail')->name('store.company.detail');
+
 
     });
 
@@ -68,6 +74,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/customer/edit/{id}', 'CustomerEdit')->name('customer.edit');
         Route::post('/customer/update', 'CustomerUpdate')->name('customer.update');
         Route::get('/customer/delete/{id}', 'CustomerDelete')->name('customer.delete');
+
+        Route::get('/credit/customer', 'CreditCustomer')->name('credit.customer');
+        Route::get('/credit/customer/print/pdf', 'CreditCustomerPrintPdf')->name('credit.customer.print.pdf');
+        Route::get('/customer/edit/prescription/{prescription_id}', 'CustomerEditPrescription')->name('customer.edit.prescription');
+        Route::post('/customer/update/prescription/{prescription_id}', 'CustomerUpdatePrescription')->name('customer.update.prescription');
+        Route::get('/customer/prescription/details/{prescription_id}', 'CustomerPrescriptionDetails')->name('customer.prescription.details.pdf');
+        Route::get('/paid/customer', 'PaidCustomer')->name('paid.customer');
+        Route::get('/paid/customer/print/pdf', 'PaidCustomerPrintPdf')->name('paid.customer.print.pdf');
+        Route::get('/customer/wise/report', 'CustomerWiseReport')->name('customer.wise.report');
+        Route::get('/customer/wise/credit/report', 'CustomerWiseCreditReport')->name('customer.wise.credit.report');
+        Route::get('/customer/wise/paid/report', 'CustomerWisePaidReport')->name('customer.wise.paid.report');
+
     });
 
 
@@ -79,6 +97,20 @@ Route::middleware('auth')->group(function () {
         Route::get('/service/edit/{id}', 'ServiceEdit')->name('service.edit');
         Route::post('/service/update', 'ServiceUpdate')->name('service.update');
         Route::get('/service/delete/{id}', 'ServiceDelete')->name('service.delete');
+    });
+
+
+    //Prescription Routes
+    Route::controller(PrescriptionController::class)->group(function () {
+        Route::get('/prescription/all', 'PrescriptionAll')->name('prescription.all');
+        Route::get('/prescription/add', 'PrescriptionAdd')->name('prescription.add');
+        Route::post('/prescription/store', 'PrescriptionStore')->name('prescription.store');
+        Route::get('/print/prescription/{id}', 'PrintPrescription')->name('print.prescription');
+        Route::get('/daily/prescription/report', 'DailyPrescriptionReport')->name('daily.prescription.report');
+        Route::get('/daily/prescription/pdf', 'DailyPrescriptionPdf')->name('daily.prescription.pdf');
+        Route::get('prescription/payment/report', 'PrescriptionPaymentReport')->name('prescription.payment.report');
+        Route::get('/payment/option/report', 'PaymentOptionReport')->name('payment.option.report');
+
     });
     
 

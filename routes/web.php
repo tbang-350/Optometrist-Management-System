@@ -8,6 +8,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ConsultationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,7 +81,18 @@ Route::middleware('auth')->group(function () {
         Route::post('/service/update', 'ServiceUpdate')->name('service.update');
         Route::get('/service/delete/{id}', 'ServiceDelete')->name('service.delete');
     });
-    
+
+
+    //Consultation Routes
+    Route::controller(ConsultationController::class)->group(function () {
+        Route::get('/consultation/all', 'ConsultationAll')->name('consultation.all');
+        Route::get('/consultation/add', 'ConsultationAdd')->name('consultation.add');
+        Route::post('/consultation/store', 'ConsultationStore')->name('consultation.store');
+//        Route::get('/service/edit/{id}', 'ServiceEdit')->name('service.edit');
+//        Route::post('/service/update', 'ServiceUpdate')->name('service.update');
+//        Route::get('/service/delete/{id}', 'ServiceDelete')->name('service.delete');
+    });
+
 
 });
 

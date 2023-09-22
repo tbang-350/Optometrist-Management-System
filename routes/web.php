@@ -112,7 +112,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/payment/option/report', 'PaymentOptionReport')->name('payment.option.report');
 
     });
-    
+
 
 });
 

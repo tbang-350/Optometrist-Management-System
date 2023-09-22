@@ -69,6 +69,19 @@
                     </ul>
                 </li>
 
+                <li class="menu-title">Consultation</li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-shield-user-fill"></i>
+                        <span>Consultation</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('consultation.all') }}">All Consultations</a></li>
+                        {{-- <li><a href="email-read.html">Read Email</a></li> --}}
+                    </ul>
+                </li>
+
 
 
                 <li class="menu-title">Reports</li>

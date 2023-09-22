@@ -60,7 +60,7 @@
                                             <td> {{ $item->email }} </td>
                                             <td> {{ $item['location']['location_name'] }} </td>
 
-                                            
+
                                             <td>
                                                 @if ($item->status == '0')
                                                     <span class="btn btn-warning">Inactive</span>

@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">All Customers</h4>
+                        <h4 class="mb-sm-0">All Credit Customers</h4>
 
 
 
@@ -21,10 +21,10 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <a href="{{ route('customer.add') }}" class="btn btn-dark btn-rounded waves-effect waves-light"
-                                style="float:right">
-                                <i class="fas fa-plus-circle">
-                                    Add Customer
+                            <a href=" {{ route('credit.customer.print.pdf') }} "
+                                class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right">
+                                <i class="fas fa-print">
+                                    Print Credit Customer(s)
                                 </i>
                             </a>
 
@@ -40,38 +40,34 @@
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
-                                        <th>Name</th>
-                                        <th>Age</th>
-                                        <th>Sex</th>
-                                        <th>Phone Number</th>
-                                        <th>Address</th>
-                                        <th>Location</th>
+                                        <th>Customer Name</th>
+                                        <th>prescription No</th>
+                                        <th>Date</th>
+                                        <th>Due Amount</th>
                                         <th>Action</th>
-
+                                    </tr>
                                 </thead>
 
 
                                 <tbody>
 
-                                    @foreach ($customer as $key => $item)
+                                    @foreach ($allData as $key => $item)
                                         <tr>
                                             <td> {{ $key + 1 }} </td>
-                                            <td> {{ $item->name }} </td>
-                                            <td> {{ $item->age }} </td>
-                                            <td> {{ $item->sex }} </td>
-                                            <td> {{ $item->phonenumber }} </td>
-                                            <td> {{ $item->address }} </td>
-                                            <td> {{ $item['location']['location_name'] }} </td>
+                                            <td> {{ $item['customer']['name'] }} </td>
+                                            <td> #{{ $item['prescription']['prescription_no'] }} </td>
+                                            <td> {{ date('d-m-Y',strtotime($item['prescription']['date'])) }} </td>
+                                            <td> Tsh {{ $item->due_amount }} </td>
 
                                             <td>
-                                                <a href=" {{ route('customer.edit', $item->id) }} " class="btn btn-info sm"
+                                                <a href=" {{ route('customer.edit.prescription', $item->prescription_id) }} " class="btn btn-info sm"
                                                     title="Edit Data">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
 
-                                                <a href=" {{ route('customer.delete', $item->id) }} "
-                                                    class="btn btn-danger sm" title="Delete Data" id="delete"> <i
-                                                        class="fas fa-trash-alt"></i>
+                                                <a href=" {{ route('customer.prescription.details.pdf', $item->prescription_id) }} "
+                                                    class="btn btn-danger sm" title="Customer prescription Details"> <i
+                                                        class="fas fa-eye"></i>
                                                 </a>
 
                                             </td>

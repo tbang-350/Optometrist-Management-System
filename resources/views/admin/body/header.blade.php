@@ -68,6 +68,11 @@
                         Change Password
                     </a>
 
+                    <a class="dropdown-item d-block" href="{{ route('view.company.detail') }}">
+                        <i class="ri-settings-2-line align-middle me-1"></i>
+                        Settings
+                    </a>
+
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="{{ route('admin.logout') }}">
                         <i class="ri-shut-down-line align-middle me-1 text-danger"></i>

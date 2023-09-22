@@ -129,7 +129,7 @@
                 },
                 messages: {
                     customer_id: {
-                        required: 'Please Select Customer Name',
+                        required: 'Please Select Customer',
                     },
                     consultation_fee: {
                         required: 'Please Enter Consultation Fee'

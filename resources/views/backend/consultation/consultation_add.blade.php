@@ -90,7 +90,7 @@
 
                                 <br>
 
-                                <input type="submit" class="btn btn-info waves-effect waves-light" value="Add Customer">
+                                <input type="submit" class="btn btn-info waves-effect waves-light" value="Add Consultation">
                             </form>
 
 

@@ -29,9 +29,7 @@ class ConsultationController extends Controller
     }
 
 
-    /**
-     * @throws \Exception
-     */
+
     public function ConsultationStore(Request $request){
 
         $date = new DateTime('now', new DateTimeZone('Africa/Dar_es_Salaam'));
@@ -53,7 +51,9 @@ class ConsultationController extends Controller
 
             $consultation->customer_id = $customer_id;
             $consultation->date = $date;
+            $consultation->status = 0;
             $consultation->consultation_fee = $request->consultation_fee;
+            $consultation->created_by = Auth::user()->id;
 
             $consultation->save();
 
@@ -71,6 +71,7 @@ class ConsultationController extends Controller
             $consultation  = new Consultation();
             $consultation->customer_id = $customer_id;
             $consultation->date = $date;
+            $consultation->status = 0;
             $consultation->consultation_fee = $request->consultation_fee;
             $consultation->created_by = Auth::user()->id;
 
@@ -86,5 +87,22 @@ class ConsultationController extends Controller
         }
 
     }
+
+
+
+    public function ConsultationDelete($id){
+
+        Consultation::findOrFail($id)->delete();
+
+        $notification = array(
+            'message' => 'Consultation Deleted Successfully',
+            'alert-type' => 'success',
+        );
+
+        return redirect()->route('consultation.all')->with($notification);
+
+
+    }
+
 
 }

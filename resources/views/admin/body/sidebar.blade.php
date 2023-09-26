@@ -98,6 +98,7 @@
                         <li><a href="{{ route('supplier.all') }}">Suppliers</a></li>
                         <li><a href="{{ route('unit.all') }}">Units</a></li>
                         <li><a href="{{ route('category.all') }}">Categories</a></li>
+                        <li><a href="{{ route('product.all') }}">Products</a></li>
                     </ul>
 
 

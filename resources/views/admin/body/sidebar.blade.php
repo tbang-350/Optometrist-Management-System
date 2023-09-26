@@ -118,15 +118,21 @@
                 </li>
 
 
-                {{-- <li>
+                <li class="menu-title">Invoice</li>
+
+                <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-shopping-basket-2-fill"></i>
-                        <span>Manage Products</span>
+                        <i class=" ri-edit-box-fill"></i>
+                        <span>Manage Invoice</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('product.all') }}">All Products</a></li>
+                        <li><a href="{{ route('invoice.all') }}">All Invoices</a></li>
+                        <li><a href="{{ route('invoice.pending.list') }}">Invoice Approval</a></li>
+                        <li><a href="{{ route('daily.invoice.report') }}">Daily Invoice Report</a></li>
                     </ul>
-                </li> --}}
+
+                </li>
+
 
 
 

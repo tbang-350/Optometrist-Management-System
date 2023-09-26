@@ -85,4 +85,16 @@ class PrescriptionController extends Controller
 
     }
 
+
+    public function PrescriptionView($id){
+
+        $data = Prescription::findOrFail($id);
+
+        // dd($data);
+
+        return view('backend.pdf.prescription_view',compact('data'));
+
+
+    }
+
 }

@@ -11,7 +11,7 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <h4 class="card-title">Add Consultation </h4><br><br>
+                            <h4 class="card-title">Add Prescription </h4><br><br>
 
 
 
@@ -23,7 +23,10 @@
 
                                 @if ($consultation)
                                     <div class="row new_customer">
-                                        <h6 class="card-title">Customer Data</h6>
+                                        <h6 class="card-title">Customer Information</h6>
+
+                                        <br>
+                                        <br>
 
                                         <input type="hidden" name="customer_id"
                                             value="{{ $consultation->customer->id ?? '' }}">
@@ -101,7 +104,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
 
-                                            <input type="text" name="RE" id="address" class="form-control"
+                                            <input type="text" name="RE" id="RE" class="form-control"
                                                 placeholder="RE">
                                         </div>
 
@@ -109,7 +112,7 @@
 
                                         <div class="form-group">
 
-                                            <input type="text" name="LE" id="ADD" class="form-control"
+                                            <input type="text" name="LE" id="LE" class="form-control"
                                                 placeholder="LE">
                                         </div>
 

@@ -94,7 +94,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/prescription/all', 'PrescriptionAll')->name('prescription.all');
         Route::get('/prescription/add/{id}', 'PrescriptionAdd')->name('prescription.add');
         Route::post('/prescription/store', 'PrescriptionStore')->name('prescription.store');
-//        Route::get('/service/edit/{id}', 'ServiceEdit')->name('service.edit');
+        Route::get('/prescription/view/{id}', 'PrescriptionView')->name('prescription.view');
 //        Route::post('/service/update', 'ServiceUpdate')->name('service.update');
 //        Route::get('/service/delete/{id}', 'ServiceDelete')->name('service.delete');
     });

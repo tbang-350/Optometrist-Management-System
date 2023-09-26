@@ -8,6 +8,9 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
+
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,7 +43,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/view/company/detail', 'ViewCompanyDetail')->name('view.company.detail');
         Route::get('/edit/company/detail', 'EditCompanyDetail')->name('edit.company.detail');
         Route::post('/store/company/detail', 'StoreCompanyDetail')->name('store.company.detail');
-
 
     });
 
@@ -103,6 +105,28 @@ Route::middleware('auth')->group(function () {
 //        Route::post('/service/update', 'ServiceUpdate')->name('service.update');
 //        Route::get('/service/delete/{id}', 'ServiceDelete')->name('service.delete');
     });
+
+    //Supplier Routes
+    Route::controller(SupplierController::class)->group(function () {
+        Route::get('/supplier/all', 'SupplierAll')->name('supplier.all');
+        Route::get('/supplier/add', 'SupplierAdd')->name('supplier.add');
+        Route::post('/supplier/store', 'SupplierStore')->name('supplier.store');
+        Route::get('/supplier/edit/{id}', 'SupplierEdit')->name('supplier.edit');
+        Route::post('/supplier/update', 'SupplierUpdate')->name('supplier.update');
+        Route::get('/supplier/delete/{id}', 'SupplierDelete')->name('supplier.delete');
+    });
+
+
+    // Unit Routes
+    Route::controller(UnitController::class)->group(function () {
+        Route::get('/unit/all', 'UnitAll')->name('unit.all');
+        Route::get('/unit/add', 'UnitAdd')->name('unit.add');
+        Route::post('/unit/store', 'UnitStore')->name('unit.store');
+        Route::get('/unit/edit/{id}', 'UnitEdit')->name('unit.edit');
+        Route::post('/unit/update', 'UnitUpdate')->name('unit.update');
+        Route::get('/unit/delete/{id}', 'UnitDelete')->name('unit.delete');
+    });
+
 
 });
 

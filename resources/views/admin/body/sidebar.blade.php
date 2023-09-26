@@ -85,6 +85,42 @@
 
                 </li>
 
+                <li class="menu-title">Product</li>
+
+
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-hotel-fill"></i>
+                        <span>Manage Suppliers</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('supplier.all') }}">All Suppliers</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-delete-back-fill"></i>
+                        <span>Manage Units</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('unit.all') }}">All Units</a></li>
+                    </ul>
+                </li>
+
+
+
+                {{-- <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-shopping-basket-2-fill"></i>
+                        <span>Manage Products</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('product.all') }}">All Products</a></li>
+                    </ul>
+                </li> --}}
+
 
 
 

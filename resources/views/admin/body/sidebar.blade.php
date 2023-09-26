@@ -92,22 +92,18 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-hotel-fill"></i>
-                        <span>Manage Suppliers</span>
+                        <span>Manage Products</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('supplier.all') }}">All Suppliers</a></li>
+                        <li><a href="{{ route('supplier.all') }}">Suppliers</a></li>
+                        <li><a href="{{ route('unit.all') }}">Units</a></li>
+                        <li><a href="{{ route('category.all') }}">Categories</a></li>
                     </ul>
+
+
                 </li>
 
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-delete-back-fill"></i>
-                        <span>Manage Units</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('unit.all') }}">All Units</a></li>
-                    </ul>
-                </li>
+
 
 
 

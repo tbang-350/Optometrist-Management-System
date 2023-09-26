@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-
+use App\Models\Company;
 
 class AdminController extends Controller
 {
@@ -103,7 +103,7 @@ class AdminController extends Controller
 
             $users = User::find(Auth::id());
             $users->password = bcrypt($request->newpassword);
-            $users->save(); 
+            $users->save();
 
             session()->flash('message','Password Updated Succesfully');
 
@@ -113,6 +113,52 @@ class AdminController extends Controller
 
             return redirect()->back();
         }
+
+    } // End Method
+
+
+    public function ViewCompanyDetail()
+    {
+
+        $company = Company::latest()->first();
+
+        // dd($company);
+
+        return view('company.company_details_view', compact('company'));
+
+    } // End Method
+
+
+    public function EditCompanyDetail()
+    {
+
+        $company = Company::first();
+
+        // dd($company);
+
+        return view('company.company_edit_details', compact('company'));
+
+    } // End Method
+
+
+    public function StoreCompanyDetail(Request $request)
+    {
+
+        $company = Company::first();
+
+        $company->company_name = $request->company_name;
+        $company->company_email = $request->company_email;
+        $company->company_address = $request->company_address;
+        $company->company_phone = $request->company_phone;
+
+        $company->save();
+
+        $notification = array(
+            'message' => 'Company Details Updated Successfully',
+            'alert-type' => 'info',
+        );
+
+        return redirect()->route('view.company.detail')->with($notification);
 
     } // End Method
 

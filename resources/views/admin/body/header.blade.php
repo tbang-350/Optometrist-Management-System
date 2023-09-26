@@ -37,10 +37,10 @@
             </div>
 
             @php
-                
+
                 $id = Auth::user()->id;
                 $adminData = App\Models\User::find($id);
-                
+
             @endphp
 
             <div class="dropdown d-inline-block user-dropdown">
@@ -66,6 +66,11 @@
                     <a class="dropdown-item d-block" href="{{ route('change.password') }}">
                         <i class="ri-lock-unlock-line align-middle me-1"></i>
                         Change Password
+                    </a>
+
+                    <a class="dropdown-item d-block" href="{{ route('view.company.detail') }}">
+                        <i class="ri-settings-2-line align-middle me-1"></i>
+                        Settings
                     </a>
 
                     <div class="dropdown-divider"></div>

@@ -46,14 +46,22 @@ class DefaultController extends Controller
     }// End Method
 
 
-    public function GetBuyingUnitPrice(Request $request){
-
+    public function GetBuyingUnitPrice(Request $request) {
         $product_id = $request->product_id;
 
-        $unit_price = Purchase::where('product_id',$product_id)->first()->unit_price;
+        $latestPurchase = Purchase::where('product_id', $product_id)
+            ->orderBy('created_at', 'desc')
+            ->first();
 
-        return response()->json($unit_price);
+        if ($latestPurchase) {
+            $unit_price = $latestPurchase->unit_price;
+            return response()->json($unit_price);
+        } else {
+            // Handle the case where there are no purchases for the specified product.
+            // You can return a default value or an error response.
+            return response()->json(['error' => 'No purchase found for this product.']);
+        }
+    }
 
-    } // End Method
 
 }

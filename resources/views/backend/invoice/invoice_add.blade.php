@@ -180,25 +180,41 @@
 
                                 <div class="row">
                                     <div class="form-group col-md-3">
-                                        <label for="payment status">Payment Status</label>
-                                        <select name="paid_status" id="paid_status" class="form-select">
+                                        <label for="payment status">Payment Options</label>
+                                        <select name="payment_option" id="payment_option" class="form-select">
 
-                                            <option value="">Select Payment Status</option>
-                                            <option value="full_paid">Fully Paid</option>
-                                            <option value="full_due">Full Due</option>
-                                            <option value="partial_paid">Partially Paid</option>
-
+                                            <option value="">Select Payment Option</option>
+                                            <option value="cash">Cash</option>
+                                            <option value="cheque">Cheque</option>
+                                            <option value="insurance">Insurance</option>
+                                            <option value="selcom">Selcom</option>
                                         </select>
 
                                         <br>
 
-                                        <input type="text" name="paid_amount" id="paid_amount" class="form-control paid_amount"
-                                            placeholder="Enter Paid Amount..." style="display: none">
+                                        <div class="form-group" style="display: none">
+                                            <label for="payment status">Payment Status</label>
+                                            <select name="paid_status" id="paid_status" class="form-select">
+
+                                                <option value="">Select Payment Status</option>
+                                                <option value="full_paid">Fully Paid</option>
+                                                <option value="partial_paid">Partially Paid</option>
+
+                                            </select>
+
+                                            <br>
+
+                                            <input type="text" name="paid_amount" id="paid_amount"
+                                                class="form-control paid_amount" placeholder="Enter Paid Amount..."
+                                                style="display: none">
+
+
+
+                                        </div>
 
                                         <br>
 
                                     </div>
-
 
 
                                     <div class="form-group col-md-9">
@@ -309,6 +325,22 @@
             </td>
 
         </tr>
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#payment_option').change(function() {
+                var selectedOption = $(this).val();
+                var paidStatusField = $('#paid_status');
+
+                if (selectedOption !== '') {
+                    paidStatusField.closest('.form-group').show();
+                } else {
+                    paidStatusField.closest('.form-group').hide();
+                }
+            });
+        });
     </script>
 
 
@@ -606,6 +638,18 @@
                 $('.new_customer').hide();
             }
         });
+
+
+
+        $(document).on('change', '#payment_option', function() {
+            var payment_option = $(this).val();
+            if (payment_option !== '') {
+                $('.paid_status').show();
+            } else {
+                $('.paid_status').hide();
+            }
+        });
+
     </script>
 
     <script type="text/javascript">

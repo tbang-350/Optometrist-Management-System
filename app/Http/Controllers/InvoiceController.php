@@ -141,6 +141,7 @@ class InvoiceController extends Controller
                         $payment->invoice_id = $invoice->id;
                         $payment->customer_id = $customer_id;
                         $payment->paid_status = $request->paid_status;
+                        $payment->payment_option = $request->payment_option;
                         $payment->discount_amount = $request->discount_amount;
                         $payment->total_amount = $request->estimated_amount;
                         $payment->created_at = Carbon::now();

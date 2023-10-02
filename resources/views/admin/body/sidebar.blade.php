@@ -36,23 +36,10 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-shield-user-fill"></i>
-                        <span>Services</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('service.all') }}">All Services</a></li>
-                        {{-- <li><a href="email-read.html">Read Email</a></li> --}}
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-shield-user-fill"></i>
                         <span>Customers</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('customer.all') }}">All Customers</a></li>
-                        <li><a href="{{ route('credit.customer') }}">Credit Customers</a></li>
-                        <li><a href="{{ route('paid.customer') }}">Paid Customers</a></li>
                         {{-- <li><a href="email-read.html">Read Email</a></li> --}}
                     </ul>
                 </li>
@@ -61,10 +48,10 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-shield-user-fill"></i>
-                        <span>Prescription</span>
+                        <span>Services</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('prescription.all') }}">All Prescriptions</a></li>
+                        <li><a href="{{ route('service.all') }}">All Services</a></li>
                         {{-- <li><a href="email-read.html">Read Email</a></li> --}}
                     </ul>
                 </li>
@@ -107,7 +94,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('supplier.all') }}">Suppliers</a></li>
-                        <li><a href="{{ route('unit.all') }}">Units</a></li>
+                        {{-- <li><a href="{{ route('unit.all') }}">Units</a></li> --}}
                         <li><a href="{{ route('category.all') }}">Categories</a></li>
                         <li><a href="{{ route('product.all') }}">Products</a></li>
                     </ul>
@@ -150,41 +137,35 @@
 
 
 
-                <li class="menu-title">Reports</li>
+                <li class="menu-title">Pages</li>
 
-                <li>
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-account-circle-line"></i>
-                        <span>Customer</span>
+                        <span>Authentication</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('customer.wise.report') }}">Customer Wise Report </a></li>
-
+                        <li><a href="auth-login.html">Login</a></li>
+                        <li><a href="auth-register.html">Register</a></li>
+                        <li><a href="auth-recoverpw.html">Recover Password</a></li>
+                        <li><a href="auth-lock-screen.html">Lock Screen</a></li>
                     </ul>
                 </li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-profile-line"></i>
-                        <span>Prescription</span>
+                        <span>Utility</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('daily.prescription.report') }}">Daily Prescription Report</a></li>
-
+                        <li><a href="pages-starter.html">Starter Page</a></li>
+                        <li><a href="pages-timeline.html">Timeline</a></li>
+                        <li><a href="pages-directory.html">Directory</a></li>
+                        <li><a href="pages-invoice.html">Invoice</a></li>
+                        <li><a href="pages-404.html">Error 404</a></li>
+                        <li><a href="pages-500.html">Error 500</a></li>
                     </ul>
-                </li>
-
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-profile-line"></i>
-                        <span>Payment</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('prescription.payment.report') }}">Payment Option Report</a></li>
-
-                    </ul>
-                </li>
+                </li> --}}
 
 
 

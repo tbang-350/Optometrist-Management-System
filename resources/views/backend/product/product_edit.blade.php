@@ -51,23 +51,7 @@
                                 <!-- end row -->
 
 
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label">Unit</label>
-                                    <div class="col-sm-10">
-                                        <select name="unit_id" class="form-select" aria-label="Default select example">
-                                            <option selected="">Open this select menu</option>
 
-                                            @foreach ($unit as $unit)
-                                                <option
-                                                    value="{{ $unit->id }}"{{ $unit->id == $product->unit_id ? 'selected' : '' }}>
-                                                    {{ $unit->name }}
-                                                </option>
-                                            @endforeach
-
-                                        </select>
-                                    </div>
-                                </div>
-                                <!-- end row -->
 
 
                                 <div class="row mb-3">
@@ -122,9 +106,6 @@
                     supplier_id: {
                         required: true,
                     },
-                    unit_id: {
-                        required: true,
-                    },
                     category_id: {
                         required: true,
                     },
@@ -135,9 +116,6 @@
                     },
                     supplier_id: {
                         required: 'Please Select Supplier',
-                    },
-                    unit_id: {
-                        required: 'Please Select Unit',
                     },
                     category_id: {
                         required: 'Please Select Category',
@@ -158,5 +136,5 @@
         });
     </script>
 
-    
+
 @endsection

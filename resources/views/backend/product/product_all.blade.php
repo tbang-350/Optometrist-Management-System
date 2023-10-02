@@ -43,7 +43,6 @@
 
                                         <th>Name</th>
                                         <th>Supplier name</th>
-                                        <th>Unit</th>
                                         <th>Category</th>
                                         <th>Stock</th>
                                         <th>Action</th>
@@ -58,7 +57,6 @@
                                             <td> {{ $key + 1 }} </td>
                                             <td> {{ $item->name }} </td>
                                             <td> {{ $item['supplier']['name'] }} </td>
-                                            <td> {{ $item['unit']['name'] }} </td>
                                             <td> {{ $item['category']['name'] }} </td>
                                             <td> {{ $item->quantity }} </td>
 

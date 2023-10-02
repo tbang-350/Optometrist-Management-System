@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">All Consultation</h4>
+                        <h4 class="mb-sm-0">Pending Invoices</h4>
 
 
 
@@ -21,10 +21,10 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <a href="{{ route('consultation.add') }}"
+                            <a href=" {{ route('invoice.add') }} "
                                 class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right">
                                 <i class="fas fa-plus-circle">
-                                    Add Consultation
+                                    Add Invoice
                                 </i>
                             </a>
 
@@ -40,11 +40,11 @@
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
+                                        <th>Customer Name</th>
+                                        <th>Invoice No</th>
                                         <th>Date</th>
-                                        <th>Name</th>
-                                        <th>Age</th>
-                                        <th>Sex</th>
-                                        <th>Consultation Fee</th>
+                                        <th>Description</th>
+                                        <th>Amount</th>
                                         <th>Status</th>
                                         <th>Action</th>
 
@@ -53,34 +53,37 @@
 
                                 <tbody>
 
-                                    @foreach ($consultation as $key => $item)
+                                    @foreach ($allData as $key => $item)
                                         <tr>
                                             <td> {{ $key + 1 }} </td>
-                                            <td>{{ date('d-m-Y', strtotime($item->date)) }}</td>
-                                            <td> {{ $item['customer']['name'] }} </td>
-                                            <td> {{ $item['customer']['age'] }} </td>
-                                            <td> {{ $item['customer']['sex'] }} </td>
-                                            <td> {{ $item->consultation_fee }} </td>
+                                            <td> {{$item['payment']['customer']['name']}} </td>
+                                            <td> #{{ $item->invoice_no }} </td>
+                                            <td> {{ date('d-m-Y', strtotime($item->date)) }} </td>
+                                            <td> {{ $item->description }} </td>
+
+                                            <td> Tsh {{$item['payment']['total_amount']}} </td>
 
                                             <td>
                                                 @if ($item->status == '0')
-                                                    <span class="btn btn-warning">Unseen</span>
+                                                    <span class="btn btn-warning">Pending</span>
                                                 @elseif($item->status == '1')
-                                                    <span class="btn btn-success">Seen</span>
+                                                    <span class="btn btn-success">Approved</span>
                                                 @endif
                                             </td>
 
                                             <td>
-                                                <a href=" {{ route('prescription.add', $item->id) }} "
-                                                    class="btn btn-info sm"--}} title="Add Prescription">
-                                                    <i class="fas fa-plus"></i>
+                                                @if ($item->status == '0')
+
+                                                <a href=" {{ route('invoice.approve', $item->id) }} "
+                                                    class="btn btn-dark sm" title="Approve"> <i
+                                                        class="fas fa-check-circle"></i>
                                                 </a>
 
-                                                <a href=" {{ route('consultation.delete', $item->id) }} "
+                                                <a href=" {{ route('invoice.delete', $item->id) }} "
                                                     class="btn btn-danger sm" title="Delete Data" id="delete"> <i
                                                         class="fas fa-trash-alt"></i>
                                                 </a>
-
+                                                @endif
                                             </td>
 
                                         </tr>

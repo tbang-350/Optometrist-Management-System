@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('consultations', function (Blueprint $table) {
+        Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->date("date")->nullable();
-            $table->integer("customer_id")->nullable();
-            $table->tinyInteger('status')->default('0')->comment('0 = unseen , 1 = seen');
-            $table->double("consultation_fee")->nullable();
+            $table->string('invoice_no')->nullable();
+            $table->date('date')->nullable();
+            $table->text('description')->nullable();
+            $table->tinyInteger('status')->default('0')->comment('0 = pending , 1 = approved');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->timestamps();
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('consultations');
+        Schema::dropIfExists('invoices');
     }
 };

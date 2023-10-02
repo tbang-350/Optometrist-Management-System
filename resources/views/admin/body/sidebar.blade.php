@@ -83,6 +83,72 @@
                 </li>
 
 
+                <li class="menu-title">Prescriptions</li>
+
+                <li>
+
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-shield-user-fill"></i>
+                        <span>Prescription</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('prescription.all') }}">All Prescriptions</a></li>
+                        {{-- <li><a href="email-read.html">Read Email</a></li> --}}
+                    </ul>
+
+                </li>
+
+                <li class="menu-title">Product</li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-hotel-fill"></i>
+                        <span>Manage Products</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('supplier.all') }}">Suppliers</a></li>
+                        <li><a href="{{ route('unit.all') }}">Units</a></li>
+                        <li><a href="{{ route('category.all') }}">Categories</a></li>
+                        <li><a href="{{ route('product.all') }}">Products</a></li>
+                    </ul>
+
+
+                </li>
+
+                <li class="menu-title">Purchase</li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-shopping-cart-fill"></i>
+                        <span>Manage Purchases</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('purchase.all') }}">All Purchases</a></li>
+                        {{-- <li><a href="{{ route('purchase.pending') }}">Purchase Approval</a></li> --}}
+                        <li><a href="{{ route('daily.purchase.report') }}">Daily Purchase Report</a></li>
+                    </ul>
+
+                </li>
+
+
+                <li class="menu-title">Invoice</li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class=" ri-edit-box-fill"></i>
+                        <span>Manage Invoice</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('invoice.all') }}">All Invoices</a></li>
+                        <li><a href="{{ route('invoice.pending.list') }}">Invoice Approval</a></li>
+                        <li><a href="{{ route('daily.invoice.report') }}">Daily Invoice Report</a></li>
+                    </ul>
+
+                </li>
+
+
+
+
 
                 <li class="menu-title">Reports</li>
 

@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('consultations', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->date("date")->nullable();
-            $table->integer("customer_id")->nullable();
-            $table->tinyInteger('status')->default('0')->comment('0 = unseen , 1 = seen');
-            $table->double("consultation_fee")->nullable();
+            $table->integer('supplier_id');
+            $table->integer('unit_id');
+            $table->integer('category_id');
+            $table->string('name')->nullable();
+            $table->double('quantity')->default('0');
+            $table->tinyInteger('status')->default('1');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->timestamps();
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('consultations');
+        Schema::dropIfExists('products');
     }
 };

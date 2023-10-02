@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">All Consultation</h4>
+                        <h4 class="mb-sm-0">All Products</h4>
 
 
 
@@ -21,10 +21,10 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <a href="{{ route('consultation.add') }}"
-                                class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right">
+                            <a href=" {{ route('product.add') }} " class="btn btn-dark btn-rounded waves-effect waves-light"
+                                style="float:right">
                                 <i class="fas fa-plus-circle">
-                                    Add Consultation
+                                    Add Product
                                 </i>
                             </a>
 
@@ -40,12 +40,12 @@
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
-                                        <th>Date</th>
+
                                         <th>Name</th>
-                                        <th>Age</th>
-                                        <th>Sex</th>
-                                        <th>Consultation Fee</th>
-                                        <th>Status</th>
+                                        <th>Supplier name</th>
+                                        <th>Unit</th>
+                                        <th>Category</th>
+                                        <th>Stock</th>
                                         <th>Action</th>
 
                                 </thead>
@@ -53,30 +53,22 @@
 
                                 <tbody>
 
-                                    @foreach ($consultation as $key => $item)
+                                    @foreach ($products as $key => $item)
                                         <tr>
                                             <td> {{ $key + 1 }} </td>
-                                            <td>{{ date('d-m-Y', strtotime($item->date)) }}</td>
-                                            <td> {{ $item['customer']['name'] }} </td>
-                                            <td> {{ $item['customer']['age'] }} </td>
-                                            <td> {{ $item['customer']['sex'] }} </td>
-                                            <td> {{ $item->consultation_fee }} </td>
+                                            <td> {{ $item->name }} </td>
+                                            <td> {{ $item['supplier']['name'] }} </td>
+                                            <td> {{ $item['unit']['name'] }} </td>
+                                            <td> {{ $item['category']['name'] }} </td>
+                                            <td> {{ $item->quantity }} </td>
 
                                             <td>
-                                                @if ($item->status == '0')
-                                                    <span class="btn btn-warning">Unseen</span>
-                                                @elseif($item->status == '1')
-                                                    <span class="btn btn-success">Seen</span>
-                                                @endif
-                                            </td>
-
-                                            <td>
-                                                <a href=" {{ route('prescription.add', $item->id) }} "
-                                                    class="btn btn-info sm"--}} title="Add Prescription">
-                                                    <i class="fas fa-plus"></i>
+                                                <a href=" {{ route('product.edit', $item->id) }} " class="btn btn-info sm"
+                                                    title="Edit Data">
+                                                    <i class="fas fa-edit"></i>
                                                 </a>
 
-                                                <a href=" {{ route('consultation.delete', $item->id) }} "
+                                                <a href=" {{ route('product.delete', $item->id) }} "
                                                     class="btn btn-danger sm" title="Delete Data" id="delete"> <i
                                                         class="fas fa-trash-alt"></i>
                                                 </a>

@@ -103,7 +103,7 @@ class AdminController extends Controller
 
             $users = User::find(Auth::id());
             $users->password = bcrypt($request->newpassword);
-            $users->save(); 
+            $users->save();
 
             session()->flash('message','Password Updated Succesfully');
 

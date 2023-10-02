@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">All Prescriptions</h4>
+                        <h4 class="mb-sm-0">All Units</h4>
 
 
 
@@ -21,12 +21,12 @@
                     <div class="card">
                         <div class="card-body">
 
-                            {{-- <a href="{{ route('consultation.add') }}"
-                                class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right">
+                            <a href=" {{ route('unit.add') }} " class="btn btn-dark btn-rounded waves-effect waves-light"
+                                style="float:right">
                                 <i class="fas fa-plus-circle">
-                                    Add Consultation
+                                    Add Unit
                                 </i>
-                            </a> --}}
+                            </a>
 
                             <br>
                             <br>
@@ -39,38 +39,31 @@
                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th>Sl</th>
-                                        <th>Date</th>
-                                        <th>Customer Name</th>
-                                        <th>Next Appointment</th>
-                                        <th>Action</th>
-
+                                        <th width="5%">Sl</th>
+                                        <th>Name</th>
+                                        <th width="20%">Action</th>
 
                                 </thead>
 
 
                                 <tbody>
 
-                                    @foreach ($prescription as $key => $item)
+                                    @foreach ($units as $key => $item)
                                         <tr>
-
                                             <td> {{ $key + 1 }} </td>
-                                            <td>{{ date('d-m-Y', strtotime($item->date)) }}</td>
-                                            <td>{{ $item['customer']['name'] }}</td>
-                                            <td>{{ $item->next_appointment }}</td>
+                                            <td> {{ $item->name }} </td>
+
                                             <td>
-                                                <a href=" {{ route('prescription.view', $item->id) }} " class="btn btn-info sm"
-                                                    title="View Data">
-                                                    <i class="fas fa-eye"></i>
+                                                <a href=" {{ route('unit.edit', $item->id) }} " class="btn btn-info sm"
+                                                    title="Edit Data">
+                                                    <i class="fas fa-edit"></i>
                                                 </a>
 
-                                                <a href=" {{ route('customer.delete', $item->id) }} "
-                                                    class="btn btn-danger sm" title="Delete Data" id="delete"> <i
-                                                        class="fas fa-trash-alt"></i>
+                                                <a href=" {{ route('unit.delete', $item->id) }} " class="btn btn-danger sm"
+                                                    title="Delete Data" id="delete"> <i class="fas fa-trash-alt"></i>
                                                 </a>
+
                                             </td>
-
-
 
                                         </tr>
                                     @endforeach

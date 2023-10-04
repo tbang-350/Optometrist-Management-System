@@ -56,7 +56,7 @@
                     </ul>
                 </li>
 
-                <li class="menu-title">Consultation</li>
+                <li class="menu-title">Consultation &amp; Prescription</li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -70,7 +70,7 @@
                 </li>
 
 
-                <li class="menu-title">Prescriptions</li>
+
 
                 <li>
 
@@ -85,7 +85,7 @@
 
                 </li>
 
-                <li class="menu-title">Product</li>
+                <li class="menu-title">Product &amp; Purchase </li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -102,7 +102,6 @@
 
                 </li>
 
-                <li class="menu-title">Purchase</li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -123,7 +122,7 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class=" ri-edit-box-fill"></i>
-                        <span>Manage Invoice</span>
+                        <span>Product Invoice</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('invoice.all') }}">All Invoices</a></li>
@@ -135,35 +134,54 @@
 
 
 
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-shield-user-fill"></i>
+                        <span>Service Invoice</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('service.invoice.all') }}">All Service Invoices</a></li>
+                        {{-- <li><a href="email-read.html">Read Email</a></li> --}}
+                    </ul>
+                </li>
 
 
-                <li class="menu-title">Pages</li>
+
+
+
+                <li class="menu-title">Reports</li>
 
                 {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-account-circle-line"></i>
-                        <span>Authentication</span>
+                        <span>Customer</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="auth-login.html">Login</a></li>
-                        <li><a href="auth-register.html">Register</a></li>
-                        <li><a href="auth-recoverpw.html">Recover Password</a></li>
-                        <li><a href="auth-lock-screen.html">Lock Screen</a></li>
+                        <li><a href="{{ route('customer.wise.report') }}">Customer Wise Report </a></li>
+
                     </ul>
-                </li>
+                </li> --}}
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-profile-line"></i>
-                        <span>Utility</span>
+                        <span>Invoice</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="pages-starter.html">Starter Page</a></li>
-                        <li><a href="pages-timeline.html">Timeline</a></li>
-                        <li><a href="pages-directory.html">Directory</a></li>
-                        <li><a href="pages-invoice.html">Invoice</a></li>
-                        <li><a href="pages-404.html">Error 404</a></li>
-                        <li><a href="pages-500.html">Error 500</a></li>
+                        <li><a href="{{ route('daily.service.invoice.report') }}">Daily Service Invoice Report</a></li>
+
+                    </ul>
+                </li>
+
+
+                {{-- <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-profile-line"></i>
+                        <span>Payment</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('prescription.payment.report') }}">Payment Option Report</a></li>
+
                     </ul>
                 </li> --}}
 

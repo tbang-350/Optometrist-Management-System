@@ -7,12 +7,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Payment Option Report</h4>
+                        <h4 class="mb-sm-0">Daily Service Invoice Report</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
 
-                                <li class="breadcrumb-item active">Payment Option Report</li>
+                                <li class="breadcrumb-item active">Service Invoice</li>
                             </ol>
                         </div>
 
@@ -27,9 +27,9 @@
                         <div class="card-body">
 
                             @php
-                                
+
                                 $company_info = App\Models\Company::first();
-                                
+
                             @endphp
 
                             <div class="row">
@@ -70,8 +70,11 @@
                                     <div>
                                         <div class="p-2">
                                             <h3 class="font-size-16">
-                                                <strong>Payment Option : {{ $payment_option }}</strong>
-
+                                                <strong>Daily Service Invoice Report</strong>
+                                                <span class="btn btn-info">{{ date('d-m-Y', strtotime($start_date)) }}</span>
+                                                -
+                                                <span
+                                                    class="btn btn-success">{{ date('d-m-Y', strtotime($end_date)) }}</span>
                                             </h3>
                                         </div>
 
@@ -95,11 +98,11 @@
                                                         <tr>
                                                             <td><strong>S.No</strong></td>
                                                             <td class="text-center"><strong>Customer Name</strong></td>
-                                                            <td class="text-center"><strong>Prescription No</strong>
+                                                            <td class="text-center"><strong>Invoice No</strong>
                                                             </td>
                                                             <td class="text-center"><strong>Date</strong>
                                                             </td>
-                                                            <td class="text-center"><strong>Paid Amount</strong>
+                                                            <td class="text-center"><strong>Amount</strong>
                                                             </td>
 
 
@@ -109,25 +112,24 @@
                                                     <tbody>
 
                                                         @php
-                                                            $total_paid = '0';
+                                                            $total_sum = '0';
                                                         @endphp
 
                                                         @foreach ($allData as $key => $item)
                                                             <tr>
                                                                 <td class="text-center">{{ $key + 1 }}</td>
-                                                                <td class="text-center"> {{ $item['customer']['name'] }}
-                                                                </td>
                                                                 <td class="text-center">
-                                                                    #{{ $item['prescription']['prescription_no'] }} </td>
+                                                                    {{ $item['service_payment']['customer']['name'] }}</td>
+                                                                <td class="text-center">{{ $item->service_invoice_no }}</td>
                                                                 <td class="text-center">
-                                                                    {{ date('d-m-Y', strtotime($item['prescription']['date'])) }}
-                                                                </td>
-                                                                <td class="text-center"> {{ $item->paid_amount }} </td>
+                                                                    {{ date('d-m-Y', strtotime($item->date)) }}</td>
+                                                                <td class="text-center">
+                                                                    {{ $item['service_payment']['total_amount'] }}</td>
 
                                                             </tr>
 
                                                             @php
-                                                                $total_paid += $item->paid_amount;
+                                                                $total_sum += $item['service_payment']['total_amount'];
                                                             @endphp
                                                         @endforeach
 
@@ -135,25 +137,16 @@
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
-
                                                             <td class="no-line text-center">
-                                                                <strong>Grand Paid Amount(Tshs)</strong>
+                                                                <strong>Grand Total(Tshs)</strong>
                                                             </td>
                                                             <td class="no-line text-center">
-                                                                <h4 class="m-0">{{ $total_paid }}</h4>
+                                                                <h4 class="m-0">{{ $total_sum }}</h4>
                                                             </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
-
-                                            @php
-                                                
-                                                $date = new DateTime('now', new DateTimeZone('Africa/Dar_es_Salaam'));
-                                                
-                                            @endphp
-
-                                            <i>Printing Time : {{ $date->format('F j, Y, g:i a') }}</i>
 
                                             <div class="d-print-none">
                                                 <div class="float-end">

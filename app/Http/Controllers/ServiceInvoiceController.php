@@ -209,27 +209,27 @@ class ServiceInvoiceController extends Controller
 
         // dd($allData);
 
-        return view('backend.pdf.daily_prescription_report_pdf', compact('allData', 'start_date', 'end_date'));
+        return view('backend.pdf.service_invoice_report_pdf', compact('allData', 'start_date', 'end_date'));
 
     } // End Method
 
-    public function PrescriptionPaymentReport()
+    public function ServiceInvoicePaymentReport()
     {
 
-        return view('backend.prescription.prescription_payment_report');
+        return view('backend.service_invoice.service_invoice_payment_report');
 
     }
 
-    public function PaymentOptionReport(Request $request)
+    public function ServicePaymentOptionReport(Request $request)
     {
 
         $payment_option = $request->payment_option;
 
-        $allData = Payment::where('payment_option', $request->payment_option)->get();
+        $allData = ServicePayment::where('payment_option', $request->payment_option)->get();
 
         // dd($allData);
 
-        return view('backend.pdf.payment_option_report_pdf', compact('allData', 'payment_option'));
+        return view('backend.pdf.service_payment_option_report_pdf', compact('allData', 'payment_option'));
 
     }
 

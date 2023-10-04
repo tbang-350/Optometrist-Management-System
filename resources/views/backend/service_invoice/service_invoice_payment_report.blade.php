@@ -23,7 +23,7 @@
                     <div class="card">
                         <div class="card-body">
 
-                           
+
 
 
 
@@ -32,7 +32,7 @@
                             <!-- Payment Option Wise -->
                             <div class="show_credit">
 
-                                <form action="{{ route('payment.option.report') }}" method="get" id="myForm">
+                                <form action="{{ route('service.payment.option.report') }}" method="get" id="myForm">
 
                                     <div class="row">
                                         <div class="col-sm-8 form-group">
@@ -40,7 +40,7 @@
 
                                             <select name="payment_option" class="form-select"
                                                 aria-label="Default select example">
-                                                
+
 
                                                 <option value="">Select Payment Option</option>
                                                 <option value="cash">Cash</option>

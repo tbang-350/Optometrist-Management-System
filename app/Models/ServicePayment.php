@@ -22,7 +22,7 @@ class ServicePayment extends Model
     public function service_invoice()
     {
 
-        return $this->belongsTo(ServiceInvoice::class, 'prescription_id', 'id');
+        return $this->belongsTo(ServiceInvoice::class, 'service_invoice_id', 'id');
 
     } // End Method
 }

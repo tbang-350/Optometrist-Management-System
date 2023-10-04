@@ -187,8 +187,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/print/service/invoice/{id}', 'PrintServiceInvoice')->name('print.service.invoice');
         Route::get('/daily/service/invoice/report', 'DailyServiceInvoiceReport')->name('daily.service.invoice.report');
         Route::get('/daily/service/invoice/pdf', 'DailyServiceInvoicePdf')->name('daily.service.invoice.pdf');
-        Route::get('prescription/payment/report', 'PrescriptionPaymentReport')->name('prescription.payment.report');
-        Route::get('/payment/option/report', 'PaymentOptionReport')->name('payment.option.report');
+        Route::get('/service/invoice/payment/report', 'ServiceInvoicePaymentReport')->name('service.invoice.payment.report');
+        Route::get('/service/payment/option/report', 'servicePaymentOptionReport')->name('service.payment.option.report');
 
     });
 

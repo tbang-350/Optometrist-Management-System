@@ -9,11 +9,11 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PrescriptionController;
-use App\Http\Controllers\ServiceInvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ServiceInvoiceController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
@@ -178,7 +178,6 @@ Route::middleware('auth')->group(function () {
 
     });
 
-
     //Service Invoice Routes
     Route::controller(ServiceInvoiceController::class)->group(function () {
         Route::get('/service/invoice/all', 'ServiceInvoiceAll')->name('service.invoice.all');
@@ -200,6 +199,10 @@ Route::controller(DefaultController::class)->group(function () {
     Route::get('/get-product', 'GetProduct')->name('get-product');
     Route::get('/check_product', 'GetStock')->name('check_product_stock');
     Route::get('/get-buying-unit-price', 'GetBuyingUnitPrice')->name('get_buying_unit_price');
+    Route::get('/autocomplete/suppliers', 'AutocompleteSuppliers')->name('autocomplete.suppliers');
+    Route::get('/autocomplete/categories', 'AutocompleteCategories')->name('autocomplete.categories');
+    Route::get('/autocomplete/products', 'AutocompleteProducts')->name('autocomplete.products');
+
 });
 
 Route::get('/dashboard', function () {

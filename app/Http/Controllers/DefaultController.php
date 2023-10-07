@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Purchase;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class DefaultController extends Controller
@@ -20,7 +22,7 @@ class DefaultController extends Controller
 
         return response()->json($allCatagory);
 
-    }// End Method
+    } // End Method
 
     public function GetProduct(Request $request)
     {
@@ -31,10 +33,10 @@ class DefaultController extends Controller
 
         return response()->json($allProduct);
 
-    }// End Method
+    } // End Method
 
-
-    public function GetStock(Request $request){
+    public function GetStock(Request $request)
+    {
 
         $product_id = $request->product_id;
 
@@ -42,11 +44,10 @@ class DefaultController extends Controller
 
         return response()->json($stock);
 
+    } // End Method
 
-    }// End Method
-
-
-    public function GetBuyingUnitPrice(Request $request) {
+    public function GetBuyingUnitPrice(Request $request)
+    {
         $product_id = $request->product_id;
 
         $latestPurchase = Purchase::where('product_id', $product_id)
@@ -63,5 +64,33 @@ class DefaultController extends Controller
         }
     }
 
+    public function AutocompleteSuppliers(Request $request)
+    {
+
+        $query = $request->input('term');
+
+        dd($query);
+
+        $suppliers = Supplier::where('name', 'LIKE', "%$query%")->pluck('name');
+
+        return response()->json($suppliers);
+    }
+
+    public function AutocompleteCategory(Request $request)
+    {
+        $query = $request->input('term');
+        $suppliers = Category::where('name', 'LIKE', "%$query%")->pluck('name');
+
+        return response()->json($suppliers);
+    }
+
+    public function AutocompleteProduct(Request $request)
+    {
+        $query = $request->input('term');
+
+        $suppliers = Product::where('name', 'LIKE', "%$query%")->pluck('name');
+
+        return response()->json($suppliers);
+    }
 
 }

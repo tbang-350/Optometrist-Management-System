@@ -22,11 +22,13 @@ return new class extends Migration
             $table->date('date');
             $table->string('description')->nullable();
             $table->double('buying_qty');
-            $table->double('unit_price');
-            $table->double('buying_price');
+            $table->double('buying_unit_price');
+            $table->double('selling_unit_price');
+            $table->double('total_buying_amount');
             $table->tinyInteger('status')->default('1')->comment('0 = pending , 1 = approved');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
+            $table->integer('location_id')->nullable();
             $table->timestamps();
         });
     }

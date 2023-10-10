@@ -31,39 +31,6 @@
                                 </div>
                                 <!-- end row -->
 
-
-                                <div class="row mb-3">
-                                    <label for="example-text-input" class="col-sm-2 col-form-label">Phone Number</label>
-                                    <div class="form-group col-sm-10">
-                                        <input name="mobile_no" class="form-control" value="{{ $supplier->mobile_no }}"
-                                            type="text">
-                                    </div>
-                                </div>
-                                <!-- end row -->
-
-                                <div class="row mb-3">
-                                    <label for="example-text-input" class="col-sm-2 col-form-label">Email</label>
-                                    <div class="form-group col-sm-10">
-                                        <input name="email" class="form-control" value="{{ $supplier->email }}"
-                                            type="Email">
-                                    </div>
-                                </div>
-                                <!-- end row -->
-
-
-
-                                <div class="row mb-3">
-                                    <label for="example-text-input" class="col-sm-2 col-form-label">Address</label>
-                                    <div class=" form-group col-sm-10">
-                                        <input name="address" class="form-control" value="{{ $supplier->address }}"
-                                            type="text">
-                                    </div>
-                                </div>
-                                <!-- end row -->
-
-
-
-
                                 <input type="submit" class="btn btn-info waves-effect waves-light" value="Update Supplier">
                             </form>
 

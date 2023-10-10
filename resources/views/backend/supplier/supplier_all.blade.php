@@ -39,12 +39,9 @@
                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th>Sl</th>
+                                        <th width="5%">Sl</th>
                                         <th>Name</th>
-                                        <th>Phone Number</th>
-                                        <th>Address</th>
-                                        <th>Email</th>
-                                        <th>Action</th>
+                                        <th width="20%">Action</th>
 
                                 </thead>
 
@@ -55,17 +52,14 @@
                                         <tr>
                                             <td> {{ $key + 1 }} </td>
                                             <td> {{ $item->name }} </td>
-                                            <td> {{ $item->mobile_no }} </td>
-                                            <td> {{ $item->address }} </td>
-                                            <td> {{ $item->email }} </td>
 
                                             <td>
-                                                <a href=" {{ route('supplier.edit' , $item->id) }} " class="btn btn-info sm" title="Edit Data"> 
-                                                    <i class="fas fa-edit"></i> 
+                                                <a href=" {{ route('supplier.edit' , $item->id) }} " class="btn btn-info sm" title="Edit Data">
+                                                    <i class="fas fa-edit"></i>
                                                 </a>
 
                                                 <a href=" {{ route('supplier.delete' , $item->id) }} " class="btn btn-danger sm" title="Delete Data"
-                                                    id="delete"> <i class="fas fa-trash-alt"></i> 
+                                                    id="delete"> <i class="fas fa-trash-alt"></i>
                                                 </a>
 
                                             </td>

@@ -33,9 +33,6 @@ class SupplierController extends Controller
 
         Supplier::insert([
             'name' => $request->name,
-            'mobile_no' => $request->mobile_no,
-            'address' => $request->address,
-            'email' => $request->email,
             'location_id' => Auth::user()->location_id,
             'created_by' => Auth::user()->id,
             'created_at' => Carbon::now(),
@@ -68,9 +65,6 @@ class SupplierController extends Controller
 
         Supplier::findOrFail($supplier_id)->update([
             'name' => $request->name,
-            'mobile_no' => $request->mobile_no,
-            'address' => $request->address,
-            'email' => $request->email,
             'updated_by' => Auth::user()->id,
             'updated_at' => Carbon::now(),
         ]);

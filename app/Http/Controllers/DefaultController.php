@@ -64,33 +64,45 @@ class DefaultController extends Controller
         }
     }
 
+    // public function AutocompleteSuppliers(Request $request)
+    // {
+
+    //     $query = $request->input('term');
+
+    //     dd($query);
+
+    //     $suppliers = Supplier::where('name', 'LIKE', "%$query%")->pluck('name');
+
+    //     return response()->json($suppliers);
+    // }
+
     public function AutocompleteSuppliers(Request $request)
     {
 
-        $query = $request->input('term');
+        $data = Supplier::select("name")
+            ->where('name', 'LIKE', '%' . $request->get('query') . '%')
+            ->get();
 
-        dd($query);
+        return response()->json($data);
 
-        $suppliers = Supplier::where('name', 'LIKE', "%$query%")->pluck('name');
-
-        return response()->json($suppliers);
     }
 
-    public function AutocompleteCategory(Request $request)
+    public function AutocompleteCategories(Request $request)
     {
-        $query = $request->input('term');
-        $suppliers = Category::where('name', 'LIKE', "%$query%")->pluck('name');
+        $data = Category::select("name")
+            ->where('name', 'LIKE', '%' . $request->get('query') . '%')
+            ->get();
 
-        return response()->json($suppliers);
+        return response()->json($data);
     }
 
-    public function AutocompleteProduct(Request $request)
+    public function AutocompleteProducts(Request $request)
     {
-        $query = $request->input('term');
+        $data = Product::select("name")
+            ->where('name', 'LIKE', '%' . $request->get('query') . '%')
+            ->get();
 
-        $suppliers = Product::where('name', 'LIKE', "%$query%")->pluck('name');
-
-        return response()->json($suppliers);
+        return response()->json($data);
     }
 
 }

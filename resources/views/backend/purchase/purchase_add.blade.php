@@ -1,6 +1,9 @@
 @extends('admin.admin_master')
 @section('admin')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+
+
 
     {{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -125,36 +128,46 @@
     </div>
 
 
-    <script>
-        $(document).ready(function() {
-            // Function to implement autocomplete
-            function implementAutocomplete(inputId, routeName) {
-                $(inputId).autocomplete({
-                    source: function(request, response) {
-                        $.ajax({
-                            url: routeName,
-                            dataType: 'json',
-                            data: {
-                                term: request.term
-                            },
-                            success: function(data) {
-                                response(data);
-                            }
-                        });
-                    },
-                    minLength: 2
+    <script type="text/javascript">
+        var path = "{{ route('autocomplete.suppliers') }}";
+
+        $('#supplier_name').typeahead({
+            source: function(query, process) {
+                return $.get(path, {
+                    query: query
+                }, function(data) {
+                    return process(data);
                 });
             }
-
-            // Implement autocomplete for supplier name
-            implementAutocomplete("#supplier_name", "{{ route('autocomplete.suppliers') }}");
-
-            // Implement autocomplete for category name
-            implementAutocomplete("#category_name", "{{ route('autocomplete.categories') }}");
-
-            // Implement autocomplete for product name
-            implementAutocomplete("#product_name", "{{ route('autocomplete.products') }}");
         });
     </script>
 
+    <script type="text/javascript">
+        var path2 = "{{ route('autocomplete.categories') }}";
+
+        $('#category_name').typeahead({
+            source: function(query, process) {
+                return $.get(path2, {
+                    query: query
+                }, function(data) {
+                    return process(data);
+                });
+            }
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        var path3 = "{{ route('autocomplete.products') }}";
+
+        $('#product_name').typeahead({
+            source: function(query, process) {
+                return $.get(path3, {
+                    query: query
+                }, function(data) {
+                    return process(data);
+                });
+            }
+        });
+    </script>
 @endsection

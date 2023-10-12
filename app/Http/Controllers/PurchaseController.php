@@ -8,9 +8,9 @@ use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Supplier;
 use App\Models\Unit;
-use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class PurchaseController extends Controller
 {
@@ -41,57 +41,59 @@ class PurchaseController extends Controller
 
     public function PurchaseStore(Request $request)
     {
+        $supplier = Supplier::firstOrCreate(
+            ['name' => $request->supplier_name, 'location_id' => Auth::user()->location_id],
+            ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
+        );
 
-        if ($request->category_id === null) {
+        $category = Category::firstOrCreate(
+            ['name' => $request->category_name, 'location_id' => Auth::user()->location_id],
+            ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
+        );
 
-            $notification = array(
-                'message' => 'Sorry , no item selected',
-                'alert-type' => 'warning',
-            );
+        $product = Product::firstOrCreate(
+            ['name' => $request->product_name, 'supplier_id' => $supplier->id, 'category_id' => $category->id, 'location_id' => Auth::user()->location_id],
+            ['reorder_level' => $request->reorder_level, 'created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
+        );
 
-            return redirect()->back()->with($notification);
+        // Update the quantity of the product
+        $purchase_qty = ((float) $request->buying_qty) + ((float) $product->quantity);
+        $product->quantity = $purchase_qty;
+        $product->save();
 
-        } else {
 
-            $count_category = count($request->category_id);
+        $purchase = new Purchase();
+        $purchase->date = date('Y-m-d', strtotime($request->date));
+        $purchase->supplier_id = $supplier->id;
+        $purchase->category_id = $category->id;
+        $purchase->product_id = $product->id;
+        $purchase->purchase_no = $request->purchase_no;
 
-            for ($i = 0; $i < $count_category; $i++) {
-                $purchase = new Purchase();
-                $purchase->date = date('Y-m-d', strtotime($request->date[$i]));
-                $purchase->purchase_no = $request->purchase_no[$i];
-                $purchase->supplier_id = $request->supplier_id[$i];
-                $purchase->purchase_no = $request->purchase_no[$i];
-                $purchase->category_id = $request->category_id[$i];
-                $purchase->product_id = $request->product_id[$i];
+        $purchase->buying_qty = $request->buying_qty;
+        $purchase->buying_unit_price = $request->buying_unit_price;
+        $purchase->selling_unit_price = $request->selling_unit_price;
 
-                $purchase->buying_qty = $request->buying_qty[$i];
-                $purchase->unit_price = $request->unit_price[$i];
-                $purchase->buying_price = $request->buying_price[$i];
-                $purchase->description = $request->description[$i];
+        $total = $request->buying_qty * $request->buying_unit_price;
 
-                $purchase->created_by = Auth::user()->id;
-                $purchase->created_at = Carbon::now();
-                $purchase->status = '1';
+        $purchase->total_buying_amount = $total;
 
-                $purchase->save();
+        $purchase->location_id = Auth::user()->location_id;
+        $purchase->created_by = Auth::user()->id;
+        $purchase->created_at = Carbon::now();
 
-                $product = Product::findOrFail($request->product_id[$i]);
-                $purchase_qty = ((float) $request->buying_qty[$i]) + ((float) $product->quantity);
-                $product->quantity = $purchase_qty;
-                $product->save();
-
-            }
-
-        }
+        $purchase->save();
 
         $notification = array(
-            'message' => 'Data Added Successfully',
+            'message' => 'Purchase Added successfully',
             'alert-type' => 'success',
         );
 
         return redirect()->route('purchase.all')->with($notification);
 
-    } // End Method
+        // dd([$purchase,$supplier,$category,$product]);
+    }
+
+    // End Method
 
     public function PurchaseDelete($id)
     {

@@ -22,7 +22,9 @@
 
                             <h4 class="card-title">Add Purchase </h4><br><br>
 
-                            <form action="#" method="get">
+                            <form action="{{ route('purchase.store') }}" method="post" id="myForm" >
+
+                                @csrf
 
                                 <div class="row">
 
@@ -69,7 +71,7 @@
 
                                         <div class=" form-group col-md-6">
                                             <label for="example-text-input" class="form-label">Units</label>
-                                            <input name="name" class="form-control" type="number">
+                                            <input name="buying_qty" class="form-control" type="number">
                                         </div>
 
                                     </div>
@@ -79,12 +81,12 @@
                                     <div class="row mb-3 ">
                                         <div class=" form-group col-md-6">
                                             <label for="example-text-input" class="form-label">Buying Unit Price</label>
-                                            <input name="name" class="form-control" type="text">
+                                            <input name="buying_unit_price" class="form-control" type="number">
                                         </div>
 
                                         <div class=" form-group col-md-6">
                                             <label for="example-text-input" class="form-label">Selling Unit Price</label>
-                                            <input name="name" class="form-control" type="number">
+                                            <input name="selling_unit_price" class="form-control" type="number">
                                         </div>
 
                                     </div>
@@ -94,7 +96,7 @@
                                     <div class="row mb-3 ">
                                         <div class=" form-group col-md-4">
                                             <label for="example-text-input" class="form-label">Reorder Level</label>
-                                            <input name="name" class="form-control" type="text">
+                                            <input name="reorder_level" class="form-control" type="text">
                                         </div>
 
                                     </div>
@@ -170,4 +172,75 @@
             }
         });
     </script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#myForm').validate({
+            rules: {
+                date: {
+                    required: true,
+                },
+                supplier_name: {
+                    required: true,
+                },
+                category_name: {
+                    required: true,
+                },
+                product_name: {
+                    required: true,
+                },
+                buying_qty: {
+                    required: true,
+                },
+                buying_unit_price: {
+                    required: true,
+                },
+                selling_unit_price: {
+                    required: true,
+                },
+                reorder_level: {
+                    required: true,
+                },
+            },
+            messages: {
+                date: {
+                    required: 'Date is required',
+                },
+                supplier_name: {
+                    required: 'Supplier name is required',
+                },
+                category_name: {
+                    required: 'Category name is required',
+                },
+                product_name: {
+                    required: 'Product name is required',
+                },
+                buying_qty: {
+                    required: 'Units are required',
+                },
+                buying_unit_price: {
+                    required: 'Buying unit price is required',
+                },
+                selling_unit_price: {
+                    required: 'Selling unit price is required',
+                },
+                reorder_level: {
+                    required: 'Reorder Level is required',
+                },
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            },
+        });
+    });
+</script>
+
 @endsection

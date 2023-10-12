@@ -33,24 +33,20 @@
 
 
                                 <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label">Supplier Name</label>
-                                    <div class="col-sm-10">
-                                        <select name="supplier_id" class="form-select" aria-label="Default select example">
-                                            <option selected="">Open this select menu</option>
-
-                                            @foreach ($supplier as $supp)
-                                                <option value="{{ $supp->id }}"
-                                                    {{ $supp->id == $product->supplier_id ? 'selected' : '' }}>
-                                                    {{ $supp->name }}
-                                                </option>
-                                            @endforeach
-
-                                        </select>
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Supplier Name</label>
+                                    <div class=" form-group col-sm-10">
+                                        <input name="supplier_name" class="form-control" type="text" value="{{ $product->supplier_name }}">
                                     </div>
                                 </div>
                                 <!-- end row -->
 
 
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Quantity</label>
+                                    <div class=" form-group col-sm-10">
+                                        <input name="quantity" class="form-control" type="number" value="{{ $product->quantity }}" >
+                                    </div>
+                                </div>
 
 
 

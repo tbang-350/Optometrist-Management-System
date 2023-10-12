@@ -108,7 +108,7 @@
                                     <div class="row mb-3 ">
                                         <div class=" form-group col-md-2">
                                             <input type="submit" class="btn btn-info waves-effect waves-light"
-                                                value="Add Prescription">
+                                                value="Add Purchase">
                                         </div>
 
                                     </div>

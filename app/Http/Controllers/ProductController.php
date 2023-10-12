@@ -37,7 +37,7 @@ class ProductController extends Controller
         Product::insert([
 
             'name' => $request->name,
-            'supplier_id' => $request->supplier_id,
+            'supplier_name' => $request->supplier_name,
             'category_id' => $request->category_id,
             'quantity' => '0',
             'created_by' => Auth::user()->id,
@@ -74,9 +74,10 @@ class ProductController extends Controller
         Product::findOrFail($product_id)->update([
 
             'name' => $request->name,
-            'supplier_id' => $request->supplier_id,
+            'supplier_name' => $request->supplier_name,
             'category_id' => $request->category_id,
-            'quantity' => '0',
+            'quantity' => $request->quantity,
+            'reorder_level' => $request->reorder_level,
             'updated_by' => Auth::user()->id,
             'updated_at' => Carbon::now(),
 

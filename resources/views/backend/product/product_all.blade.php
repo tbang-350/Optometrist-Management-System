@@ -21,12 +21,12 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <a href=" {{ route('product.add') }} " class="btn btn-dark btn-rounded waves-effect waves-light"
+                            {{-- <a href=" {{ route('product.add') }} " class="btn btn-dark btn-rounded waves-effect waves-light"
                                 style="float:right">
                                 <i class="fas fa-plus-circle">
                                     Add Product
                                 </i>
-                            </a>
+                            </a> --}}
 
                             <br>
                             <br>
@@ -56,7 +56,7 @@
                                         <tr>
                                             <td> {{ $key + 1 }} </td>
                                             <td> {{ $item->name }} </td>
-                                            <td> {{ $item['supplier']['name'] }} </td>
+                                            <td> {{ $item->supplier_name }} </td>
                                             <td> {{ $item['category']['name'] }} </td>
                                             <td> {{ $item->quantity }} </td>
 

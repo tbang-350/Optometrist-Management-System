@@ -41,10 +41,10 @@ class PurchaseController extends Controller
 
     public function PurchaseStore(Request $request)
     {
-        $supplier = Supplier::firstOrCreate(
-            ['name' => $request->supplier_name, 'location_id' => Auth::user()->location_id],
-            ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
-        );
+        // $supplier = Supplier::firstOrCreate(
+        //     ['name' => $request->supplier_name, 'location_id' => Auth::user()->location_id],
+        //     ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
+        // );
 
         $category = Category::firstOrCreate(
             ['name' => $request->category_name, 'location_id' => Auth::user()->location_id],
@@ -52,7 +52,7 @@ class PurchaseController extends Controller
         );
 
         $product = Product::firstOrCreate(
-            ['name' => $request->product_name, 'supplier_id' => $supplier->id, 'category_id' => $category->id, 'location_id' => Auth::user()->location_id],
+            ['name' => $request->product_name, 'supplier_name' => $request->supplier_name, 'category_id' => $category->id, 'location_id' => Auth::user()->location_id],
             ['reorder_level' => $request->reorder_level, 'created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
         );
 
@@ -64,7 +64,7 @@ class PurchaseController extends Controller
 
         $purchase = new Purchase();
         $purchase->date = date('Y-m-d', strtotime($request->date));
-        $purchase->supplier_id = $supplier->id;
+        $purchase->supplier_name = $request->supplier_name;
         $purchase->category_id = $category->id;
         $purchase->product_id = $product->id;
         $purchase->purchase_no = $request->purchase_no;

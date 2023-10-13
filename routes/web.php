@@ -199,6 +199,7 @@ Route::controller(DefaultController::class)->group(function () {
     Route::get('/get-product', 'GetProduct')->name('get-product');
     Route::get('/check_product', 'GetStock')->name('check_product_stock');
     Route::get('/get-buying-unit-price', 'GetBuyingUnitPrice')->name('get_buying_unit_price');
+    Route::get('/get-service-price', 'GetServicePrice')->name('get_service_price');
     Route::get('/autocomplete/suppliers', 'AutocompleteSuppliers')->name('autocomplete.suppliers');
     Route::get('/autocomplete/categories', 'AutocompleteCategories')->name('autocomplete.categories');
     Route::get('/autocomplete/products', 'AutocompleteProducts')->name('autocomplete.products');

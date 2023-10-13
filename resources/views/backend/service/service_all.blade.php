@@ -21,7 +21,7 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <a href="{{route('service.add')}}" class="btn btn-dark btn-rounded waves-effect waves-light"
+                            <a href="{{ route('service.add') }}" class="btn btn-dark btn-rounded waves-effect waves-light"
                                 style="float:right">
                                 <i class="fas fa-plus-circle">
                                     Add Service
@@ -41,7 +41,8 @@
                                     <tr>
                                         <th width="5%">Sl</th>
                                         <th>Name</th>
-                                        <th width="20%">Action</th>
+                                        <th>Price</th>
+                                        <th width="10%">Action</th>
 
                                 </thead>
 
@@ -52,6 +53,7 @@
                                         <tr>
                                             <td> {{ $key + 1 }} </td>
                                             <td> {{ $item->name }} </td>
+                                            <td> {{ $item->service_price }} </td>
 
                                             <td>
                                                 <a href=" {{ route('service.edit', $item->id) }} " class="btn btn-info sm"
@@ -59,8 +61,9 @@
                                                     <i class="fas fa-edit"></i>
                                                 </a>
 
-                                                <a href=" {{ route('service.delete', $item->id) }} " class="btn btn-danger sm"
-                                                    title="Delete Data" id="delete"> <i class="fas fa-trash-alt"></i>
+                                                <a href=" {{ route('service.delete', $item->id) }} "
+                                                    class="btn btn-danger sm" title="Delete Data" id="delete"> <i
+                                                        class="fas fa-trash-alt"></i>
                                                 </a>
 
                                             </td>

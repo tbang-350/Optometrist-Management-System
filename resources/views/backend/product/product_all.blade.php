@@ -45,6 +45,7 @@
                                         <th>Supplier name</th>
                                         <th>Category</th>
                                         <th>Stock</th>
+                                        <th>Reorder Level</th>
                                         <th>Action</th>
 
                                 </thead>
@@ -59,6 +60,7 @@
                                             <td> {{ $item->supplier_name }} </td>
                                             <td> {{ $item['category']['name'] }} </td>
                                             <td> {{ $item->quantity }} </td>
+                                            <td>{{ $item->reorder_level }}</td>
 
                                             <td>
                                                 <a href=" {{ route('product.edit', $item->id) }} " class="btn btn-info sm"

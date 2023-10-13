@@ -22,9 +22,8 @@
                                         <label for="example-text-input" class="form-label">Invoice No</label>
                                         <div class=" form-group col-sm-10">
                                             <input name="service_invoice_no" class="form-control example-date-input"
-                                                   type="text"
-                                                   id="service_invoice_no" value="{{ $service_invoice_no }}" readonly
-                                                   style="background-color: #ddd">
+                                                type="text" id="service_invoice_no" value="{{ $service_invoice_no }}"
+                                                readonly style="background-color: #ddd">
                                         </div>
                                     </div>
                                 </div>
@@ -35,7 +34,7 @@
                                         <label for="example-text-input" class="form-label">Date</label>
                                         <div class=" form-group col-sm-10">
                                             <input name="date" class="form-control example-date-input" type="date"
-                                                   id="date" value={{ $date }}>
+                                                id="date" value={{ $date }}>
                                         </div>
                                     </div>
                                 </div>
@@ -46,7 +45,7 @@
                                         <label for="example-text-input" class="form-label">Service</label>
                                         <div class=" form-group col-sm-10">
                                             <select name="service_id" id="service_id" class="form-select select2"
-                                                    aria-label="Default select example">
+                                                aria-label="Default select example">
                                                 <option selected="">Open this select menu</option>
 
                                                 @foreach ($service as $ser)
@@ -66,7 +65,7 @@
 
 
                                         <i class="btn btn-secondary btn-rounded waves-effect waves-light fas fa-plus-circle addeventmore"
-                                           id="addeventmore">
+                                            id="addeventmore">
                                             Add More
                                         </i>
                                     </div>
@@ -82,7 +81,7 @@
 
                         <div class="card-body">
 
-                            <form action="{{route('service.invoice.store')}}" method="post" id="myForm">
+                            <form action="{{ route('service.invoice.store') }}" method="post" id="myForm">
 
                                 @csrf
 
@@ -90,12 +89,12 @@
 
 
                                     <thead>
-                                    <tr>
-                                        <th>Product Name</th>
-                                        <th width="40%">Service Price</th>
-                                        <th width="30%">Total Price</th>
-                                        <th width="10%">Action</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <th width="40%">Service Price</th>
+                                            <th width="30%">Total Price</th>
+                                            <th width="10%">Action</th>
+                                        </tr>
                                     </thead>
 
                                     <tbody id="addRow" class="addRow">
@@ -104,23 +103,23 @@
 
                                     <tbody>
 
-                                    <tr>
-                                        <td colspan="2">Discount</td>
-                                        <td>
-                                            <input type="text" name="discount_amount" id="discount_amount"
-                                                   class="form-control estimated_amount" placeholder="Discount Amount">
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td colspan="2">Discount</td>
+                                            <td>
+                                                <input type="text" name="discount_amount" id="discount_amount"
+                                                    class="form-control estimated_amount" placeholder="Discount Amount">
+                                            </td>
+                                        </tr>
 
-                                    <tr>
-                                        <td colspan="2">Grand Total</td>
-                                        <td>
-                                            <input type="text" name="estimated_amount" value="0"
-                                                   id="estimated_amount" class="form-control estimated_amount" readonly
-                                                   style="background-color: #ddd">
-                                        </td>
-                                        <td></td>
-                                    </tr>
+                                        <tr>
+                                            <td colspan="2">Grand Total</td>
+                                            <td>
+                                                <input type="text" name="estimated_amount" value="0"
+                                                    id="estimated_amount" class="form-control estimated_amount" readonly
+                                                    style="background-color: #ddd">
+                                            </td>
+                                            <td></td>
+                                        </tr>
                                     </tbody>
 
                                 </table>
@@ -130,8 +129,7 @@
 
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        <textarea name="description" id="description" class="form-control"
-                                                  placeholder="Write description here..."></textarea>
+                                        <textarea name="description" id="description" class="form-control" placeholder="Write description here..."></textarea>
                                     </div>
                                 </div>
 
@@ -166,8 +164,8 @@
                                             <br>
 
                                             <input type="text" name="paid_amount" id="paid_amount"
-                                                   class="form-control paid_amount" placeholder="Enter Paid Amount..."
-                                                   style="display: none">
+                                                class="form-control paid_amount" placeholder="Enter Paid Amount..."
+                                                style="display: none">
 
 
                                         </div>
@@ -227,21 +225,21 @@
 
                                         <div class="form-group col-md-4">
                                             <input type="text" name="name" id="name" class="form-control"
-                                                   placeholder="Enter Customer Name">
+                                                placeholder="Enter Customer Name">
                                         </div>
 
 
 
                                         <div class="form-group col-md-4">
                                             <input type="address" name="address" id="address" class="form-control"
-                                                   placeholder="Enter Customer address">
+                                                placeholder="Enter Customer address">
                                         </div>
 
 
 
                                         <div class="form-group col-md-4">
                                             <input type="age" name="age" id="age" class="form-control"
-                                                   placeholder="Enter Customer Age">
+                                                placeholder="Enter Customer Age">
                                         </div>
 
 
@@ -255,7 +253,8 @@
 
                                         <div class="form-group col-md-4 ">
 
-                                            <select name="sex" class="form-select" aria-label="Default select example">
+                                            <select name="sex" class="form-select"
+                                                aria-label="Default select example">
                                                 <option value="" selected="">Select gender</option>
                                                 <option value="male">Male</option>
                                                 <option value="female">Female</option>
@@ -266,8 +265,8 @@
 
 
                                         <div class="form-group col-md-3">
-                                            <input type="text" name="phonenumber" id="phonenumber" class="form-control"
-                                                   placeholder="Enter Customer Phonenumber">
+                                            <input type="text" name="phonenumber" id="phonenumber"
+                                                class="form-control" placeholder="Enter Customer Phonenumber">
                                         </div>
 
                                     </div>
@@ -317,7 +316,7 @@
 
             <td>
                 <input type="number" class="form-control service_price text-right" name="service_price[]"
-                       id="service_price" value="">
+                       id="service_price" value="@{{service_price}}">
             </td>
 
 
@@ -341,8 +340,8 @@
 
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#payment_option').change(function () {
+        $(document).ready(function() {
+            $('#payment_option').change(function() {
                 var selectedOption = $(this).val();
                 var paidStatusField = $('#paid_status');
 
@@ -357,8 +356,8 @@
 
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $(document).on("click", "#storeButton", function () {
+        $(document).ready(function() {
+            $(document).on("click", "#storeButton", function() {
                 var service_price = $('#service_price').val();
                 var service_selling_price = $('#service_selling_price').val();
                 var customer_id = $('#customer_id').val();
@@ -412,8 +411,8 @@
 
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $(document).on("click", ".addeventmore", function () {
+        $(document).ready(function() {
+            $(document).on("click", ".addeventmore", function() {
 
                 var date = $('#date').val();
                 var service_invoice_no = $('#service_invoice_no').val();
@@ -461,13 +460,13 @@
 
             });
 
-            $(document).on("click", ".removeeventmore", function (event) {
+            $(document).on("click", ".removeeventmore", function(event) {
                 $(this).closest(".delete_add_more_item").remove();
                 totalAmountPrice();
             })
 
             // dynamically change selling_price on change of selling_qty and unit_price
-            $(document).on('keyup click', '.service_price,.service_selling_price', function () {
+            $(document).on('keyup click', '.service_price,.service_selling_price', function() {
                 var service_price = $(this).closest("tr").find("input.service_price").val();
                 var total = service_price;
                 $(this).closest("tr").find("input.service_selling_price").val(total);
@@ -475,7 +474,7 @@
             });
 
 
-            $(document).on('keyup click', '#discount_amount', function () {
+            $(document).on('keyup click', '#discount_amount', function() {
                 totalAmountPrice();
             });
 
@@ -505,7 +504,7 @@
             function totalAmountPrice() {
                 var sum = 0;
 
-                $(".service_selling_price").each(function () {
+                $(".service_selling_price").each(function() {
                     var value = $(this).val();
                     if (!isNaN(value) && value.length != 0) {
                         sum += parseFloat(value);
@@ -525,15 +524,15 @@
     </script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             // Add an event listener to the form submission
-            $('#myForm').submit(function (event) {
+            $('#myForm').submit(function(event) {
                 // Prevent the form from submitting
                 event.preventDefault();
 
                 // Check if any field is empty
                 var inputs = $(this).find('input[required]');
-                var emptyFields = inputs.filter(function () {
+                var emptyFields = inputs.filter(function() {
                     return $(this).val().trim() === '';
                 });
 
@@ -550,9 +549,30 @@
     </script>
 
 
+    <script type="text/javascript">
+        $(function() {
+            $(document).on('change', '#service_id', function() {
+                var service_id = $(this).val();
+                $.ajax({
+                    url: "{{ route('get_service_price') }}",
+                    type: "GET",
+                    data: {
+                        service_id: service_id
+                    },
+                    success: function(data) {
+                        console.log(data)
+
+                        $('#service_price').val(data);
+                    }
+                });
+            });
+        });
+    </script>
+
+
 
     <script type="text/javascript">
-        $(document).on('change', '#paid_status', function () {
+        $(document).on('change', '#paid_status', function() {
             var paid_status = $(this).val();
             if (paid_status == 'partial_paid') {
                 $('.paid_amount').show();
@@ -561,7 +581,7 @@
             }
         });
 
-        $(document).on('change', '#customer_id', function () {
+        $(document).on('change', '#customer_id', function() {
             var customer_id = $(this).val();
             if (customer_id == '0') {
                 $('.new_customer').show();
@@ -585,7 +605,7 @@
         //     });
         // });
 
-        $(document).on('change', '#payment_option', function () {
+        $(document).on('change', '#payment_option', function() {
             var payment_option = $(this).val();
             if (payment_option !== '') {
                 $('.paid_status').show();
@@ -596,7 +616,7 @@
     </script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#myForm').validate({
                 rules: {
                     paid_amount: {
@@ -611,14 +631,14 @@
                     },
                 },
                 errorElement: 'span',
-                errorPlacement: function (error, element) {
+                errorPlacement: function(error, element) {
                     error.addClass('invalid-feedback');
                     element.closest('.form-group').append(error);
                 },
-                highlight: function (element, errorClass, validClass) {
+                highlight: function(element, errorClass, validClass) {
                     $(element).addClass('is-invalid');
                 },
-                unhighlight: function (element, errorClass, validClass) {
+                unhighlight: function(element, errorClass, validClass) {
                     $(element).removeClass('is-invalid');
                 },
             });

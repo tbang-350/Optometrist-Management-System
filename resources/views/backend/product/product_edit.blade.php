@@ -48,7 +48,12 @@
                                     </div>
                                 </div>
 
-
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Reorder Level</label>
+                                    <div class=" form-group col-sm-10">
+                                        <input name="reorder_level" class="form-control" type="number" value="{{ $product->reorder_level }}" >
+                                    </div>
+                                </div>
 
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">Category</label>

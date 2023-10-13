@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Purchase;
+use App\Models\Service;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
@@ -24,6 +25,7 @@ class DefaultController extends Controller
 
     } // End Method
 
+
     public function GetProduct(Request $request)
     {
 
@@ -34,6 +36,7 @@ class DefaultController extends Controller
         return response()->json($allProduct);
 
     } // End Method
+
 
     public function GetStock(Request $request)
     {
@@ -46,6 +49,7 @@ class DefaultController extends Controller
 
     } // End Method
 
+
     public function GetBuyingUnitPrice(Request $request)
     {
         $product_id = $request->product_id;
@@ -55,37 +59,49 @@ class DefaultController extends Controller
             ->first();
 
         if ($latestPurchase) {
-            $unit_price = $latestPurchase->unit_price;
+            $unit_price = $latestPurchase->buying_unit_price;
             return response()->json($unit_price);
         } else {
             // Handle the case where there are no purchases for the specified product.
             // You can return a default value or an error response.
             return response()->json(['error' => 'No purchase found for this product.']);
         }
-    }
+    } // End Method
 
-    // public function AutocompleteSuppliers(Request $request)
-    // {
 
-    //     $query = $request->input('term');
+    public function GetServicePrice(Request $request)
+    {
+        $service_id = $request->service_id;
 
-    //     dd($query);
+        $latestService = Service::where('id', $service_id)
+            ->orderBy('created_at', 'desc')
+            ->first();
 
-    //     $suppliers = Supplier::where('name', 'LIKE', "%$query%")->pluck('name');
+        // dd($latestService->service_price);
 
-    //     return response()->json($suppliers);
-    // }
+        if ($latestService) {
+            $service_price = $latestService->service_price;
+            return response()->json($service_price);
+        } else {
+            // Handle the case where there are no price for the specified service.
+            // You can return a default value or an error response.
+            return response()->json(['error' => 'No price found for this service.']);
+        }
+    } // End Method
+
+
 
     public function AutocompleteSuppliers(Request $request)
     {
 
-        $data = Supplier::select("name")
-            ->where('name', 'LIKE', '%' . $request->get('query') . '%')
+        $data = Product::select("supplier_name")
+            ->where('supplier_name', 'LIKE', '%' . $request->get('query') . '%')
             ->get();
 
         return response()->json($data);
 
-    }
+    } // End Method
+
 
     public function AutocompleteCategories(Request $request)
     {
@@ -94,7 +110,8 @@ class DefaultController extends Controller
             ->get();
 
         return response()->json($data);
-    }
+    } // End Method
+
 
     public function AutocompleteProducts(Request $request)
     {
@@ -103,6 +120,6 @@ class DefaultController extends Controller
             ->get();
 
         return response()->json($data);
-    }
+    } // End Method
 
 }

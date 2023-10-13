@@ -22,7 +22,7 @@
 
                             <h4 class="card-title">Add Purchase </h4><br><br>
 
-                            <form action="{{ route('purchase.store') }}" method="post" id="myForm" >
+                            <form action="{{ route('purchase.store') }}" method="post" id="myForm">
 
                                 @csrf
 
@@ -138,7 +138,12 @@
                 return $.get(path, {
                     query: query
                 }, function(data) {
-                    return process(data);
+                    if (data.length > 0) {
+                        var supplierNames = data.map(function(item) {
+                            return item.supplier_name;
+                        });
+                        return process(supplierNames);
+                    }
                 });
             }
         });
@@ -173,74 +178,73 @@
         });
     </script>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#myForm').validate({
-            rules: {
-                date: {
-                    required: true,
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myForm').validate({
+                rules: {
+                    date: {
+                        required: true,
+                    },
+                    supplier_name: {
+                        required: true,
+                    },
+                    category_name: {
+                        required: true,
+                    },
+                    product_name: {
+                        required: true,
+                    },
+                    buying_qty: {
+                        required: true,
+                    },
+                    buying_unit_price: {
+                        required: true,
+                    },
+                    selling_unit_price: {
+                        required: true,
+                    },
+                    reorder_level: {
+                        required: true,
+                    },
                 },
-                supplier_name: {
-                    required: true,
+                messages: {
+                    date: {
+                        required: 'Date is required',
+                    },
+                    supplier_name: {
+                        required: 'Supplier name is required',
+                    },
+                    category_name: {
+                        required: 'Category name is required',
+                    },
+                    product_name: {
+                        required: 'Product name is required',
+                    },
+                    buying_qty: {
+                        required: 'Units are required',
+                    },
+                    buying_unit_price: {
+                        required: 'Buying unit price is required',
+                    },
+                    selling_unit_price: {
+                        required: 'Selling unit price is required',
+                    },
+                    reorder_level: {
+                        required: 'Reorder Level is required',
+                    },
                 },
-                category_name: {
-                    required: true,
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
                 },
-                product_name: {
-                    required: true,
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
                 },
-                buying_qty: {
-                    required: true,
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
                 },
-                buying_unit_price: {
-                    required: true,
-                },
-                selling_unit_price: {
-                    required: true,
-                },
-                reorder_level: {
-                    required: true,
-                },
-            },
-            messages: {
-                date: {
-                    required: 'Date is required',
-                },
-                supplier_name: {
-                    required: 'Supplier name is required',
-                },
-                category_name: {
-                    required: 'Category name is required',
-                },
-                product_name: {
-                    required: 'Product name is required',
-                },
-                buying_qty: {
-                    required: 'Units are required',
-                },
-                buying_unit_price: {
-                    required: 'Buying unit price is required',
-                },
-                selling_unit_price: {
-                    required: 'Selling unit price is required',
-                },
-                reorder_level: {
-                    required: 'Reorder Level is required',
-                },
-            },
-            errorElement: 'span',
-            errorPlacement: function(error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
-            },
+            });
         });
-    });
-</script>
-
+    </script>
 @endsection

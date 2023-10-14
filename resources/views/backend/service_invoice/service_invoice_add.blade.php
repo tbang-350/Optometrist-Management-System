@@ -102,7 +102,7 @@
                                         <tr>
                                             <th>Product Name</th>
                                             <th width="40%">Service Price</th>
-                                            <th width="30%">Total Price</th>
+                                            {{-- <th width="30%">Total Price</th> --}}
                                             <th width="10%">Action</th>
                                         </tr>
                                     </thead>
@@ -114,7 +114,7 @@
                                     <tbody>
 
                                         <tr>
-                                            <td colspan="2">Discount</td>
+                                            <td colspan="1">Discount</td>
                                             <td>
                                                 <input type="text" name="discount_amount" id="discount_amount"
                                                     class="form-control estimated_amount" placeholder="Discount Amount">
@@ -122,7 +122,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td colspan="2">Grand Total</td>
+                                            <td colspan="1">Grand Total</td>
                                             <td>
                                                 <input type="text" name="estimated_amount" value="0"
                                                     id="estimated_amount" class="form-control estimated_amount" readonly
@@ -305,12 +305,15 @@
 
 
 
-            <td>
+            <!-- <td>
                 <input type="number" class="form-control service_price text-right" name="service_price[]" value="@{{service_price}}" readonly>
-            </td>
+            </td> -->
+
+
             <td>
                 <input type="number" class="form-control service_selling_price text-right" name="service_selling_price[]" value="@{{service_price}}" readonly>
             </td>
+
 
             <!--
              <td>

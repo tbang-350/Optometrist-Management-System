@@ -57,6 +57,16 @@
                                     </div>
                                 </div>
 
+                                <div style="display: none">
+                                    <div>
+                                        <label for="example-text-input" class="form-label">Service Price</label>
+                                        <div class=" form-group col-sm-10">
+                                            <input name="service_price" class="form-control example-date-input"
+                                                type="text" id="service_price" readonly style="background-color: #ddd">
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <div class="col-md-2">
                                     <div class="md-3">
@@ -173,28 +183,6 @@
                                         <br>
 
                                     </div>
-
-
-                                    {{-- <div class="form-group col-md-3" style="display: none">
-                                        <label for="payment status">Payment Status</label>
-                                        <select name="paid_status" id="paid_status" class="form-select">
-
-                                            <option value="">Select Payment Status</option>
-                                            <option value="full_paid">Fully Paid</option>
-                                            <option value="full_due">Full Due</option>
-                                            <option value="partial_paid">Partially Paid</option>
-
-                                        </select>
-
-                                        <br>
-
-                                        <input type="text" name="paid_amount" id="paid_amount"
-                                            class="form-control paid_amount" placeholder="Enter Paid Amount..."
-                                            style="display: none">
-
-                                        <br>
-
-                                    </div> --}}
 
 
                                     <div class="form-group col-md-9">
@@ -314,15 +302,14 @@
             </td>
 
 
+
+
+
             <td>
-                <input type="number" class="form-control service_price text-right" name="service_price[]"
-                       id="service_price" value="@{{service_price}}">
+                <input type="number" class="form-control service_price text-right" name="service_price[]" value="@{{service_price}}" readonly>
             </td>
-
-
             <td>
-                <input type="number" class="form-control service_selling_price text-right" id="service_selling_price"
-                       name="service_selling_price[]" value="0" readonly>
+                <input type="number" class="form-control service_selling_price text-right" name="service_selling_price[]" value="@{{service_price}}" readonly>
             </td>
 
             <!--
@@ -418,6 +405,7 @@
                 var service_invoice_no = $('#service_invoice_no').val();
                 var service_id = $('#service_id').val();
                 var service_name = $('#service_id').find('option:selected').text();
+                var service_price = $('#service_price').val();
 
                 if (date == '') {
                     $.notify("Date not set", {
@@ -453,10 +441,13 @@
                     service_invoice_no: service_invoice_no,
                     service_id: service_id,
                     service_name: service_name,
+                    service_price: service_price
                 };
 
                 var html = template(data);
                 $("#addRow").append(html);
+
+                totalAmountPrice();
 
             });
 
@@ -474,31 +465,11 @@
             });
 
 
+
             $(document).on('keyup click', '#discount_amount', function() {
                 totalAmountPrice();
             });
 
-            //Written by AI , Chatgpt to be specific
-            // $(document).on('keyup click', '.selling_qty,.unit_price', function() {
-            //     var row = $(this).closest('tr');
-            //     var selling_qty = row.find('.selling_qty').val();
-            //     var unit_price = row.find('.unit_price').val();
-            //     var selling_price = (selling_qty * unit_price).toFixed(2);
-            //     row.find('.selling_price').val(selling_price);
-            // });
-
-            // $(document).on('keyup click', '.unit_price, #buying_unit_price', function() {
-            //     var unit_price = parseFloat($(this).closest("tr").find("input.unit_price").val());
-            //     var buying_unit_price = parseFloat($("#buying_unit_price").val());
-            //     var diff = 0;
-            //     if (unit_price > buying_unit_price) {
-            //         diff = unit_price - buying_unit_price;
-            //         $('#profit_loss').val(diff.toFixed(2));
-            //     } else {
-            //         diff = buying_unit_price - unit_price;
-            //         $('#profit_loss').val('-' + diff.toFixed(2));
-            //     }
-            // });
 
 
             function totalAmountPrice() {

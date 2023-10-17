@@ -27,9 +27,9 @@
                         <div class="card-body">
 
                             @php
-                                
+
                                 $company_info = App\Models\Company::first();
-                                
+
                             @endphp
 
                             <div class="row">
@@ -127,18 +127,17 @@
                                                                 <td class="text-center">
                                                                     {{ date('d-m-Y', strtotime($item->date)) }}</td>
                                                                 <td class="text-center">{{ $item['product']['name'] }}</td>
-                                                                <td class="text-center">{{ $item->buying_qty }}
-                                                                    {{ $item['product']['unit']['name'] }} </td>
-                                                                <td class="text-center">{{ $item->unit_price }}</td>
-                                                                <td class="text-center">{{ $item->buying_price }}</td>
+                                                                <td class="text-center">{{ $item->buying_qty }} Pcs </td>
+                                                                <td class="text-center">{{ $item->buying_unit_price }}</td>
+                                                                <td class="text-center">{{ $item->total_buying_amount }}</td>
 
                                                             </tr>
 
                                                             @php
-                                                                $total_sum += $item->buying_price;
+                                                                $total_sum += $item->total_buying_amount;
                                                             @endphp
                                                         @endforeach
-
+                                                        
                                                         <tr>
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>

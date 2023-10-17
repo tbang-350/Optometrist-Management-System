@@ -103,8 +103,8 @@
                                         </label>
 
 
-                                        <i
-                                            class="btn btn-secondary btn-rounded waves-effect waves-light fas fa-plus-circle addeventmore" id="addeventmore">
+                                        <i class="btn btn-secondary btn-rounded waves-effect waves-light fas fa-plus-circle addeventmore"
+                                            id="addeventmore">
                                             Add More
                                         </i>
                                     </div>
@@ -134,7 +134,7 @@
                                             <th>Product Name</th>
                                             <th width="7%">Unit(s)</th>
                                             <th width="10%">Unit Price</th>
-                                            <th width="10%">Buying Unit Price</th>
+                                            {{-- <th width="10%">Buying Unit Price</th> --}}
                                             <th width="15%">Total Price</th>
                                             <th width="7%">Action</th>
                                         </tr>
@@ -147,7 +147,7 @@
                                     <tbody>
 
                                         <tr>
-                                            <td colspan="5">Discount</td>
+                                            <td colspan="4">Discount</td>
                                             <td>
                                                 <input type="text" name="discount_amount" id="discount_amount"
                                                     class="form-control estimated_amount" placeholder="Discount Amount">
@@ -155,7 +155,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td colspan="5">Grand Total</td>
+                                            <td colspan="4">Grand Total</td>
                                             <td>
                                                 <input type="text" name="estimated_amount" value="0"
                                                     id="estimated_amount" class="form-control estimated_amount" readonly
@@ -245,21 +245,21 @@
 
                                         <div class="form-group col-md-4">
                                             <input type="text" name="name" id="name" class="form-control"
-                                                   placeholder="Enter Customer Name">
+                                                placeholder="Enter Customer Name">
                                         </div>
 
 
 
                                         <div class="form-group col-md-4">
                                             <input type="address" name="address" id="address" class="form-control"
-                                                   placeholder="Enter Customer address">
+                                                placeholder="Enter Customer address">
                                         </div>
 
 
 
                                         <div class="form-group col-md-4">
                                             <input type="age" name="age" id="age" class="form-control"
-                                                   placeholder="Enter Customer Age">
+                                                placeholder="Enter Customer Age">
                                         </div>
 
 
@@ -273,7 +273,8 @@
 
                                         <div class="form-group col-md-4 ">
 
-                                            <select name="sex" class="form-select" aria-label="Default select example">
+                                            <select name="sex" class="form-select"
+                                                aria-label="Default select example">
                                                 <option value="" selected="">Select gender</option>
                                                 <option value="male">Male</option>
                                                 <option value="female">Female</option>
@@ -284,8 +285,8 @@
 
 
                                         <div class="form-group col-md-3">
-                                            <input type="text" name="phonenumber" id="phonenumber" class="form-control"
-                                                   placeholder="Enter Customer Phonenumber">
+                                            <input type="text" name="phonenumber" id="phonenumber"
+                                                class="form-control" placeholder="Enter Customer Phonenumber">
                                         </div>
 
                                     </div>
@@ -341,14 +342,14 @@
             </td>
 
             <td>
-                <input type="number" class="form-control unit_price text-right" name="unit_price[]" id="unit_price" value="">
+                <input type="number" class="form-control unit_price text-right" name="unit_price[]" id="unit_price" value="@{{buying_unit_price}}" readonly>
             </td>
 
-
+            <!--
             <td>
                 <input type="number" class="form-control buying_unit_price text-right" name="buying_unit_price" id="buying_unit_price" value="@{{buying_unit_price}}" readonly>
             </td>
-
+            -->
 
             <td>
                 <input type="number" class="form-control selling_price text-right" id="selling_price[]" name="selling_price[]" value="0" readonly>
@@ -386,7 +387,7 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $(document).on("click","#storeButton" , function() {
+            $(document).on("click", "#storeButton", function() {
                 var buying_unit_price = $('#buying_unit_price').val();
                 var selling_qty = $('#selling_qty').val();
                 var unit_price = $('#unit_price').val();
@@ -500,6 +501,8 @@
                 var html = template(data);
                 $("#addRow").append(html);
 
+                totalAmountPrice();
+
             });
 
             $(document).on("click", ".removeeventmore", function(event) {
@@ -508,13 +511,22 @@
             })
 
             // dynamically change selling_price on change of selling_qty and unit_price
-            $(document).on('keyup click', '.unit_price,.selling_price', function() {
-                var unit_price = $(this).closest("tr").find("input.unit_price").val();
-                var qty = $(this).closest("tr").find("input.selling_qty").val();
-                var total = unit_price * qty;
+            // $(document).on('keyup click', '.unit_price,.selling_price', function() {
+            //     var unit_price = $(this).closest("tr").find("input.unit_price").val();
+            //     var qty = $(this).closest("tr").find("input.selling_qty").val();
+            //     var total = unit_price * qty;
+            //     $(this).closest("tr").find("input.selling_price").val(total);
+            //     $('#discount_amount').trigger('keyup')
+            // });
+
+
+            $(document).on('keyup click', '.selling_qty', function() {
+                var unit = $(this).closest("tr").find("input.selling_qty").val();
+                var total = unit * parseFloat($("#buying_unit_price").val()); // Use the buying_unit_price
                 $(this).closest("tr").find("input.selling_price").val(total);
-                $('#discount_amount').trigger('keyup')
+                $('#discount_amount').trigger('keyup');
             });
+
 
 
 
@@ -689,7 +701,6 @@
                 $('.paid_status').hide();
             }
         });
-
     </script>
 
     <script type="text/javascript">

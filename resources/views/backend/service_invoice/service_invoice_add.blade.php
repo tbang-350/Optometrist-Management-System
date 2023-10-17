@@ -305,9 +305,9 @@
 
 
 
-            <!-- <td>
+            <td style="display: none">
                 <input type="number" class="form-control service_price text-right" name="service_price[]" value="@{{service_price}}" readonly>
-            </td> -->
+            </td>
 
 
             <td>

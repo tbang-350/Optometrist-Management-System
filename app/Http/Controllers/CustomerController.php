@@ -130,7 +130,7 @@ class CustomerController extends Controller
                 'message' => 'Sorry , you paid maximum value',
                 'alert-type' => 'error',
             );
-    
+
             return redirect()->back()->with($notification);
         } else {
 
@@ -149,15 +149,15 @@ class CustomerController extends Controller
                 // $payment->paid_status = 'full_paid';
 
                 $payment_details->current_paid_amount = $request->new_paid_amount;
-                
+
             } elseif ($request->paid_status == 'partial_paid') {
 
                 $payment->paid_amount = Payment::where('prescription_id',$prescription_id)->first()['paid_amount'] + $request->paid_amount;
 
                 $payment->due_amount = Payment::where('prescription_id',$prescription_id)->first()['due_amount'] - $request->paid_amount;
 
-                $payment_details->current_paid_amount = $request->paid_amount; 
-                
+                $payment_details->current_paid_amount = $request->paid_amount;
+
             }
 
             $payment->save();
@@ -171,19 +171,19 @@ class CustomerController extends Controller
                 'message' => 'Prescription Updated Succesfully',
                 'alert-type' => 'success',
             );
-    
+
             return redirect()->route('credit.customer')->with($notification);
-            
+
         }
 
     } // End Method
 
 
-    public function CustomerPrescriptionDetails($prescription_id){
+    public function CustomerInvoiceDetails($invoice_id){
 
-        $payment = Payment::where('prescription_id',$prescription_id)->first();
+        $payment = Payment::where('invoice_id',$invoice_id)->first();
 
-        return view('backend.pdf.prescription_details_pdf',compact('payment'));
+        return view('backend.pdf.invoice_details_pdf',compact('payment'));
 
     } // End Method
 

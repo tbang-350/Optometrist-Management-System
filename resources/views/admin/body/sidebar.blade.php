@@ -40,7 +40,9 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('customer.all') }}">All Customers</a></li>
-                        {{-- <li><a href="email-read.html">Read Email</a></li> --}}
+                        <li><a href="{{ route('credit.customer') }}">Credit Customers</a></li>
+                        <li><a href="{{ route('paid.customer') }}">Paid Customers</a></li>
+                         <li><a href="{{ route('customer.wise.report') }}">Customer Wise Report</a></li>
                     </ul>
                 </li>
 
@@ -182,6 +184,21 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('service.invoice.payment.report') }}">Service Payment Option Report</a></li>
 
+                    </ul>
+                </li>
+
+                <li class="mm-active">
+                    <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="true">
+                        <i class="ri-share-line"></i>
+                        <span>Multi Level</span>
+                    </a>
+                    <ul class="sub-menu mm-collapse mm-show" aria-expanded="true" style="">
+                        <li class=""><a href="javascript: void(0);" class="has-arrow" aria-expanded="false">Level 1.2</a>
+                            <ul class="sub-menu mm-collapse" aria-expanded="true" style="height: 0px;">
+                                <li><a href="javascript: void(0);">Level 2.1</a></li>
+                                <li><a href="javascript: void(0);">Level 2.2</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
 

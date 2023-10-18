@@ -41,7 +41,7 @@
                                     <tr>
                                         <th>Sl</th>
                                         <th>Customer Name</th>
-                                        <th>prescription No</th>
+                                        <th>Invoice No</th>
                                         <th>Date</th>
                                         <th>Due Amount</th>
                                         <th>Action</th>
@@ -55,18 +55,18 @@
                                         <tr>
                                             <td> {{ $key + 1 }} </td>
                                             <td> {{ $item['customer']['name'] }} </td>
-                                            <td> #{{ $item['prescription']['prescription_no'] }} </td>
-                                            <td> {{ date('d-m-Y',strtotime($item['prescription']['date'])) }} </td>
+                                            <td> #{{ $item['invoice']['invoice_no'] }} </td>
+                                            <td> {{ date('d-m-Y',strtotime($item['invoice']['date'])) }} </td>
                                             <td> Tsh {{ $item->due_amount }} </td>
 
                                             <td>
-                                                <a href=" {{ route('customer.edit.prescription', $item->prescription_id) }} " class="btn btn-info sm"
+                                                <a href=" {{ route('customer.edit.invoice', $item->invoice_id) }} " class="btn btn-info sm"
                                                     title="Edit Data">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
 
-                                                <a href=" {{ route('customer.prescription.details.pdf', $item->prescription_id) }} "
-                                                    class="btn btn-danger sm" title="Customer prescription Details"> <i
+                                                <a href=" {{ route('customer.invoice.details.pdf', $item->invoice_id) }} "
+                                                    class="btn btn-danger sm" title="Customer Invoice Details"> <i
                                                         class="fas fa-eye"></i>
                                                 </a>
 

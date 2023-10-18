@@ -34,9 +34,9 @@
 
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="prescription-title">
-                                        <h4 class="float-end font-size-16"><strong>prescription No #
-                                                {{ $payment['prescription']['prescription_no'] }}</strong></h4>
+                                    <div class="invoice-title">
+                                        <h4 class="float-end font-size-16"><strong>Invoice No #
+                                                {{ $payment['invoice']['invoice_no'] }}</strong></h4>
                                         <h3>
                                             <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="logo"
                                                 height="24" /> {{ $company_info->company_name }}
@@ -57,8 +57,8 @@
                                         </div>
                                         <div class="col-6 mt-4 text-end">
                                             <address>
-                                                <strong>prescription Date:</strong><br>
-                                                {{ date('d-m-Y', strtotime($payment['prescription']['date'])) }}<br><br>
+                                                <strong>Invoice Date:</strong><br>
+                                                {{ date('d-m-Y', strtotime($payment['invoice']['date'])) }}<br><br>
                                             </address>
                                         </div>
                                     </div>
@@ -66,14 +66,14 @@
                             </div>
 
                             @php
-                                $payment = App\Models\Payment::where('prescription_id', $payment->prescription_id)->first();
+                                $payment = App\Models\Payment::where('invoice_id', $payment->invoice_id)->first();
                             @endphp
 
                             <div class="row">
                                 <div class="col-12">
                                     <div>
                                         <div class="p-2">
-                                            <h3 class="font-size-16"><strong>Customer prescription</strong></h3>
+                                            <h3 class="font-size-16"><strong>Customer Invoice</strong></h3>
                                         </div>
                                         <div class="">
                                             <div class="table-responsive">
@@ -117,107 +117,107 @@
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
-                                                            <td class="text-center"><strong>S.No</strong></td>
-                                                            <td class="text-center"><strong>Service Name</strong>
+                                                            <td><strong>S.No</strong></td>
+                                                            <td class="text-center"><strong>Category</strong></td>
+                                                            <td class="text-center"><strong>Product Name</strong>
                                                             </td>
-
+                                                            <td class="text-center"><strong>Current stock</strong>
+                                                            </td>
+                                                            <td class="text-center"><strong>Quantity</strong>
+                                                            </td>
+                                                            <td class="text-center"><strong>Unit Price</strong>
                                                             </td>
                                                             <td class="text-center"><strong>Total Price(Tshs)</strong>
                                                             </td>
+
                                                         </tr>
                                                     </thead>
 
                                                     <tbody>
 
                                                         @php
+
                                                             $total_sum = '0';
 
-                                                            $prescription_details = App\Models\PrescriptionDetails::where('prescription_id', $payment->prescription_id)->get();
+                                                            $invoice_details = App\Models\InvoiceDetail::where('invoice_id', $payment->invoice_id)->get();
 
                                                         @endphp
 
-                                                        @foreach ($prescription_details as $key => $details)
+                                                        @foreach ($invoice_details as $key => $details)
                                                             <tr>
                                                                 <td class="text-center">{{ $key + 1 }}</td>
+                                                                <td class="text-center">{{ $details['category']['name'] }}
+                                                                </td>
+                                                                <td class="text-center">{{ $details['product']['name'] }}
+                                                                </td>
                                                                 <td class="text-center">
-                                                                    {{ $details['service']['name'] }}
-                                                                </td>
-
-                                                                <td class="text-center">{{ $details->service_price }}
-                                                                </td>
+                                                                    {{ $details['product']['quantity'] }}</td>
+                                                                <td class="text-center">{{ $details->selling_qty }}</td>
+                                                                <td class="text-center">{{ $details->unit_price }}</td>
+                                                                <td class="text-center">{{ $details->selling_price }}</td>
 
                                                             </tr>
 
                                                             @php
-                                                                $total_sum += $details->service_price;
+                                                                $total_sum += $details->selling_price;
                                                             @endphp
                                                         @endforeach
 
                                                         <tr>
                                                             <td class="thick-line"></td>
+                                                            <td class="thick-line"></td>
+                                                            <td class="thick-line"></td>
+                                                            <td class="thick-line"></td>
+                                                            <td class="thick-line"></td>
                                                             <td class="thick-line text-center">
-                                                                <h6>
-                                                                    <strong>Subtotal(Tshs)</strong>
-                                                                </h6>
+                                                                <strong>Subtotal(Tshs)</strong>
                                                             </td>
-                                                            <td class="thick-line text-center">
-                                                                <h6>
-                                                                    {{ $total_sum }}
-                                                                </h6>
-                                                            </td>
+                                                            <td class="thick-line text-center">{{ $total_sum }}</td>
                                                         </tr>
                                                         <tr>
-
-
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
                                                             <td class="no-line"></td>
                                                             <td class="no-line text-center">
-                                                                <h6>
-                                                                    <strong>Discount Amount(Tshs)</strong>
-                                                                </h6>
+                                                                <strong>Discount Amount(Tshs)</strong>
                                                             </td>
-                                                            <td class="no-line text-center">
-                                                                <h6>
-                                                                    {{ $payment->discount_amount }}
-                                                                </h6>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-
-
-                                                            <td class="no-line"></td>
-                                                            <td class="no-line text-center">
-                                                                <h6>
-                                                                    <strong>Paid Amount(Tshs)</strong>
-                                                                </h6>
-                                                            </td>
-                                                            <td class="no-line text-center" colspan="5">
-                                                                <h6>
-                                                                    {{ $payment->paid_amount }}
-                                                                </h6>
+                                                            <td class="no-line text-center">{{ $payment->discount_amount }}
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
                                                             <td class="no-line text-center">
-                                                                <h6>
-                                                                    <strong>Due Amount(Tshs)</strong>
-                                                                </h6>
+                                                                <strong>Paid Amount(Tshs)</strong>
                                                             </td>
+                                                            <td class="no-line text-center">{{ $payment->paid_amount }}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
                                                             <td class="no-line text-center">
-                                                                <h6>
-                                                                    {{ $payment->due_amount }}
-                                                                </h6>
+                                                                <strong>Due Amount(Tshs)</strong>
                                                             </td>
-                                                            <input type="hidden" name="new_paid_amount"
-                                                                value="{{ $payment->due_amount }}">
+                                                            <td class="no-line text-center">{{ $payment->due_amount }}</td>
                                                         </tr>
 
                                                         <tr>
                                                             <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
                                                             <td class="no-line text-center">
-                                                                <h6>
-                                                                    <strong>Grand Total(Tshs)</strong>
-                                                                </h6>
+                                                                <strong>Grand Total(Tshs)</strong>
                                                             </td>
                                                             <td class="no-line text-center">
                                                                 <h4 class="m-0">{{ $payment->total_amount }}</h4>
@@ -225,35 +225,31 @@
                                                         </tr>
 
                                                         <tr>
-                                                            <td></td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td colspan="3" style="text-align:center; font-weight:bold;">
+                                                            <td colspan="7" style="text-align:center; font-weight:bold;">
                                                                 Payment History</td>
                                                         </tr>
 
                                                         <tr>
-                                                            <td colspan="2" style="text-align:center; font-weight:bold;">
+                                                            <td colspan="4" style="text-align:center; font-weight:bold;">
                                                                 Date</td>
 
-                                                            <td  style="text-align:center; font-weight:bold;">
+                                                            <td colspan="3" style="text-align:center; font-weight:bold;">
                                                                 Amount</td>
                                                         </tr>
 
                                                         @php
 
-                                                            $payment_details = App\Models\PaymentDetails::where('prescription_id', $payment->prescription_id)->get();
+                                                            $payment_details = App\Models\PaymentDetail::where('invoice_id', $payment->invoice_id)->get();
 
                                                         @endphp
 
                                                         @foreach ($payment_details as $key => $item)
                                                             <tr>
-                                                                <td colspan="2"
+                                                                <td colspan="4"
                                                                     style="text-align:center; font-weight:bold;">
                                                                     {{ date('d-m-Y', strtotime($item->date)) }}</td>
 
-                                                                <td
+                                                                <td colspan="3"
                                                                     style="text-align:center; font-weight:bold;">
                                                                     {{ $item->current_paid_amount }}</td>
                                                             </tr>

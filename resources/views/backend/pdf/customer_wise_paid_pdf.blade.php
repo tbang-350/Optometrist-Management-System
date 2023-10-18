@@ -34,7 +34,7 @@
 
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="prescription-title">
+                                    <div class="invoice-title">
 
                                         <h3>
                                             <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="logo"
@@ -95,7 +95,7 @@
                                                         <tr>
                                                             <td><strong>S.No</strong></td>
                                                             <td class="text-center"><strong>Customer Name</strong></td>
-                                                            <td class="text-center"><strong>prescription No</strong>
+                                                            <td class="text-center"><strong>Invoice No</strong>
                                                             </td>
                                                             <td class="text-center"><strong>Date</strong>
                                                             </td>
@@ -118,9 +118,9 @@
                                                                 <td class="text-center"> {{ $item['customer']['name'] }}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    #{{ $item['prescription']['prescription_no'] }} </td>
+                                                                    #{{ $item['invoice']['invoice_no'] }} </td>
                                                                 <td class="text-center">
-                                                                    {{ date('d-m-Y', strtotime($item['prescription']['date'])) }}
+                                                                    {{ date('d-m-Y', strtotime($item['invoice']['date'])) }}
                                                                 </td>
                                                                 <td class="text-center"> {{ $item->paid_amount }} </td>
 

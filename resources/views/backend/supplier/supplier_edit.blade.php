@@ -53,7 +53,7 @@
                     name: {
                         required: true,
                     },
-                    mobile_no: {
+                    phonenumber: {
                         required: true,
                     },
                     address: {
@@ -64,7 +64,7 @@
                     name: {
                         required: 'Please Enter Supplier Name',
                     },
-                    mobile_no: {
+                    phonenumber: {
                         required: 'Please Enter Supplier Phone number',
                     },
                     address: {

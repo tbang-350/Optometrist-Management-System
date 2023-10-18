@@ -7,12 +7,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Credit Customer Report</h4>
+                        <h4 class="mb-sm-0">Paid Customer Report</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
 
-                                <li class="breadcrumb-item active">prescription</li>
+                                <li class="breadcrumb-item active">Invoice</li>
                             </ol>
                         </div>
 
@@ -34,7 +34,7 @@
 
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="prescription-title">
+                                    <div class="invoice-title">
 
                                         <h3>
                                             <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="logo"
@@ -70,7 +70,7 @@
                                     <div>
                                         <div class="p-2">
                                             <h3 class="font-size-16">
-                                                <strong>Credit Customers Report</strong>
+                                                <strong>Paid Customers Report</strong>
 
                                             </h3>
                                         </div>
@@ -95,7 +95,7 @@
                                                         <tr>
                                                             <td><strong>S.No</strong></td>
                                                             <td class="text-center"><strong>Customer Name</strong></td>
-                                                            <td class="text-center"><strong>prescription No</strong>
+                                                            <td class="text-center"><strong>Invoice No</strong>
                                                             </td>
                                                             <td class="text-center"><strong>Date</strong>
                                                             </td>
@@ -118,9 +118,9 @@
                                                                 <td class="text-center"> {{ $item['customer']['name'] }}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    #{{ $item['prescription']['prescription_no'] }} </td>
+                                                                    #{{ $item['invoice']['invoice_no'] }} </td>
                                                                 <td class="text-center">
-                                                                    {{ date('d-m-Y', strtotime($item['prescription']['date'])) }}
+                                                                    {{ date('d-m-Y', strtotime($item['invoice']['date'])) }}
                                                                 </td>
                                                                 <td class="text-center"> {{ $item->paid_amount }} </td>
 

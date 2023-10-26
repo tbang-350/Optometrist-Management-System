@@ -80,10 +80,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/customer/delete/{id}', 'CustomerDelete')->name('customer.delete');
 
         Route::get('/credit/customer', 'CreditCustomer')->name('credit.customer');
+        Route::get('/credit/service/customer', 'CreditServiceCustomer')->name('credit.service.customer');
         Route::get('/credit/customer/print/pdf', 'CreditCustomerPrintPdf')->name('credit.customer.print.pdf');
+        Route::get('/credit/service/customer/print/pdf', 'ServiceCreditCustomerPrintPdf')->name('service.credit.customer.print.pdf');
         Route::get('/customer/edit/invoice/{invoice_id}', 'CustomerEditInvoice')->name('customer.edit.invoice');
+        Route::get('/customer/edit/service_invoice/{invoice_id}', 'CustomerEditServiceInvoice')->name('customer.edit.service.invoice');
         Route::post('/customer/update/invoice/{invoice_id}', 'CustomerUpdateInvoice')->name('customer.update.invoice');
+        Route::post('/customer/update/service_invoice/{invoice_id}', 'CustomerUpdateServiceInvoice')->name('customer.update.service.invoice');
         Route::get('/customer/invoice/details/{invoice_id}', 'CustomerInvoiceDetails')->name('customer.invoice.details.pdf');
+        Route::get('/customer/service/invoice/details/{invoice_id}', 'CustomerServiceInvoiceDetails')->name('customer.service.invoice.details.pdf');
         Route::get('/paid/customer', 'PaidCustomer')->name('paid.customer');
         Route::get('/paid/customer/print/pdf', 'PaidCustomerPrintPdf')->name('paid.customer.print.pdf');
         Route::get('/customer/wise/report', 'CustomerWiseReport')->name('customer.wise.report');

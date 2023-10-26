@@ -29,7 +29,7 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <a href=" {{ route('credit.customer') }} "
+                            <a href=" {{ route('credit.service.customer') }} "
                                 class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right">
                                 <i class="fas fa-list">
                                     Back
@@ -43,7 +43,8 @@
                                     <div>
                                         <div class="p-2">
                                             <h3 class="font-size-16"><strong>Invoice no:
-                                                    #{{ $payment['invoice']['invoice_no'] }}</strong></h3>
+                                                    #{{ $service_payment['service_invoice']['service_invoice_no'] }}</strong>
+                                            </h3>
                                         </div>
                                         <div class="">
                                             <div class="table-responsive">
@@ -51,6 +52,8 @@
                                                     <thead>
                                                         <tr>
                                                             <td><strong>Customer Name</strong></td>
+                                                            <td class="text-center"><strong>Age</strong></td>
+                                                            <td class="text-center"><strong>Sex</strong></td>
                                                             <td class="text-center"><strong>Phone Number</strong></td>
                                                             <td class="text-center"><strong>Address</strong>
                                                             </td>
@@ -60,12 +63,20 @@
                                                     <tbody>
                                                         <!-- foreach ($order->lineItems as $line) or some such thing here -->
                                                         <tr>
-                                                            <td>{{ $payment['customer']['name'] }}</td>
+                                                            <td>{{ $service_payment['customer']['name'] }}</td>
                                                             <td class="text-center">
-                                                                {{ $payment['customer']['phonenumber'] }}
+                                                                {{ $service_payment['customer']['age'] }}
                                                             </td>
-                                                            <td class="text-center">{{ $payment['customer']['address'] }}
+                                                            <td class="text-center">
+                                                                {{ $service_payment['customer']['sex'] }}
                                                             </td>
+                                                            <td class="text-center">
+                                                                {{ $service_payment['customer']['phonenumber'] }}
+                                                            </td>
+                                                            <td class="text-center">
+                                                                {{ $service_payment['customer']['address'] }}
+                                                            </td>
+
 
                                                         </tr>
 
@@ -85,7 +96,8 @@
                             <div class="row">
                                 <div class="col-12">
 
-                                    <form action="{{ route('customer.update.invoice', $payment->invoice_id) }}"
+                                    <form
+                                        action="{{ route('customer.update.service.invoice', $service_payment->service_invoice_id) }}"
                                         method="post" id="myForm">
                                         @csrf
                                         <div>
@@ -97,17 +109,17 @@
                                                     <table class="table">
                                                         <thead>
                                                             <tr>
-                                                                <td><strong>S.No</strong></td>
-                                                                <td class="text-center"><strong>Category</strong></td>
-                                                                <td class="text-center"><strong>Product Name</strong>
+
+                                                                <td class="text-center">
+                                                                    <strong>S.No</strong>
                                                                 </td>
-                                                                <td class="text-center"><strong>Current stock</strong>
+
+                                                                <td class="text-center">
+                                                                    <strong>Service Name</strong>
                                                                 </td>
-                                                                <td class="text-center"><strong>Quantity</strong>
-                                                                </td>
-                                                                <td class="text-center"><strong>Unit Price</strong>
-                                                                </td>
-                                                                <td class="text-center"><strong>Total Price(Tshs)</strong>
+
+                                                                <td class="text-center">
+                                                                    <strong>Total Price(Tshs)</strong>
                                                                 </td>
 
                                                             </tr>
@@ -118,96 +130,95 @@
                                                             @php
                                                                 $total_sum = '0';
 
-                                                                $invoice_details = App\Models\InvoiceDetail::where('invoice_id', $payment->invoice_id)->get();
+                                                                $service_invoice_details = App\Models\ServiceInvoiceDetails::where('service_invoice_id', $service_payment->service_invoice_id)->get();
 
                                                             @endphp
 
-                                                            @foreach ($invoice_details as $key => $details)
+                                                            @foreach ($service_invoice_details as $key => $details)
                                                                 <tr>
                                                                     <td class="text-center">{{ $key + 1 }}</td>
                                                                     <td class="text-center">
-                                                                        {{ $details['category']['name'] }}
+                                                                        {{ $details['service']['name'] }}
                                                                     </td>
-                                                                    <td class="text-center">
-                                                                        {{ $details['product']['name'] }}
-                                                                    </td>
-                                                                    <td class="text-center">
-                                                                        {{ $details['product']['quantity'] }}</td>
-                                                                    <td class="text-center">{{ $details->selling_qty }}
-                                                                    </td>
-                                                                    <td class="text-center">{{ $details->unit_price }}</td>
-                                                                    <td class="text-center">{{ $details->selling_price }}
+
+                                                                    <td class="text-center">{{ $details->service_price }}
                                                                     </td>
 
                                                                 </tr>
 
                                                                 @php
-                                                                    $total_sum += $details->selling_price;
+                                                                    $total_sum += $details->service_selling_price;
                                                                 @endphp
                                                             @endforeach
 
                                                             <tr>
                                                                 <td class="thick-line"></td>
-                                                                <td class="thick-line"></td>
-                                                                <td class="thick-line"></td>
-                                                                <td class="thick-line"></td>
-                                                                <td class="thick-line"></td>
                                                                 <td class="thick-line text-center">
-                                                                    <strong>Subtotal(Tshs)</strong>
+                                                                    <h6>
+                                                                        <strong>Subtotal(Tshs)</strong>
+                                                                    </h6>
                                                                 </td>
-                                                                <td class="thick-line text-center">{{ $total_sum }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line text-center">
-                                                                    <strong>Discount Amount(Tshs)</strong>
-                                                                </td>
-                                                                <td class="no-line text-center">
-                                                                    {{ $payment->discount_amount }}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line text-center">
-                                                                    <strong>Paid Amount(Tshs)</strong>
-                                                                </td>
-                                                                <td class="no-line text-center">{{ $payment->paid_amount }}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line text-center">
-                                                                    <strong>Due Amount(Tshs)</strong>
-                                                                </td>
-                                                                <input type="hidden" name="new_paid_amount"
-                                                                    value="{{ $payment->due_amount }}">
-                                                                <td class="no-line text-center">{{ $payment->due_amount }}
+                                                                <td class="thick-line text-center">
+                                                                    <h6>
+                                                                        {{ $total_sum }}
+                                                                    </h6>
                                                                 </td>
                                                             </tr>
 
                                                             <tr>
                                                                 <td class="no-line"></td>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line"></td>
-                                                                <td class="no-line"></td>
                                                                 <td class="no-line text-center">
-                                                                    <strong>Grand Total(Tshs)</strong>
+                                                                    <h6>
+                                                                        <strong>Discount Amount(Tshs)</strong>
+                                                                    </h6>
                                                                 </td>
                                                                 <td class="no-line text-center">
-                                                                    <h4 class="m-0">{{ $payment->total_amount }}</h4>
+                                                                    <h6>
+                                                                        {{ $service_payment->discount_amount }}
+                                                                    </h6>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td class="no-line"></td>
+                                                                <td class="no-line text-center">
+                                                                    <h6>
+                                                                        <strong>Paid Amount(Tshs)</strong>
+                                                                    </h6>
+                                                                </td>
+                                                                <td class="no-line text-center" colspan="5">
+                                                                    <h6>
+                                                                        {{ $service_payment->paid_amount }}
+                                                                    </h6>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td class="no-line"></td>
+                                                                <td class="no-line text-center">
+                                                                    <h6>
+                                                                        <strong>Due Amount(Tshs)</strong>
+                                                                    </h6>
+                                                                </td>
+                                                                <input type="hidden" name="new_paid_amount"
+                                                                    value="{{ $service_payment->due_amount }}">
+                                                                <td class="no-line text-center">
+                                                                    <h6>
+                                                                        {{ $service_payment->due_amount }}
+                                                                    </h6>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td class="no-line"></td>
+                                                                <td class="no-line text-center">
+                                                                    <h6>
+                                                                        <strong>Grand Total(Tshs)</strong>
+                                                                    </h6>
+                                                                </td>
+                                                                <td class="no-line text-center">
+                                                                    <h4 class="m-0">{{ $service_payment->total_amount }}
+                                                                    </h4>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -217,7 +228,7 @@
                                                 <div class="row">
                                                     <div class="form-group col-md-3">
 
-                                                        <label for="payment status">Payment Status</label>
+                                                        <label for="service_payment status">Payment Status</label>
                                                         <select name="paid_status" id="paid_status" class="form-select">
 
                                                             <option value="">Select Payement Status</option>
@@ -310,7 +321,7 @@
                         required: 'Date is required',
                     },
                     paid_status: {
-                        required: 'Please choose payment status',
+                        required: 'Please choose service_payment status',
                     },
                 },
                 errorElement: 'span',

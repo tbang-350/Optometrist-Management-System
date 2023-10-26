@@ -7,12 +7,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Invoice</h4>
+                        <h4 class="mb-sm-0">Customer service_payment Report</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
 
-                                <li class="breadcrumb-item active">Prescription</li>
+                                <li class="breadcrumb-item active">Customer service_payment Report</li>
                             </ol>
                         </div>
 
@@ -34,9 +34,9 @@
 
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="prescription-title">
+                                    <div class="invoice-title">
                                         <h4 class="float-end font-size-16"><strong>Invoice No #
-                                                {{ $service_invoice->service_invoice_no }}</strong></h4>
+                                                {{ $service_payment['service_invoice']['service_invoice_no'] }}</strong></h4>
                                         <h3>
                                             <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="logo"
                                                 height="24" /> {{ $company_info->company_name }}
@@ -58,7 +58,7 @@
                                         <div class="col-6 mt-4 text-end">
                                             <address>
                                                 <strong>Invoice Date:</strong><br>
-                                                {{ date('d-m-Y', strtotime($service_invoice->date)) }}<br><br>
+                                                {{ date('d-m-Y', strtotime($service_payment['service_invoice']['date'])) }}<br><br>
                                             </address>
                                         </div>
                                     </div>
@@ -66,7 +66,7 @@
                             </div>
 
                             @php
-                                $service_payment = App\Models\ServicePayment::where('service_invoice_id', $service_invoice->id)->first();
+                                $service_payment = App\Models\ServicePayment::where('service_invoice_id', $service_payment->service_invoice_id)->first();
                             @endphp
 
                             <div class="row">
@@ -77,71 +77,22 @@
                                         </div>
                                         <div class="">
                                             <div class="table-responsive">
-                                                <table class="table mb-">
+                                                <table class="table">
                                                     <thead>
                                                         <tr>
-
                                                             <td><strong>Customer Name</strong></td>
-                                                            <td class="text-center"><strong>Age</strong></td>
-                                                            <td class="text-center"><strong>Sex</strong></td>
                                                             <td class="text-center"><strong>Phone Number</strong></td>
                                                             <td class="text-center"><strong>Address</strong>
                                                             </td>
-
-
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <!-- foreach ($order->lineItems as $line) or some such thing here -->
                                                         <tr>
                                                             <td>{{ $service_payment['customer']['name'] }}</td>
-                                                            <td class="text-center">
-                                                                {{ $service_payment['customer']['age'] }}
+                                                            <td class="text-center">{{ $service_payment['customer']['phonenumber'] }}
                                                             </td>
-                                                            <td class="text-center">
-                                                                {{ $service_payment['customer']['sex'] }}
-                                                            </td>
-                                                            <td class="text-center">
-                                                                {{ $service_payment['customer']['phonenumber'] }}
-                                                            </td>
-                                                            <td class="text-center">
-                                                                {{ $service_payment['customer']['address'] }}
-                                                            </td>
-
-
-                                                        </tr>
-
-
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div> <!-- end row -->
-
-
-                            <div class="row">
-                                <div class="col-12">
-                                    <div>
-                                        <div class="">
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <h6>
-                                                                <td><strong>Description</strong>
-                                                                </td>
-                                                            </h6>
-
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <!-- foreach ($order->lineItems as $line) or some such thing here -->
-                                                        <tr>
-                                                            <td>{{ $service_invoice->description }}
+                                                            <td class="text-center">{{ $service_payment['customer']['address'] }}
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -152,6 +103,7 @@
 
                                 </div>
                             </div> <!-- end row -->
+
 
 
                             <div class="row">
@@ -168,7 +120,7 @@
                                                             <td class="text-center">
                                                                 <strong>S.No</strong>
                                                             </td>
-                                                            
+
                                                             <td class="text-center">
                                                                 <strong>Service Name</strong>
                                                             </td>
@@ -183,21 +135,26 @@
                                                     <tbody>
 
                                                         @php
+
                                                             $total_sum = '0';
+
+                                                            $service_invoice_details = App\Models\ServiceInvoiceDetails::where('service_invoice_id', $service_payment->service_invoice_id)->get();
+
                                                         @endphp
 
-                                                        @foreach ($service_invoice['service_invoice_details'] as $key => $details)
+                                                        @foreach ($service_invoice_details as $key => $details)
                                                             <tr>
                                                                 <td class="text-center">{{ $key + 1 }}</td>
-                                                                <td class="text-center">{{ $details['service']['name'] }}
-                                                                </td>
+                                                                    <td class="text-center">
+                                                                        {{ $details['service']['name'] }}
+                                                                    </td>
 
-                                                                <td class="text-center">{{ $details->service_price }}</td>
-
+                                                                    <td class="text-center">{{ $details->service_price }}
+                                                                    </td>
                                                             </tr>
 
                                                             @php
-                                                                $total_sum += $details->service_price;
+                                                                $total_sum += $details->service_selling_price;
                                                             @endphp
                                                         @endforeach
 
@@ -269,6 +226,38 @@
                                                                 </h4>
                                                             </td>
                                                         </tr>
+
+                                                        <tr>
+                                                            <td colspan="3" style="text-align:center; font-weight:bold;">
+                                                                Payment History</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td colspan="2" style="text-align:center; font-weight:bold;">
+                                                                Date</td>
+
+                                                            <td colspan="1" style="text-align:center; font-weight:bold;">
+                                                                Amount</td>
+                                                        </tr>
+
+                                                        @php
+
+                                                            $service_payment_details = App\Models\ServicePaymentDetail::where('service_invoice_id', $service_payment->service_invoice_id)->get();
+
+                                                        @endphp
+
+                                                        @foreach ($service_payment_details as $key => $item)
+                                                            <tr>
+                                                                <td colspan="2"
+                                                                    style="text-align:center; font-weight:bold;">
+                                                                    {{ date('d-m-Y', strtotime($item->date)) }}</td>
+
+                                                                <td colspan="1"
+                                                                    style="text-align:center; font-weight:bold;">
+                                                                    {{ $item->current_paid_amount }}</td>
+                                                            </tr>
+                                                        @endforeach
+
                                                     </tbody>
                                                 </table>
                                             </div>

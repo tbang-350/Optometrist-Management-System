@@ -11,8 +11,7 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <h4 class="card-title">Add Invoice </h4><br><br>
-
+                            <h4 class="card-title">Create Service Invoice </h4><br><br>
 
 
                             <div class="row">
@@ -20,11 +19,11 @@
 
                                 <div class="col-md-1">
                                     <div class="md-3">
-                                        <label for="example-text-input" class="form-label">Inv No</label>
+                                        <label for="example-text-input" class="form-label">Invoice No</label>
                                         <div class=" form-group col-sm-10">
-                                            <input name="invoice_no" class="form-control example-date-input" type="text"
-                                                id="invoice_no" value="{{ $invoice_no }}" readonly
-                                                style="background-color: #ddd">
+                                            <input name="service_invoice_no" class="form-control example-date-input"
+                                                type="text" id="service_invoice_no" value="{{ $service_invoice_no }}"
+                                                readonly style="background-color: #ddd">
                                         </div>
                                     </div>
                                 </div>
@@ -43,14 +42,14 @@
 
                                 <div class="col-md-3">
                                     <div class="md-3">
-                                        <label for="example-text-input" class="form-label">Category</label>
+                                        <label for="example-text-input" class="form-label">Service</label>
                                         <div class=" form-group col-sm-10">
-                                            <select name="category_id" id="category_id" class="form-select select2"
+                                            <select name="service_id" id="service_id" class="form-select select2"
                                                 aria-label="Default select example">
                                                 <option selected="">Open this select menu</option>
 
-                                                @foreach ($category as $cat)
-                                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                                @foreach ($service as $ser)
+                                                    <option value="{{ $ser->id }}">{{ $ser->name }}</option>
                                                 @endforeach
 
                                             </select>
@@ -58,43 +57,15 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
-                                    <div class="md-3">
-                                        <label for="example-text-input" class="form-label">Product</label>
-                                        <div class=" form-group col-sm-10">
-                                            <select name="product_id" id="product_id" class="form-select select2"
-                                                aria-label="Default select example">
-                                                <option selected="">Open this select menu</option>
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-md-1">
-                                    <div class="md-3">
-                                        <label for="example-text-input" class="form-label">Stock(Pcs/KG)</label>
-                                        <div class=" form-group col-sm-10">
-                                            <input name="current_stock_qty" class="form-control example-date-input"
-                                                type="text" id="current_stock_qty" readonly
-                                                style="background-color: #ddd">
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <div style="display: none">
                                     <div>
-                                        <label for="example-text-input" class="form-label">Buying Unit Price</label>
+                                        <label for="example-text-input" class="form-label">Service Price</label>
                                         <div class=" form-group col-sm-10">
-                                            <input name="buying_unit_price" class="form-control example-date-input"
-                                                type="text" id="buying_unit_price" readonly
-                                                style="background-color: #ddd">
+                                            <input name="service_price" class="form-control example-date-input"
+                                                type="text" id="service_price" readonly style="background-color: #ddd">
                                         </div>
                                     </div>
                                 </div>
-
-
 
 
                                 <div class="col-md-2">
@@ -114,14 +85,13 @@
                             </div> <!-- end row -->
 
 
-
                         </div>
                         <!--end cardbody -->
 
 
                         <div class="card-body">
 
-                            <form action="{{ route('invoice.store') }}" method="post" id="myForm">
+                            <form action="{{ route('service.invoice.store') }}" method="post" id="myForm">
 
                                 @csrf
 
@@ -130,13 +100,10 @@
 
                                     <thead>
                                         <tr>
-                                            <th>Category</th>
                                             <th>Product Name</th>
-                                            <th width="7%">Unit(s)</th>
-                                            <th width="10%">Unit Price</th>
-                                            {{-- <th width="10%">Buying Unit Price</th> --}}
-                                            <th width="15%">Total Price</th>
-                                            <th width="7%">Action</th>
+                                            <th width="40%">Service Price</th>
+                                            {{-- <th width="30%">Total Price</th> --}}
+                                            <th width="10%">Action</th>
                                         </tr>
                                     </thead>
 
@@ -147,7 +114,7 @@
                                     <tbody>
 
                                         <tr>
-                                            <td colspan="4">Discount</td>
+                                            <td colspan="1">Discount</td>
                                             <td>
                                                 <input type="text" name="discount_amount" id="discount_amount"
                                                     class="form-control estimated_amount" placeholder="Discount Amount">
@@ -155,7 +122,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td colspan="4">Grand Total</td>
+                                            <td colspan="1">Grand Total</td>
                                             <td>
                                                 <input type="text" name="estimated_amount" value="0"
                                                     id="estimated_amount" class="form-control estimated_amount" readonly
@@ -179,6 +146,8 @@
                                 <br>
 
                                 <div class="row">
+
+
                                     <div class="form-group col-md-3">
                                         <label for="payment status">Payment Options</label>
                                         <select name="payment_option" id="payment_option" class="form-select">
@@ -207,7 +176,6 @@
                                             <input type="text" name="paid_amount" id="paid_amount"
                                                 class="form-control paid_amount" placeholder="Enter Paid Amount..."
                                                 style="display: none">
-
 
 
                                         </div>
@@ -299,7 +267,8 @@
                                 <br>
 
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-info" id="storeButton">Save Invoice</button>
+                                    <button type="submit" class="btn btn-info" id="storeButton">Save Prescription
+                                    </button>
                                 </div>
 
                             </form>
@@ -325,35 +294,26 @@
     <script type="text/x-handlebars-template" id="document-template">
         <tr class="delete_add_more_item" id="delete_add_more_item">
             <input type="hidden" name="date" value="@{{date}}">
-            <input type="hidden" name="invoice_no" value="@{{invoice_no}}">
+            <input type="hidden" name="service_invoice_no" value="@{{service_invoice_no}}">
 
             <td>
-                <input type="hidden" name="category_id[]" value="@{{category_id}}">
-                @{{category_name}}
+                <input type="hidden" name="service_id[]" value="@{{service_id}}">
+                @{{service_name}}
             </td>
 
-            <td>
-                <input type="hidden" name="product_id[]" value="@{{product_id}}">
-                @{{product_name}}
+
+
+
+
+            <td style="display: none">
+                <input type="number" class="form-control service_price text-right" name="service_price[]" value="@{{service_price}}" readonly>
             </td>
 
-            <td>
-                <input type="number" min="1" class="form-control selling_qty text-right" id="selling_qty" name="selling_qty[]" value="">
-            </td>
 
             <td>
-                <input type="number" class="form-control unit_price text-right" name="unit_price[]" id="unit_price" value="@{{buying_unit_price}}" readonly>
+                <input type="number" class="form-control service_selling_price text-right" name="service_selling_price[]" value="@{{service_price}}" readonly>
             </td>
 
-            <!--
-            <td>
-                <input type="number" class="form-control buying_unit_price text-right" name="buying_unit_price" id="buying_unit_price" value="@{{buying_unit_price}}" readonly>
-            </td>
-            -->
-
-            <td>
-                <input type="number" class="form-control selling_price text-right" id="selling_price[]" name="selling_price[]" value="0" readonly>
-            </td>
 
             <!--
              <td>
@@ -388,32 +348,23 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $(document).on("click", "#storeButton", function() {
-                var buying_unit_price = $('#buying_unit_price').val();
-                var selling_qty = $('#selling_qty').val();
-                var unit_price = $('#unit_price').val();
-                var selling_price = $('#selling_price').val();
+                var service_price = $('#service_price').val();
+                var service_selling_price = $('#service_selling_price').val();
                 var customer_id = $('#customer_id').val();
                 var paid_status = $('#paid_status').find('option:selected').text();
                 var paid_amount = $('#paid_amount').val();
 
-                if (selling_qty == '') {
-                    $.notify("Selling quantity not set", {
+
+                if (service_price == '') {
+                    $.notify("Service Price not set", {
                         globalPosition: 'top-right',
                         className: 'error'
                     });
                     return false;
                 }
 
-                if (unit_price == '') {
-                    $.notify("Unit Price not set", {
-                        globalPosition: 'top-right',
-                        className: 'error'
-                    });
-                    return false;
-                }
-
-                if (selling_price == '') {
-                    $.notify("Selling Price not set", {
+                if (service_selling_price == '') {
+                    $.notify("Service Selling Price not set", {
                         globalPosition: 'top-right',
                         className: 'error'
                     });
@@ -454,12 +405,10 @@
             $(document).on("click", ".addeventmore", function() {
 
                 var date = $('#date').val();
-                var invoice_no = $('#invoice_no').val();
-                var category_id = $('#category_id').val();
-                var category_name = $('#category_id').find('option:selected').text();
-                var product_id = $('#product_id').val();
-                var product_name = $('#product_id').find('option:selected').text();
-                var buying_unit_price = $('#buying_unit_price').val();
+                var service_invoice_no = $('#service_invoice_no').val();
+                var service_id = $('#service_id').val();
+                var service_name = $('#service_id').find('option:selected').text();
+                var service_price = $('#service_price').val();
 
                 if (date == '') {
                     $.notify("Date not set", {
@@ -469,16 +418,18 @@
                     return false;
                 }
 
-                if (category_id == '') {
-                    $.notify("Category not set", {
+
+                if (service_id == '') {
+                    $.notify("Service not set", {
                         globalPosition: 'top-right',
                         className: 'error'
                     });
                     return false;
                 }
 
-                if (product_name == '') {
-                    $.notify("Product not set", {
+
+                if (service_name == '') {
+                    $.notify("Service not set", {
                         globalPosition: 'top-right',
                         className: 'error'
                     });
@@ -490,12 +441,10 @@
 
                 var data = {
                     date: date,
-                    invoice_no: invoice_no,
-                    category_id: category_id,
-                    category_name: category_name,
-                    product_id: product_id,
-                    product_name: product_name,
-                    buying_unit_price: buying_unit_price
+                    service_invoice_no: service_invoice_no,
+                    service_id: service_id,
+                    service_name: service_name,
+                    service_price: service_price
                 };
 
                 var html = template(data);
@@ -511,24 +460,12 @@
             })
 
             // dynamically change selling_price on change of selling_qty and unit_price
-            // $(document).on('keyup click', '.unit_price,.selling_price', function() {
-            //     var unit_price = $(this).closest("tr").find("input.unit_price").val();
-            //     var qty = $(this).closest("tr").find("input.selling_qty").val();
-            //     var total = unit_price * qty;
-            //     $(this).closest("tr").find("input.selling_price").val(total);
-            //     $('#discount_amount').trigger('keyup')
-            // });
-
-
-            $(document).on('keyup click', '.selling_qty', function() {
-                var unit = $(this).closest("tr").find("input.selling_qty").val();
-                var total = unit * parseFloat($("#buying_unit_price").val()); // Use the buying_unit_price
-                $(this).closest("tr").find("input.selling_price").val(total);
-                $('#discount_amount').trigger('keyup');
+            $(document).on('keyup click', '.service_price,.service_selling_price', function() {
+                var service_price = $(this).closest("tr").find("input.service_price").val();
+                var total = service_price;
+                $(this).closest("tr").find("input.service_selling_price").val(total);
+                $('#discount_amount').trigger('keyup')
             });
-
-
-
 
 
 
@@ -536,33 +473,12 @@
                 totalAmountPrice();
             });
 
-            //Written by AI , Chatgpt to be specific
-            // $(document).on('keyup click', '.selling_qty,.unit_price', function() {
-            //     var row = $(this).closest('tr');
-            //     var selling_qty = row.find('.selling_qty').val();
-            //     var unit_price = row.find('.unit_price').val();
-            //     var selling_price = (selling_qty * unit_price).toFixed(2);
-            //     row.find('.selling_price').val(selling_price);
-            // });
-
-            // $(document).on('keyup click', '.unit_price, #buying_unit_price', function() {
-            //     var unit_price = parseFloat($(this).closest("tr").find("input.unit_price").val());
-            //     var buying_unit_price = parseFloat($("#buying_unit_price").val());
-            //     var diff = 0;
-            //     if (unit_price > buying_unit_price) {
-            //         diff = unit_price - buying_unit_price;
-            //         $('#profit_loss').val(diff.toFixed(2));
-            //     } else {
-            //         diff = buying_unit_price - unit_price;
-            //         $('#profit_loss').val('-' + diff.toFixed(2));
-            //     }
-            // });
 
 
             function totalAmountPrice() {
                 var sum = 0;
 
-                $(".selling_price").each(function() {
+                $(".service_selling_price").each(function() {
                     var value = $(this).val();
                     if (!isNaN(value) && value.length != 0) {
                         sum += parseFloat(value);
@@ -609,61 +525,18 @@
 
     <script type="text/javascript">
         $(function() {
-            $(document).on('change', '#category_id', function() {
-                var category_id = $(this).val();
+            $(document).on('change', '#service_id', function() {
+                var service_id = $(this).val();
                 $.ajax({
-                    url: "{{ route('get-product') }}",
+                    url: "{{ route('get_service_price') }}",
                     type: "GET",
                     data: {
-                        category_id: category_id
+                        service_id: service_id
                     },
                     success: function(data) {
-                        var html = '<option value="">Select Product</option>';
-                        $.each(data, function(key, v) {
-                            html += '<option value=" ' + v.id + ' "> ' + v.name +
-                                '</option>';
-                        });
-                        $('#product_id').html(html);
-                    }
-                })
-            });
-        });
-    </script>
+                        console.log(data)
 
-
-    <script type="text/javascript">
-        $(function() {
-            $(document).on('change', '#product_id', function() {
-                var product_id = $(this).val();
-                $.ajax({
-                    url: "{{ route('check_product_stock') }}",
-                    type: "GET",
-                    data: {
-                        product_id: product_id
-                    },
-                    success: function(data) {
-
-                        $('#current_stock_qty').val(data);
-                    }
-                });
-            });
-        });
-    </script>
-
-
-    <script type="text/javascript">
-        $(function() {
-            $(document).on('change', '#product_id', function() {
-                var product_id = $(this).val();
-                $.ajax({
-                    url: "{{ route('get_buying_unit_price') }}",
-                    type: "GET",
-                    data: {
-                        product_id: product_id
-                    },
-                    success: function(data) {
-
-                        $('#buying_unit_price').val(data);
+                        $('#service_price').val(data);
                     }
                 });
             });
@@ -691,7 +564,20 @@
             }
         });
 
+        // $(document).ready(function() {
+        //     // Add an event listener to the payment option dropdown
+        //     $('#payment_option').change(function() {
+        //         var selectedOption = $(this).val();
+        //         var paidStatusField = $('#paid_status');
 
+        //         // Show the paid status field only if a payment option is selected
+        //         if (selectedOption !== '') {
+        //             paidStatusField.show();
+        //         } else {
+        //             paidStatusField.hide();
+        //         }
+        //     });
+        // });
 
         $(document).on('change', '#payment_option', function() {
             var payment_option = $(this).val();

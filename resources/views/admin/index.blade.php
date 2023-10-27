@@ -24,19 +24,19 @@
             <div class="row">
 
                 @php
-                    
+
                     $total_sales = App\Models\PaymentDetails::sum('current_paid_amount');
-                    
+
                     $total_services = App\Models\Service::count();
-                    
+
                     $total_employees = App\Models\User::where('role', ['2','3'])->count();
-                    
+
                     $total_locations = App\Models\Location::count();
-                    
+
                     $total_customers = App\Models\Customer::count();
-                    
-                    
-                    
+
+
+
                 @endphp
 
                 <div class="col-xl-3 col-md-6">
@@ -59,11 +59,11 @@
                 </div><!-- end col -->
 
 
-                
 
-                
 
-                
+
+
+
                 <div class="col-xl-3 col-md-6">
                     <div class="card">
                         <div class="card-body">
@@ -84,11 +84,11 @@
                 </div><!-- end col -->
 
 
-                
 
 
 
-                
+
+
 
 
                 <div class="col-xl-3 col-md-6">
@@ -150,7 +150,7 @@
                         </div><!-- end cardbody -->
                     </div><!-- end card -->
                 </div><!-- end col -->
-                
+
 
 
 
@@ -175,12 +175,12 @@
                                 <h4 class="card-title mb-4">Latest Transactions</h4>
 
                                 @php
-                                    
-                                    $allData = App\Models\Prescription::orderBy('date', 'desc')
+
+                                    $allData = App\Models\Invoice::orderBy('date', 'desc')
                                         ->orderBy('id', 'desc')
                                         ->take(10)
                                         ->get();
-                                    
+
                                 @endphp
 
                                 <div class="table-responsive">
@@ -189,7 +189,7 @@
                                             <tr>
                                                 <th>Sl</th>
                                                 <th>Customer Name</th>
-                                                <th>Prescription No</th>
+                                                <th>Invoice No</th>
                                                 <th>Date</th>
                                                 <th>Total Amount</th>
                                                 <th>Paid Amount</th>
@@ -204,22 +204,22 @@
                                                 <tr>
                                                     <td> {{ $key + 1 }} </td>
                                                     <td> {{ $item['payment']['customer']['name'] }} </td>
-                                                    <td> #{{ $item->prescription_no }} </td>
+                                                    <td> #{{ $item->invoice_no }} </td>
                                                     <td> {{ date('d-m-Y', strtotime($item->date)) }} </td>
 
                                                     <td> Tsh {{ $item['payment']['total_amount'] }} </td>
                                                     <td> Tsh {{ $item['payment']['paid_amount'] }} </td>
-                                                    
+
                                                     @if ($item['payment']['due_amount'] == 0)
                                                         <td> Null </td>
                                                     @else
                                                         <td> Tsh {{ $item['payment']['due_amount'] }} </td>
                                                     @endif
                                                     <td>
-                                                        <a href=" {{ route('print.prescription', $item->id) }} "
-                                                            class="btn btn-dark sm" title="Print prescription"> <i
-                                                                class="fas fa-eye"></i>
-                                                        </a>
+{{--                                                        <a href=" {{ route('print.prescription', $item->id) }} "--}}
+{{--                                                            class="btn btn-dark sm" title="Print prescription"> <i--}}
+{{--                                                                class="fas fa-eye"></i>--}}
+{{--                                                        </a>--}}
                                                     </td>
 
                                                 </tr>

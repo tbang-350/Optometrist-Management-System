@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">All Products</h4>
+                        <h4 class="mb-sm-0">All Invoices</h4>
 
 
 
@@ -21,12 +21,12 @@
                     <div class="card">
                         <div class="card-body">
 
-                            {{-- <a href=" {{ route('product.add') }} " class="btn btn-dark btn-rounded waves-effect waves-light"
+                            <a href=" {{ route('service.invoice.add') }} " class="btn btn-dark btn-rounded waves-effect waves-light"
                                 style="float:right">
                                 <i class="fas fa-plus-circle">
-                                    Add Product
+                                    Add Service Invoice
                                 </i>
-                            </a> --}}
+                            </a>
 
                             <br>
                             <br>
@@ -40,39 +40,40 @@
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
-
-                                        <th>Name</th>
-                                        <th>Supplier name</th>
-                                        <th>Category</th>
-                                        <th>Stock</th>
-                                        <th>Reorder Level</th>
+                                        <th>Customer Name</th>
+                                        <th>Service Invoice No</th>
+                                        <th>Date</th>
+                                        <th>Payment Method</th>
+                                        <th>Total Amount</th>
+                                        <th>Paid Amount</th>
+                                        <th>Due Amount</th>
                                         <th>Action</th>
-
+                                    </tr>
                                 </thead>
 
 
                                 <tbody>
 
-                                    @foreach ($products as $key => $item)
+                                    @foreach ($allData as $key => $item)
                                         <tr>
                                             <td> {{ $key + 1 }} </td>
-                                            <td> {{ $item->name }} </td>
-                                            <td> {{ $item->supplier_name }} </td>
-                                            <td> {{ $item['category']['name'] }} </td>
-                                            <td> {{ $item->quantity }} </td>
-                                            <td>{{ $item->reorder_level }}</td>
+                                            <td> {{ $item['service_payment']['customer']['name'] }} </td>
+                                            <td> #{{ $item->service_invoice_no }} </td>
+                                            <td> {{ date('d-m-Y', strtotime($item->date)) }} </td>
+                                            <td> {{ $item['service_payment']['payment_option'] }} </td>
+                                            <td> Tsh {{ $item['service_payment']['total_amount'] }} </td>
+                                            <td> Tsh {{ $item['service_payment']['paid_amount'] }} </td>
+
+                                            @if ($item['service_payment']['due_amount'] == 0)
+                                                <td> Null </td>
+                                            @else
+                                                <td> Tsh {{ $item['service_payment']['due_amount'] }} </td>
+                                            @endif
 
                                             <td>
-                                                <a href=" {{ route('product.edit', $item->id) }} " class="btn btn-info sm"
-                                                    title="Edit Data">
-                                                    <i class="fas fa-edit"></i>
+                                                <a href=" {{ route('print.service.invoice', $item->id) }} " class="btn btn-dark sm"
+                                                    title="Print Prescription"> <i class="fas fa-print"></i>
                                                 </a>
-
-                                                <a href=" {{ route('product.delete', $item->id) }} "
-                                                    class="btn btn-danger sm" title="Delete Data" id="delete"> <i
-                                                        class="fas fa-trash-alt"></i>
-                                                </a>
-
                                             </td>
 
                                         </tr>

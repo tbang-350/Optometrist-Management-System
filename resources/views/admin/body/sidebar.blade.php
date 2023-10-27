@@ -36,6 +36,21 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-shield-user-fill"></i>
+                        <span>Customers</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('customer.all') }}">All Customers</a></li>
+                        <li><a href="{{ route('credit.customer') }}">Credit Customers</a></li>
+
+                        <li><a href="{{ route('paid.customer') }}">Paid Customers</a></li>
+                         <li><a href="{{ route('customer.wise.report') }}">Customer Wise Report</a></li>
+                    </ul>
+                </li>
+
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-shield-user-fill"></i>
                         <span>Services</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -44,32 +59,7 @@
                     </ul>
                 </li>
 
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-shield-user-fill"></i>
-                        <span>Customers</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('customer.all') }}">All Customers</a></li>
-                        <li><a href="{{ route('credit.customer') }}">Credit Customers</a></li>
-                        <li><a href="{{ route('paid.customer') }}">Paid Customers</a></li>
-                        {{-- <li><a href="email-read.html">Read Email</a></li> --}}
-                    </ul>
-                </li>
-
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-shield-user-fill"></i>
-                        <span>Prescription</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('prescription.all') }}">All Prescriptions</a></li>
-                        {{-- <li><a href="email-read.html">Read Email</a></li> --}}
-                    </ul>
-                </li>
-
-                <li class="menu-title">Consultation</li>
+                <li class="menu-title">Consultation &amp; Prescription</li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -83,7 +73,7 @@
                 </li>
 
 
-                <li class="menu-title">Prescriptions</li>
+
 
                 <li>
 
@@ -98,7 +88,7 @@
 
                 </li>
 
-                <li class="menu-title">Product</li>
+                <li class="menu-title">Product &amp; Purchase </li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -106,8 +96,8 @@
                         <span>Manage Products</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('supplier.all') }}">Suppliers</a></li>
-                        <li><a href="{{ route('unit.all') }}">Units</a></li>
+                        {{-- <li><a href="{{ route('supplier.all') }}">Suppliers</a></li> --}}
+                        {{-- <li><a href="{{ route('unit.all') }}">Units</a></li> --}}
                         <li><a href="{{ route('category.all') }}">Categories</a></li>
                         <li><a href="{{ route('product.all') }}">Products</a></li>
                     </ul>
@@ -115,7 +105,6 @@
 
                 </li>
 
-                <li class="menu-title">Purchase</li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -136,7 +125,7 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class=" ri-edit-box-fill"></i>
-                        <span>Manage Invoice</span>
+                        <span>Product Invoice</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('invoice.all') }}">All Invoices</a></li>
@@ -148,11 +137,24 @@
 
 
 
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-shield-user-fill"></i>
+                        <span>Service Invoice</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('service.invoice.all') }}">All Service Invoices</a></li>
+                        {{-- <li><a href="email-read.html">Read Email</a></li> --}}
+                    </ul>
+                </li>
+
+
+
 
 
                 <li class="menu-title">Reports</li>
 
-                <li>
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-account-circle-line"></i>
                         <span>Customer</span>
@@ -161,15 +163,15 @@
                         <li><a href="{{ route('customer.wise.report') }}">Customer Wise Report </a></li>
 
                     </ul>
-                </li>
+                </li> --}}
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-profile-line"></i>
-                        <span>Prescription</span>
+                        <span>Invoice</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('daily.prescription.report') }}">Daily Prescription Report</a></li>
+                        <li><a href="{{ route('daily.service.invoice.report') }}">Daily Service Invoice Report</a></li>
 
                     </ul>
                 </li>
@@ -181,8 +183,23 @@
                         <span>Payment</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('prescription.payment.report') }}">Payment Option Report</a></li>
+                        <li><a href="{{ route('service.invoice.payment.report') }}">Service Payment Option Report</a></li>
 
+                    </ul>
+                </li>
+
+                <li class="mm-active">
+                    <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="true">
+                        <i class="ri-share-line"></i>
+                        <span>Multi Level</span>
+                    </a>
+                    <ul class="sub-menu mm-collapse mm-show" aria-expanded="true" style="">
+                        <li class=""><a href="javascript: void(0);" class="has-arrow" aria-expanded="false">Level 1.2</a>
+                            <ul class="sub-menu mm-collapse" aria-expanded="true" style="height: 0px;">
+                                <li><a href="javascript: void(0);">Level 2.1</a></li>
+                                <li><a href="javascript: void(0);">Level 2.2</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
 

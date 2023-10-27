@@ -33,42 +33,27 @@
 
 
                                 <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label">Supplier Name</label>
-                                    <div class="col-sm-10">
-                                        <select name="supplier_id" class="form-select" aria-label="Default select example">
-                                            <option selected="">Open this select menu</option>
-
-                                            @foreach ($supplier as $supp)
-                                                <option value="{{ $supp->id }}"
-                                                    {{ $supp->id == $product->supplier_id ? 'selected' : '' }}>
-                                                    {{ $supp->name }}
-                                                </option>
-                                            @endforeach
-
-                                        </select>
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Supplier Name</label>
+                                    <div class=" form-group col-sm-10">
+                                        <input name="supplier_name" class="form-control" type="text" value="{{ $product->supplier_name }}">
                                     </div>
                                 </div>
                                 <!-- end row -->
 
 
                                 <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label">Unit</label>
-                                    <div class="col-sm-10">
-                                        <select name="unit_id" class="form-select" aria-label="Default select example">
-                                            <option selected="">Open this select menu</option>
-
-                                            @foreach ($unit as $unit)
-                                                <option
-                                                    value="{{ $unit->id }}"{{ $unit->id == $product->unit_id ? 'selected' : '' }}>
-                                                    {{ $unit->name }}
-                                                </option>
-                                            @endforeach
-
-                                        </select>
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Quantity</label>
+                                    <div class=" form-group col-sm-10">
+                                        <input name="quantity" class="form-control" type="number" value="{{ $product->quantity }}" >
                                     </div>
                                 </div>
-                                <!-- end row -->
 
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Reorder Level</label>
+                                    <div class=" form-group col-sm-10">
+                                        <input name="reorder_level" class="form-control" type="number" value="{{ $product->reorder_level }}" >
+                                    </div>
+                                </div>
 
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">Category</label>
@@ -122,9 +107,6 @@
                     supplier_id: {
                         required: true,
                     },
-                    unit_id: {
-                        required: true,
-                    },
                     category_id: {
                         required: true,
                     },
@@ -135,9 +117,6 @@
                     },
                     supplier_id: {
                         required: 'Please Select Supplier',
-                    },
-                    unit_id: {
-                        required: 'Please Select Unit',
                     },
                     category_id: {
                         required: 'Please Select Category',
@@ -158,5 +137,5 @@
         });
     </script>
 
-    
+
 @endsection

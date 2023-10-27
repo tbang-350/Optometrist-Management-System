@@ -49,7 +49,7 @@
                                             <p>Name: <strong>{{ $payment['customer']['name'] }}</strong></p>
                                         </td>
                                         <td>
-                                            <p>Mobile No: <strong>{{ $payment['customer']['mobile_no'] }}</strong></p>
+                                            <p>Mobile No: <strong>{{ $payment['customer']['phonenumber'] }}</strong></p>
                                         </td>
                                         <td>
                                             <p>Email: <strong>{{ $payment['customer']['email'] }}</strong></p>

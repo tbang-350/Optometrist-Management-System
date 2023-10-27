@@ -15,18 +15,19 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->integer('supplier_id');
+            $table->string('supplier_name')->nullable();
             $table->integer('category_id');
             $table->integer('product_id');
             $table->string('purchase_no');
             $table->date('date');
-            $table->string('description')->nullable();
             $table->double('buying_qty');
-            $table->double('unit_price');
-            $table->double('buying_price');
+            $table->double('buying_unit_price');
+            $table->double('selling_unit_price');
+            $table->double('total_buying_amount');
             $table->tinyInteger('status')->default('1')->comment('0 = pending , 1 = approved');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
+            $table->integer('location_id')->nullable();
             $table->timestamps();
         });
     }

@@ -7,12 +7,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Customer Wise Paid Report</h4>
+                        <h4 class="mb-sm-0">Payment Option Report</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
 
-                                <li class="breadcrumb-item active">Customer Wise Paid Report</li>
+                                <li class="breadcrumb-item active">Payment Option Report</li>
                             </ol>
                         </div>
 
@@ -27,14 +27,14 @@
                         <div class="card-body">
 
                             @php
-                                
+
                                 $company_info = App\Models\Company::first();
-                                
+
                             @endphp
 
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="invoice-title">
+                                    <div class="prescription-title">
 
                                         <h3>
                                             <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="logo"
@@ -70,7 +70,7 @@
                                     <div>
                                         <div class="p-2">
                                             <h3 class="font-size-16">
-                                                <strong>Paid Customers Report</strong>
+                                                <strong>Payment Option : {{ $payment_option }}</strong>
 
                                             </h3>
                                         </div>
@@ -95,7 +95,7 @@
                                                         <tr>
                                                             <td><strong>S.No</strong></td>
                                                             <td class="text-center"><strong>Customer Name</strong></td>
-                                                            <td class="text-center"><strong>Invoice No</strong>
+                                                            <td class="text-center"><strong>Prescription No</strong>
                                                             </td>
                                                             <td class="text-center"><strong>Date</strong>
                                                             </td>
@@ -118,9 +118,9 @@
                                                                 <td class="text-center"> {{ $item['customer']['name'] }}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    #{{ $item['invoice']['invoice_no'] }} </td>
+                                                                    #{{ $item['service_invoice']['service_invoice_no'] }} </td>
                                                                 <td class="text-center">
-                                                                    {{ date('d-m-Y', strtotime($item['invoice']['date'])) }}
+                                                                    {{ date('d-m-Y', strtotime($item['service_invoice']['date'])) }}
                                                                 </td>
                                                                 <td class="text-center"> {{ $item->paid_amount }} </td>
 
@@ -148,9 +148,9 @@
                                             </div>
 
                                             @php
-                                                
+
                                                 $date = new DateTime('now', new DateTimeZone('Africa/Dar_es_Salaam'));
-                                                
+
                                             @endphp
 
                                             <i>Printing Time : {{ $date->format('F j, Y, g:i a') }}</i>

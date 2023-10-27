@@ -123,8 +123,10 @@ class InvoiceController extends Controller
 
                             $customer = new Customer();
                             $customer->name = $request->name;
-                            $customer->mobile_no = $request->mobile_no;
+                            $customer->phonenumber = $request->phonenumber;
                             $customer->address = $request->address;
+                            $customer->age = $request->age;
+                            $customer->sex = $request->sex;
                             $customer->save();
 
                             $customer_id = $customer->id;

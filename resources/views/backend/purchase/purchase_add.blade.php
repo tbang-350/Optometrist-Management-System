@@ -1,6 +1,15 @@
 @extends('admin.admin_master')
 @section('admin')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+
+
+
+    {{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ --}}
+
+
 
 
     <div class="page-content">
@@ -13,393 +22,229 @@
 
                             <h4 class="card-title">Add Purchase </h4><br><br>
 
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="md-3">
-                                        <label for="example-text-input" class="form-label">Date</label>
-                                        <div class=" form-group col-sm-10">
-                                            <input name="date" class="form-control example-date-input" type="date"
-                                                id="date">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="md-3">
-                                        <label for="example-text-input" class="form-label">Purchase No</label>
-                                        <div class=" form-group col-sm-10">
-                                            <input name="purchase_no" class="form-control example-date-input" type="text"
-                                                id="purchase_no" value="{{ $purchase_no }}" readonly
-                                                style="background-color: #ddd">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="md-3">
-                                        <label for="example-text-input" class="form-label">Supplier Name</label>
-                                        <div class=" form-group col-sm-10">
-                                            <select name="supplier_id" id="supplier_id" class="form-select select2"
-                                                aria-label="Default select example">
-                                                <option selected="">Open this select menu</option>
-
-                                                @foreach ($supplier as $supp)
-                                                    <option value="{{ $supp->id }}">{{ $supp->name }}</option>
-                                                @endforeach
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="md-3">
-                                        <label for="example-text-input" class="form-label">Category</label>
-                                        <div class=" form-group col-sm-10">
-                                            <select name="category_id" id="category_id" class="form-select select2"
-                                                aria-label="Default select example">
-                                                <option selected="">Open this select menu</option>
-
-
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="md-3">
-                                        <label for="example-text-input" class="form-label">Product</label>
-                                        <div class=" form-group col-sm-10">
-                                            <select name="product_id" id="product_id" class="form-select select2"
-                                                aria-label="Default select example">
-                                                <option selected="">Open this select menu</option>
-
-
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-md-4">
-                                    <div class="md-3">
-                                        <label for="example-text-input" class="form-label" style="margin-top: 43px">
-                                        </label>
-
-
-                                        <i
-                                            class="btn btn-secondary btn-rounded waves-effect waves-light fas fa-plus-circle addeventmore">
-                                            Add
-                                        </i>
-                                    </div>
-                                </div>
-
-
-                            </div> <!-- end row -->
-
-
-
-                        </div>
-                        <!--end cardbody -->
-
-
-                        <div class="card-body">
-
-                            <form action="{{ route('purchase.store') }}" method="post">
+                            <form action="{{ route('purchase.store') }}" method="post" id="myForm">
 
                                 @csrf
 
-                                <table class="table-sm table-bordered" width="100%" style="border-color: #ddd">
+                                <div class="row">
+
+                                    <div class="form-group col-md-6">
+                                        <label for="date" class="form-label">Date</label>
+                                        <input name="date" class="form-control example-date-input" type="date"
+                                            id="date">
+                                    </div>
+
+                                    <div class=" form-group col-md-6">
+                                        <label for="example-text-input" class="form-label">Purchase No</label>
+
+                                        <input name="purchase_no" class="form-control example-date-input" type="text"
+                                            id="purchase_no" value="{{ $purchase_no }}" readonly
+                                            style="background-color: #ddd">
+                                    </div>
+
+                                    <hr>
 
 
-                                    <thead>
-                                        <tr>
-                                            <th>Category</th>
-                                            <th>Product Name</th>
-                                            <th>Unit(s)</th>
-                                            <th>Unit Price</th>
-                                            <th>Description</th>
-                                            <th>Total Price</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
+                                    <div class="row mb-3 ">
+                                        <div class=" form-group col-md-6">
+                                            <label for="example-text-input" class="form-label">Supplier</label>
+                                            <input name="supplier_name" id="supplier_name" class="form-control"
+                                                type="text" autocomplete="off">
+                                        </div>
 
-                                    <tbody id="addRow" class="addRow">
+                                        <div class=" form-group col-md-6">
+                                            <label for="example-text-input" class="form-label">Category</label>
+                                            <input name="category_name" id="category_name" class="form-control"
+                                                type="text" autocomplete="off">
+                                        </div>
 
-                                    </tbody>
+                                    </div>
 
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="5"></td>
-                                            <td>
-                                                <input type="text" name="estimated_amount" value="0"
-                                                    id="estimated_amount" class="form-control estimated_amount" readonly
-                                                    style="background-color: #ddd">
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
 
-                                </table>
 
-                                <br>
+                                    <div class="row mb-3 ">
+                                        <div class=" form-group col-md-6">
+                                            <label for="example-text-input" class="form-label">Product Name</label>
+                                            <input name="product_name" id="product_name" class="form-control" type="text"
+                                                autocomplete="off">
+                                        </div>
 
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-info" id="storeButton">Purchase Store</button>
+                                        <div class=" form-group col-md-6">
+                                            <label for="example-text-input" class="form-label">Units</label>
+                                            <input name="buying_qty" class="form-control" type="number">
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="row mb-3 ">
+                                        <div class=" form-group col-md-6">
+                                            <label for="example-text-input" class="form-label">Buying Unit Price</label>
+                                            <input name="buying_unit_price" class="form-control" type="number">
+                                        </div>
+
+                                        <div class=" form-group col-md-6">
+                                            <label for="example-text-input" class="form-label">Selling Unit Price</label>
+                                            <input name="selling_unit_price" class="form-control" type="number">
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="row mb-3 ">
+                                        <div class=" form-group col-md-4">
+                                            <label for="example-text-input" class="form-label">Reorder Level</label>
+                                            <input name="reorder_level" class="form-control" type="text">
+                                        </div>
+
+                                    </div>
+
+
+                                    <br>
+                                    <br>
+
+                                    <div class="row mb-3 ">
+                                        <div class=" form-group col-md-2">
+                                            <input type="submit" class="btn btn-info waves-effect waves-light"
+                                                value="Add Purchase">
+                                        </div>
+
+                                    </div>
+
+
+
                                 </div>
 
                             </form>
 
+
+
+
                         </div>
-
-
                     </div>
-
-                </div> <!-- end col -->
-
-            </div> <!-- end row -->
-
+                </div>
+            </div>
         </div>
-
     </div>
 
 
-
-
-
-
-    <<script type="text/x-handlebars-template" id="document-template">
-        <tr class="delete_add_more_item" id="delete_add_more_item">
-            <input type="hidden" name="date[]" value="@{{date}}">
-            <input type="hidden" name="purchase_no[]" value="@{{purchase_no}}">
-            <input type="hidden" name="supplier_id[]" value="@{{supplier_id}}">
-            <td>
-                <input type="hidden" name="category_id[]" value="@{{category_id}}">
-                @{{category_name}}
-            </td>
-            <td>
-                <input type="hidden" name="product_id[]" value="@{{product_id}}">
-                @{{product_name}}
-            </td>
-            <td>
-                <input type="number" min="1" class="form-control buying_qty text-right" id="buying_qty" name="buying_qty[]" value="">
-            </td>
-            <td>
-                <input type="number" class="form-control unit_price text-right" id="unit_price" name="unit_price[]" value="">
-            </td>
-            <td>
-                <input type="text" class="form-control" name="description[]" value="">
-            </td>
-            <td>
-                <input type="number" class="form-control buying_price text-right" id="buying_price" name="buying_price[]" value="0" readonly>
-            </td>
-            <td>
-                <i class="btn btn-danger btn-sm fas fa-window-close removeeventmore"></i>
-            </td>
-        </tr>
-    </script>
-
-
     <script type="text/javascript">
-        $(document).ready(function() {
-            $(document).on("click","#storeButton" , function() {
-                var buying_price = $('#buying_price').val();
-                var buying_qty = $('#selling_qty').val();
-                var unit_price = $('#unit_price').val();
+        var path = "{{ route('autocomplete.suppliers') }}";
 
-
-                if (selling_qty == '') {
-                    $.notify("Selling quantity not set", {
-                        globalPosition: 'top-right',
-                        className: 'error'
-                    });
-                    return false;
-                }
-
-                if (unit_price == '') {
-                    $.notify("Unit Price not set", {
-                        globalPosition: 'top-right',
-                        className: 'error'
-                    });
-                    return false;
-                }
-
-                if (buying_price == '') {
-                    $.notify("Buying Price not set", {
-                        globalPosition: 'top-right',
-                        className: 'error'
-                    });
-                    return false;
-                }
-
-
-
-            });
-        });
-    </script>
-
-
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $(document).on("click", ".addeventmore", function() {
-
-                var date = $('#date').val();
-                var purchase_no = $('#purchase_no').val();
-                var supplier_id = $('#supplier_id').val();
-                var category_id = $('#category_id').val();
-                var category_name = $('#category_id').find('option:selected').text();
-                var product_id = $('#product_id').val();
-                var product_name = $('#product_id').find('option:selected').text();
-
-                if (date == '') {
-                    $.notify("Date not set", {
-                        globalPosition: 'top-right',
-                        className: 'error'
-                    });
-                    return false;
-                }
-
-                if (purchase_no == '') {
-                    $.notify("Purchase_no  not set", {
-                        globalPosition: 'top-right',
-                        className: 'error'
-                    });
-                    return false;
-                }
-
-                if (supplier_id == '') {
-                    $.notify("Supplier not set", {
-                        globalPosition: 'top-right',
-                        className: 'error'
-                    });
-                    return false;
-                }
-
-                if (category_id == '') {
-                    $.notify("Category not set", {
-                        globalPosition: 'top-right',
-                        className: 'error'
-                    });
-                    return false;
-                }
-
-                if (product_id == '') {
-                    $.notify("Product not set", {
-                        globalPosition: 'top-right',
-                        className: 'error'
-                    });
-                    return false;
-                }
-
-                var source = $("#document-template").html();
-                var template = Handlebars.compile(source);
-
-                var data = {
-                    date: date,
-                    purchase_no: purchase_no,
-                    supplier_id: supplier_id,
-                    category_id: category_id,
-                    category_name: category_name,
-                    product_id: product_id,
-                    product_name: product_name,
-                };
-
-                var html = template(data);
-                $("#addRow").append(html);
-
-            });
-
-            $(document).on("click", ".removeeventmore", function(event) {
-                $(this).closest(".delete_add_more_item").remove();
-                totalAmountPrice();
-            })
-
-            // dynamically change buying_price on change of buying_qty and unit_price
-            $(document).on('keyup click', '.unit_price,.buying_price', function() {
-                var unit_price = $(this).closest("tr").find("input.unit_price").val();
-                var qty = $(this).closest("tr").find("input.buying_qty").val();
-                var total = unit_price * qty;
-                $(this).closest("tr").find("input.buying_price").val(total);
-                totalAmountPrice();
-            });
-
-            //Written by AI , Chatgpt to be specific
-            // $(document).on('keyup click', '.buying_qty,.unit_price', function() {
-            //     var row = $(this).closest('tr');
-            //     var buying_qty = row.find('.buying_qty').val();
-            //     var unit_price = row.find('.unit_price').val();
-            //     var buying_price = (buying_qty * unit_price).toFixed(2);
-            //     row.find('.buying_price').val(buying_price);
-            // });
-
-
-            function totalAmountPrice() {
-                var sum = 0;
-
-                $(".buying_price").each(function() {
-                    var value = $(this).val();
-                    if (!isNaN(value) && value.length != 0) {
-                        sum += parseFloat(value);
+        $('#supplier_name').typeahead({
+            source: function(query, process) {
+                return $.get(path, {
+                    query: query
+                }, function(data) {
+                    if (data.length > 0) {
+                        var supplierNames = data.map(function(item) {
+                            return item.supplier_name;
+                        });
+                        return process(supplierNames);
                     }
                 });
-                $('#estimated_amount').val(sum);
             }
-
-
-        });
-    </script>
-
-
-
-
-
-    <script type="text/javascript">
-        $(function() {
-            $(document).on('change', '#supplier_id', function() {
-                var supplier_id = $(this).val();
-                $.ajax({
-                    url: "{{ route('get-category') }}",
-                    type: "GET",
-                    data: {
-                        supplier_id: supplier_id
-                    },
-                    success: function(data) {
-                        var html = '<option value="">Select Category</option>';
-                        $.each(data, function(key, v) {
-                            html += '<option value=" ' + v.category_id + ' "> ' + v
-                                .category.name + '</option>';
-                        });
-                        $('#category_id').html(html);
-                    }
-                })
-            });
         });
     </script>
 
     <script type="text/javascript">
-        $(function() {
-            $(document).on('change', '#category_id', function() {
-                var category_id = $(this).val();
-                $.ajax({
-                    url: "{{ route('get-product') }}",
-                    type: "GET",
-                    data: {
-                        category_id: category_id
-                    },
-                    success: function(data) {
-                        var html = '<option value="">Select Product</option>';
-                        $.each(data, function(key, v) {
-                            html += '<option value=" ' + v.id + ' "> ' + v.name +
-                                '</option>';
-                        });
-                        $('#product_id').html(html);
-                    }
-                })
-            });
+        var path2 = "{{ route('autocomplete.categories') }}";
+
+        $('#category_name').typeahead({
+            source: function(query, process) {
+                return $.get(path2, {
+                    query: query
+                }, function(data) {
+                    return process(data);
+                });
+            }
         });
     </script>
 
+
+    <script type="text/javascript">
+        var path3 = "{{ route('autocomplete.products') }}";
+
+        $('#product_name').typeahead({
+            source: function(query, process) {
+                return $.get(path3, {
+                    query: query
+                }, function(data) {
+                    return process(data);
+                });
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myForm').validate({
+                rules: {
+                    date: {
+                        required: true,
+                    },
+                    supplier_name: {
+                        required: true,
+                    },
+                    category_name: {
+                        required: true,
+                    },
+                    product_name: {
+                        required: true,
+                    },
+                    buying_qty: {
+                        required: true,
+                    },
+                    buying_unit_price: {
+                        required: true,
+                    },
+                    selling_unit_price: {
+                        required: true,
+                    },
+                    reorder_level: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    date: {
+                        required: 'Date is required',
+                    },
+                    supplier_name: {
+                        required: 'Supplier name is required',
+                    },
+                    category_name: {
+                        required: 'Category name is required',
+                    },
+                    product_name: {
+                        required: 'Product name is required',
+                    },
+                    buying_qty: {
+                        required: 'Units are required',
+                    },
+                    buying_unit_price: {
+                        required: 'Buying unit price is required',
+                    },
+                    selling_unit_price: {
+                        required: 'Selling unit price is required',
+                    },
+                    reorder_level: {
+                        required: 'Reorder Level is required',
+                    },
+                },
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+            });
+        });
+    </script>
 @endsection

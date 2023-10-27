@@ -33,35 +33,15 @@
 
 
                                 <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label">Supplier Name</label>
-                                    <div class="col-sm-10">
-                                        <select name="supplier_id" class="form-select" aria-label="Default select example">
-                                            <option selected="">Open this select menu</option>
-
-                                            @foreach ($supplier as $supp)
-                                                <option value="{{ $supp->id }}">{{ $supp->name }}</option>
-                                            @endforeach
-
-                                        </select>
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Supplier Name</label>
+                                    <div class=" form-group col-sm-10">
+                                        <input name="supplier_name" class="form-control" type="text">
                                     </div>
                                 </div>
                                 <!-- end row -->
 
 
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label">Unit</label>
-                                    <div class="col-sm-10">
-                                        <select name="unit_id" class="form-select" aria-label="Default select example">
-                                            <option selected="">Open this select menu</option>
 
-                                            @foreach ($unit as $unit)
-                                                <option value="{{ $unit->id }}">{{ $unit->name }}</option>
-                                            @endforeach
-
-                                        </select>
-                                    </div>
-                                </div>
-                                <!-- end row -->
 
 
                                 <div class="row mb-3">
@@ -81,17 +61,8 @@
 
 
 
-
-
-
-
-
-
-
-
                                 <input type="submit" class="btn btn-info waves-effect waves-light" value="Add Product">
                             </form>
-
 
 
                         </div>
@@ -114,9 +85,6 @@
                     supplier_id: {
                         required: true,
                     },
-                    unit_id: {
-                        required: true,
-                    },
                     category_id: {
                         required: true,
                     },
@@ -125,11 +93,8 @@
                     name: {
                         required: 'Please Enter Product Name',
                     },
-                    supplier_id: {
+                    supplier_name: {
                         required: 'Please Select Supplier',
-                    },
-                    unit_id: {
-                        required: 'Please Select Unit',
                     },
                     category_id: {
                         required: 'Please Select Category',
@@ -150,5 +115,5 @@
         });
     </script>
 
-    
+
 @endsection

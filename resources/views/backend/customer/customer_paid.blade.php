@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">All Credit Customers</h4>
+                        <h4 class="mb-sm-0">All Paid Customers</h4>
 
 
 
@@ -41,9 +41,9 @@
                                     <tr>
                                         <th>Sl</th>
                                         <th>Customer Name</th>
-                                        <th>prescription No</th>
+                                        <th>Invoice No</th>
                                         <th>Date</th>
-                                        <th>Paid Amount</th>
+                                        <th>Due Amount</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -55,20 +55,17 @@
                                         <tr>
                                             <td> {{ $key + 1 }} </td>
                                             <td> {{ $item['customer']['name'] }} </td>
-                                            <td> #{{ $item['prescription']['prescription_no'] }} </td>
-                                            <td> {{ date('d-m-Y',strtotime($item['prescription']['date'])) }} </td>
-                                            <td> Tsh {{ $item->paid_amount }} </td>
+                                            <td> #{{ $item['invoice']['invoice_no'] }} </td>
+                                            <td> {{ date('d-m-Y',strtotime($item['invoice']['date'])) }} </td>
+                                            <td> {{ $item->due_amount }} </td>
 
                                             <td>
-                                                {{-- <a href=" {{ route('customer.edit.prescription', $item->prescription_id) }} " class="btn btn-info sm"
-                                                    title="Edit Data">
-                                                    <i class="fas fa-edit"></i>
-                                                </a> --}}
-
-                                                <a href=" {{ route('customer.prescription.details.pdf', $item->prescription_id) }} "
-                                                    class="btn btn-danger sm" title="Customer prescription Details"> <i
-                                                        class="fas fa-eye"></i>
+                                                <a href=" {{ route('customer.invoice.details.pdf', $item->invoice_id) }} " class="btn btn-info sm"
+                                                    title="Customer invoice details">
+                                                    <i class="fas fa-eye"></i>
                                                 </a>
+
+                                                
 
                                             </td>
 

@@ -1,22 +1,20 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DefaultController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PrescriptionController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ServiceController;
-
-use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\UnitController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\DefaultController;
-use App\Http\Controllers\InvoiceController;
-
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ServiceInvoiceController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -80,6 +78,23 @@ Route::middleware('auth')->group(function () {
         Route::get('/customer/edit/{id}', 'CustomerEdit')->name('customer.edit');
         Route::post('/customer/update', 'CustomerUpdate')->name('customer.update');
         Route::get('/customer/delete/{id}', 'CustomerDelete')->name('customer.delete');
+
+        Route::get('/credit/customer', 'CreditCustomer')->name('credit.customer');
+        Route::get('/credit/service/customer', 'CreditServiceCustomer')->name('credit.service.customer');
+        Route::get('/credit/customer/print/pdf', 'CreditCustomerPrintPdf')->name('credit.customer.print.pdf');
+        Route::get('/credit/service/customer/print/pdf', 'ServiceCreditCustomerPrintPdf')->name('service.credit.customer.print.pdf');
+        Route::get('/customer/edit/invoice/{invoice_id}', 'CustomerEditInvoice')->name('customer.edit.invoice');
+        Route::get('/customer/edit/service_invoice/{invoice_id}', 'CustomerEditServiceInvoice')->name('customer.edit.service.invoice');
+        Route::post('/customer/update/invoice/{invoice_id}', 'CustomerUpdateInvoice')->name('customer.update.invoice');
+        Route::post('/customer/update/service_invoice/{invoice_id}', 'CustomerUpdateServiceInvoice')->name('customer.update.service.invoice');
+        Route::get('/customer/invoice/details/{invoice_id}', 'CustomerInvoiceDetails')->name('customer.invoice.details.pdf');
+        Route::get('/customer/service/invoice/details/{invoice_id}', 'CustomerServiceInvoiceDetails')->name('customer.service.invoice.details.pdf');
+        Route::get('/paid/customer', 'PaidCustomer')->name('paid.customer');
+        Route::get('/paid/customer/print/pdf', 'PaidCustomerPrintPdf')->name('paid.customer.print.pdf');
+        Route::get('/customer/wise/report', 'CustomerWiseReport')->name('customer.wise.report');
+        Route::get('/customer/wise/credit/report', 'CustomerWiseCreditReport')->name('customer.wise.credit.report');
+        Route::get('/customer/wise/paid/report', 'CustomerWisePaidReport')->name('customer.wise.paid.report');
+
     });
 
     //Service Routes
@@ -122,17 +137,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/supplier/delete/{id}', 'SupplierDelete')->name('supplier.delete');
     });
 
-
     // Unit Routes
-    Route::controller(UnitController::class)->group(function () {
-        Route::get('/unit/all', 'UnitAll')->name('unit.all');
-        Route::get('/unit/add', 'UnitAdd')->name('unit.add');
-        Route::post('/unit/store', 'UnitStore')->name('unit.store');
-        Route::get('/unit/edit/{id}', 'UnitEdit')->name('unit.edit');
-        Route::post('/unit/update', 'UnitUpdate')->name('unit.update');
-        Route::get('/unit/delete/{id}', 'UnitDelete')->name('unit.delete');
-    });
-
+    // Route::controller(UnitController::class)->group(function () {
+    //     Route::get('/unit/all', 'UnitAll')->name('unit.all');
+    //     Route::get('/unit/add', 'UnitAdd')->name('unit.add');
+    //     Route::post('/unit/store', 'UnitStore')->name('unit.store');
+    //     Route::get('/unit/edit/{id}', 'UnitEdit')->name('unit.edit');
+    //     Route::post('/unit/update', 'UnitUpdate')->name('unit.update');
+    //     Route::get('/unit/delete/{id}', 'UnitDelete')->name('unit.delete');
+    // });
 
     // Category Routes
     Route::controller(CategoryController::class)->group(function () {
@@ -144,7 +157,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/category/delete/{id}', 'CategoryDelete')->name('category.delete');
     });
 
-
     // Product Routes
     Route::controller(ProductController::class)->group(function () {
         Route::get('/product/all', 'ProductAll')->name('product.all');
@@ -154,7 +166,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/product/update', 'ProductUpdate')->name('product.update');
         Route::get('/product/delete/{id}', 'ProductDelete')->name('product.delete');
     });
-
 
     // Purchase Routes
     Route::controller(PurchaseController::class)->group(function () {
@@ -184,6 +195,18 @@ Route::middleware('auth')->group(function () {
 
     });
 
+    //Service Invoice Routes
+    Route::controller(ServiceInvoiceController::class)->group(function () {
+        Route::get('/service/invoice/all', 'ServiceInvoiceAll')->name('service.invoice.all');
+        Route::get('/service/invoice/add', 'ServiceInvoiceAdd')->name('service.invoice.add');
+        Route::post('/service/invoice/store', 'ServiceInvoiceStore')->name('service.invoice.store');
+        Route::get('/print/service/invoice/{id}', 'PrintServiceInvoice')->name('print.service.invoice');
+        Route::get('/daily/service/invoice/report', 'DailyServiceInvoiceReport')->name('daily.service.invoice.report');
+        Route::get('/daily/service/invoice/pdf', 'DailyServiceInvoicePdf')->name('daily.service.invoice.pdf');
+        Route::get('/service/invoice/payment/report', 'ServiceInvoicePaymentReport')->name('service.invoice.payment.report');
+        Route::get('/service/payment/option/report', 'servicePaymentOptionReport')->name('service.payment.option.report');
+
+    });
 
 });
 
@@ -192,7 +215,12 @@ Route::controller(DefaultController::class)->group(function () {
     Route::get('/get-category', 'GetCategory')->name('get-category');
     Route::get('/get-product', 'GetProduct')->name('get-product');
     Route::get('/check_product', 'GetStock')->name('check_product_stock');
-    Route::get('/get-buying-unit-price','GetBuyingUnitPrice')->name('get_buying_unit_price');
+    Route::get('/get-buying-unit-price', 'GetBuyingUnitPrice')->name('get_buying_unit_price');
+    Route::get('/get-service-price', 'GetServicePrice')->name('get_service_price');
+    Route::get('/autocomplete/suppliers', 'AutocompleteSuppliers')->name('autocomplete.suppliers');
+    Route::get('/autocomplete/categories', 'AutocompleteCategories')->name('autocomplete.categories');
+    Route::get('/autocomplete/products', 'AutocompleteProducts')->name('autocomplete.products');
+
 });
 
 Route::get('/dashboard', function () {

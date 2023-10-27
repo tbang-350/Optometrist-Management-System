@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('payment_details', function (Blueprint $table) {
+        Schema::create('service_invoice_details', function (Blueprint $table) {
             $table->id();
-            $table->integer('prescription_id')->nullable();
-            $table->integer('current_paid_amount')->nullable();
             $table->date('date')->nullable();
-            $table->integer('updated_by')->nullable();
+            $table->integer('service_invoice_id')->nullable();
+            $table->integer('service_id')->nullable();
+            $table->double('service_price')->nullable();
+            $table->double('service_selling_price')->nullable();
+            $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment_details');
+        Schema::dropIfExists('service_invoice_details');
     }
 };

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Supplier;
-use App\Models\Unit;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -26,10 +25,9 @@ class ProductController extends Controller
     public function ProductAdd()
     {
         $supplier = Supplier::all();
-        $unit = Unit::all();
         $category = Category::all();
 
-        return view('backend.product.product_add', compact('supplier', 'unit', 'category'));
+        return view('backend.product.product_add', compact('supplier','category'));
 
     } // End Method
 
@@ -39,8 +37,7 @@ class ProductController extends Controller
         Product::insert([
 
             'name' => $request->name,
-            'supplier_id' => $request->supplier_id,
-            'unit_id' => $request->unit_id,
+            'supplier_name' => $request->supplier_name,
             'category_id' => $request->category_id,
             'quantity' => '0',
             'created_by' => Auth::user()->id,
@@ -61,12 +58,11 @@ class ProductController extends Controller
     {
 
         $supplier = Supplier::all();
-        $unit = Unit::all();
         $category = Category::all();
 
         $product = Product::findOrFail($id);
 
-        return view('backend.product.product_edit', compact('supplier', 'unit', 'category', 'product'));
+        return view('backend.product.product_edit', compact('supplier','category', 'product'));
 
     } //End Method
 
@@ -78,10 +74,10 @@ class ProductController extends Controller
         Product::findOrFail($product_id)->update([
 
             'name' => $request->name,
-            'supplier_id' => $request->supplier_id,
-            'unit_id' => $request->unit_id,
+            'supplier_name' => $request->supplier_name,
             'category_id' => $request->category_id,
-            'quantity' => '0',
+            'quantity' => $request->quantity,
+            'reorder_level' => $request->reorder_level,
             'updated_by' => Auth::user()->id,
             'updated_at' => Carbon::now(),
 

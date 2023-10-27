@@ -11,19 +11,8 @@ class Prescription extends Model
 
     protected $guarded = [];
 
-    public function payment()
+    public function customer()
     {
-
-        return $this->belongsTo(Payment::class, 'id', 'prescription_id');
-
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
-
-
-    public function prescription_details()
-    {
-
-        return $this->hasMany(PrescriptionDetails::class, 'prescription_id', 'id');
-
-    }
-
 }

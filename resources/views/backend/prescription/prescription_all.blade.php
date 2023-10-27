@@ -21,12 +21,12 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <a href=" {{ route('prescription.add') }} " class="btn btn-dark btn-rounded waves-effect waves-light"
-                                style="float:right">
+                            {{-- <a href="{{ route('consultation.add') }}"
+                                class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right">
                                 <i class="fas fa-plus-circle">
-                                    Add Prescription
+                                    Add Consultation
                                 </i>
-                            </a>
+                            </a> --}}
 
                             <br>
                             <br>
@@ -40,41 +40,37 @@
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
-                                        <th>Customer Name</th>
-                                        <th>Prescrption No</th>
                                         <th>Date</th>
-                                        <th>Payment Method</th>
-                                        <th>Total Amount</th>
-                                        <th>Paid Amount</th>
-                                        <th>Due Amount</th>
+                                        <th>Customer Name</th>
+                                        <th>Next Appointment</th>
                                         <th>Action</th>
-                                    </tr>
+
+
                                 </thead>
 
 
                                 <tbody>
 
-                                    @foreach ($allData as $key => $item)
+                                    @foreach ($prescription as $key => $item)
                                         <tr>
+
                                             <td> {{ $key + 1 }} </td>
-                                            <td> {{ $item['payment']['customer']['name'] }} </td>
-                                            <td> #{{ $item->prescription_no }} </td>
-                                            <td> {{ date('d-m-Y', strtotime($item->date)) }} </td>
-                                            <td> {{ $item['payment']['payment_option'] }} </td>
-                                            <td> Tsh {{ $item['payment']['total_amount'] }} </td>
-                                            <td> Tsh {{ $item['payment']['paid_amount'] }} </td>
-
-                                            @if ($item['payment']['due_amount'] == 0)
-                                                <td> Null </td>
-                                            @else
-                                                <td> Tsh {{ $item['payment']['due_amount'] }} </td>
-                                            @endif
-
+                                            <td>{{ date('d-m-Y', strtotime($item->date)) }}</td>
+                                            <td>{{ $item['customer']['name'] }}</td>
+                                            <td>{{ $item->next_appointment }}</td>
                                             <td>
-                                                <a href=" {{ route('print.prescription', $item->id) }} " class="btn btn-dark sm"
-                                                    title="Print Prescription"> <i class="fas fa-print"></i>
+                                                <a href=" {{ route('prescription.view', $item->id) }} " class="btn btn-info sm"
+                                                    title="View Data">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+
+                                                <a href=" {{ route('customer.delete', $item->id) }} "
+                                                    class="btn btn-danger sm" title="Delete Data" id="delete"> <i
+                                                        class="fas fa-trash-alt"></i>
                                                 </a>
                                             </td>
+
+
 
                                         </tr>
                                     @endforeach

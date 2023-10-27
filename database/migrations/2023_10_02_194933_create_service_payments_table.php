@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('service_payments', function (Blueprint $table) {
             $table->id();
-            $table->integer('prescription_id')->nullable();
+            $table->integer('service_invoice_id')->nullable();
             $table->integer('customer_id')->nullable();
             $table->string('payment_option')->nullable();
             $table->string('paid_status')->nullable();
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('service_payments');
     }
 };

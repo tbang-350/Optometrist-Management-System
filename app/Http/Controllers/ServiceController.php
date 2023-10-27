@@ -29,8 +29,10 @@ class ServiceController extends Controller
 
         Service::create([
             'name' => $request->name,
+            'service_price' => $request->service_price,
             'created_at' => Carbon::now(),
             'created_by' => Auth::user()->id,
+            'location_id' => Auth::user()->location_id,
         ]);
 
         $notification = array(
@@ -57,6 +59,7 @@ class ServiceController extends Controller
 
         Service::findOrFail($service_id)->update([
             'name' => $request->name,
+            'service_price' => $request->service_price,
             'updated_by' => Auth::user()->id,
             'updated_at' => Carbon::now(),
         ]);

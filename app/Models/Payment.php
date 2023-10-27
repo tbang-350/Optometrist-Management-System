@@ -19,12 +19,10 @@ class Payment extends Model
     } // End Method
 
 
-    public function prescription()
+    public function invoice()
     {
 
-        return $this->belongsTo(Prescription::class, 'prescription_id', 'id');
+        return $this->belongsTo(Invoice::class, 'invoice_id', 'id');
 
     } // End Method
-
-
 }

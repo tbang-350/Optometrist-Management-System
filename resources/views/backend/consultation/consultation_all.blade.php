@@ -21,8 +21,8 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <a href="{{ route("consultation.add") }}" class="btn btn-dark btn-rounded waves-effect waves-light"
-                               style="float:right">
+                            <a href="{{ route('consultation.add') }}"
+                                class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right">
                                 <i class="fas fa-plus-circle">
                                     Add Consultation
                                 </i>
@@ -36,46 +36,55 @@
 
 
                             <table id="datatable" class="table table-bordered dt-responsive nowrap"
-                                   style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
-                                <tr>
-                                    <th>Sl</th>
-                                    <th>Date</th>
-                                    <th>Name</th>
-                                    <th>Age</th>
-                                    <th>Sex</th>
-                                    <th>Consultation Fee</th>
-                                    <th>Action</th>
+                                    <tr>
+                                        <th>Sl</th>
+                                        <th>Date</th>
+                                        <th>Name</th>
+                                        <th>Age</th>
+                                        <th>Sex</th>
+                                        <th>Consultation Fee</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
 
                                 </thead>
 
 
                                 <tbody>
 
-                                @foreach ($consultation as $key => $item)
-                                    <tr>
-                                        <td> {{ $key + 1 }} </td>
-                                        <td>{{ date('d-m-Y', strtotime($item->date))  }}</td>
-                                        <td> {{ $item['customer']['name'] }} </td>
-                                        <td> {{ $item['customer']['age'] }} </td>
-                                        <td> {{ $item['customer']['sex'] }} </td>
-                                        <td> {{ $item->consultation_fee }} </td>
+                                    @foreach ($consultation as $key => $item)
+                                        <tr>
+                                            <td> {{ $key + 1 }} </td>
+                                            <td>{{ date('d-m-Y', strtotime($item->date)) }}</td>
+                                            <td> {{ $item['customer']['name'] }} </td>
+                                            <td> {{ $item['customer']['age'] }} </td>
+                                            <td> {{ $item['customer']['sex'] }} </td>
+                                            <td> {{ $item->consultation_fee }} </td>
 
-                                        <td>
-{{--                                            <a href=" {{ route('customer.edit', $item->id) }} " class="btn btn-info sm"--}}
-{{--                                               title="Edit Data">--}}
-{{--                                                <i class="fas fa-edit"></i>--}}
-{{--                                            </a>--}}
+                                            <td>
+                                                @if ($item->status == '0')
+                                                    <span class="btn btn-warning">Unseen</span>
+                                                @elseif($item->status == '1')
+                                                    <span class="btn btn-success">Seen</span>
+                                                @endif
+                                            </td>
 
-{{--                                            <a href=" {{ route('customer.delete', $item->id) }} "--}}
-{{--                                               class="btn btn-danger sm" title="Delete Data" id="delete"> <i--}}
-{{--                                                    class="fas fa-trash-alt"></i>--}}
-{{--                                            </a>--}}
+                                            <td>
+                                                <a href=" {{ route('prescription.add', $item->id) }} "
+                                                    class="btn btn-info sm"--}} title="Add Prescription">
+                                                    <i class="fas fa-plus"></i>
+                                                </a>
 
-                                        </td>
+                                                <a href=" {{ route('consultation.delete', $item->id) }} "
+                                                    class="btn btn-danger sm" title="Delete Data" id="delete"> <i
+                                                        class="fas fa-trash-alt"></i>
+                                                </a>
 
-                                    </tr>
-                                @endforeach
+                                            </td>
+
+                                        </tr>
+                                    @endforeach
 
                                 </tbody>
                             </table>

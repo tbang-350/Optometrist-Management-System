@@ -27,9 +27,9 @@
                         <div class="card-body">
 
                             @php
-                                
+
                                 $company_info = App\Models\Company::first();
-                                
+
                             @endphp
 
                             <div class="row">
@@ -90,7 +90,7 @@
                                                         <!-- foreach ($order->lineItems as $line) or some such thing here -->
                                                         <tr>
                                                             <td>{{ $payment['customer']['name'] }}</td>
-                                                            <td class="text-center">{{ $payment['customer']['mobile_no'] }}
+                                                            <td class="text-center">{{ $payment['customer']['phonenumber'] }}
                                                             </td>
                                                             <td class="text-center">{{ $payment['customer']['address'] }}
                                                             </td>
@@ -131,9 +131,9 @@
 
                                                         @php
                                                             $total_sum = '0';
-                                                            
+
                                                             $prescription_details = App\Models\PrescriptionDetails::where('prescription_id', $payment->prescription_id)->get();
-                                                            
+
                                                         @endphp
 
                                                         @foreach ($prescription_details as $key => $details)
@@ -242,9 +242,9 @@
                                                         </tr>
 
                                                         @php
-                                                            
+
                                                             $payment_details = App\Models\PaymentDetails::where('prescription_id', $payment->prescription_id)->get();
-                                                            
+
                                                         @endphp
 
                                                         @foreach ($payment_details as $key => $item)
@@ -253,7 +253,7 @@
                                                                     style="text-align:center; font-weight:bold;">
                                                                     {{ date('d-m-Y', strtotime($item->date)) }}</td>
 
-                                                                <td 
+                                                                <td
                                                                     style="text-align:center; font-weight:bold;">
                                                                     {{ $item->current_paid_amount }}</td>
                                                             </tr>

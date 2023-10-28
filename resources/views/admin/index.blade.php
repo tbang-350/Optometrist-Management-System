@@ -29,13 +29,11 @@
 
                     $total_services = App\Models\Service::count();
 
-                    $total_employees = App\Models\User::where('role', ['2','3'])->count();
+                    $total_employees = App\Models\User::whereIn('role', ['2', '3'])->count();
 
                     $total_locations = App\Models\Location::count();
 
                     $total_customers = App\Models\Customer::count();
-
-
 
                 @endphp
 
@@ -165,8 +163,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="dropdown float-end">
-                                    <a href="#" class="dropdown-toggle arrow-none card-drop"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
                                         <i class="mdi mdi-dots-vertical"></i>
                                     </a>
 
@@ -216,10 +214,10 @@
                                                         <td> Tsh {{ $item['payment']['due_amount'] }} </td>
                                                     @endif
                                                     <td>
-{{--                                                        <a href=" {{ route('print.prescription', $item->id) }} "--}}
-{{--                                                            class="btn btn-dark sm" title="Print prescription"> <i--}}
-{{--                                                                class="fas fa-eye"></i>--}}
-{{--                                                        </a>--}}
+                                                        <a href=" {{ route('print.invoice', $item->id) }} "
+                                                            class="btn btn-dark sm" title="Print Invoice"> <i
+                                                                class="fas fa-eye"></i>
+                                                        </a>
                                                     </td>
 
                                                 </tr>

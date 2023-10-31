@@ -8,6 +8,7 @@ use App\Http\Controllers\DefaultController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -205,6 +206,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/daily/service/invoice/pdf', 'DailyServiceInvoicePdf')->name('daily.service.invoice.pdf');
         Route::get('/service/invoice/payment/report', 'ServiceInvoicePaymentReport')->name('service.invoice.payment.report');
         Route::get('/service/payment/option/report', 'servicePaymentOptionReport')->name('service.payment.option.report');
+
+    });
+
+
+    // Stock Routes
+    Route::controller(StockController::class)->group(function () {
+        Route::get('/stock/report', 'StockReport')->name('stock.report');
+        Route::get('/stock/report/pdf', 'StockReportPdf')->name('stock.report.pdf');
+        Route::get('/stock/supplier/wise', 'StockSupplierWise')->name('stock.supplier.wise');
+        Route::get('/supplier/wise/pdf', 'SupplierWisePdf')->name('supplier.wise.pdf');
+        Route::get('/product/wise/pdf', 'ProductWisePdf')->name('product.wise.pdf');
 
     });
 

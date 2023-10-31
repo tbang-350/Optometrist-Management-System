@@ -1,7 +1,10 @@
 on:
   push:
     branches:
-      -master
+      - master
+  pull_request:
+    types:
+      - closed
 name: 🚀 Deploy website on push
 jobs:
   web-deploy:

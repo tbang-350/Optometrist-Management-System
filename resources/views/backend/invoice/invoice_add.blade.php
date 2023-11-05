@@ -444,6 +444,15 @@
                     return false;
                 }
 
+                // Check if selling_qty is larger than current_stock_qty
+                if (parseFloat(selling_qty) > parseFloat(current_stock_qty)) {
+                    $.notify("Stock is not enough to meet the order", {
+                        globalPosition: 'top-right',
+                        className: 'error'
+                    });
+                    return false;
+                }
+
             });
         });
     </script>
@@ -460,6 +469,9 @@
                 var product_id = $('#product_id').val();
                 var product_name = $('#product_id').find('option:selected').text();
                 var buying_unit_price = $('#buying_unit_price').val();
+                var selling_qty = $('#selling_qty').val(); // Get the selling_qty
+                var current_stock_qty = $('#current_stock_qty').val(); // Get the current_stock_qty
+
 
                 if (date == '') {
                     $.notify("Date not set", {
@@ -479,6 +491,23 @@
 
                 if (product_name == '') {
                     $.notify("Product not set", {
+                        globalPosition: 'top-right',
+                        className: 'error'
+                    });
+                    return false;
+                }
+
+                // if (selling_qty === '') {
+                //     $.notify("Selling quantity not set", {
+                //         globalPosition: 'top-right',
+                //         className: 'error'
+                //     });
+                //     return false;
+                // }
+
+                // Check if selling_qty is larger than current_stock_qty
+                if (parseFloat(selling_qty) > parseFloat(current_stock_qty)) {
+                    $.notify("Stock is not enough to meet the order", {
                         globalPosition: 'top-right',
                         className: 'error'
                     });

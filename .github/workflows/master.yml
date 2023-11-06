@@ -25,5 +25,5 @@ jobs:
         server: bestchoiceeyecenter.co.tz
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: /home/bestchoi/public_html/bestchoiceeyecenter.co.tz/second_choice/
+        server-dir: /public_html/second_choice/
 

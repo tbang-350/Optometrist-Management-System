@@ -188,6 +188,20 @@
                     </ul>
                 </li>
 
+
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-safe-2-fill"></i>
+                        <span>Stock</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('stock.report') }}">Stock Report</a></li>
+                        {{-- <li><a href="{{ route('stock.supplier.wise') }}">Supplier/Product wise</a></li> --}}
+
+                    </ul>
+                </li>
+
                 {{-- <li class="mm-active">
                     <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="true">
                         <i class="ri-share-line"></i>
@@ -202,19 +216,6 @@
                         </li>
                     </ul>
                 </li> --}}
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-safe-2-fill"></i>
-                        <span>Stock</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('stock.report') }}">Stock Report</a></li>
-                        {{-- <li><a href="{{ route('stock.supplier.wise') }}">Supplier/Product wise</a></li> --}}
-
-                    </ul>
-                </li>
-
 
 
             </ul>

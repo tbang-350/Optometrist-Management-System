@@ -6,7 +6,7 @@ on:
     types:
       - closed
 
-name: 🚀 Deploy website on push
+name: 🚀 Deploy website on push to sub domain
 
 jobs:
 

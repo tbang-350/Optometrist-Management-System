@@ -11,7 +11,7 @@ name: 🚀 Deploy website on push
 jobs:
 
   web-deploy:
-    name: 🎉 Deploy
+    name: 🎉 Deploy on subdomain
     runs-on: ubuntu-latest
 
     steps:

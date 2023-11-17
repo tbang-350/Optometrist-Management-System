@@ -7,7 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Service;
-use App\Models\Supplier;
+use Auth;
 use Illuminate\Http\Request;
 
 class DefaultController extends Controller
@@ -25,7 +25,6 @@ class DefaultController extends Controller
 
     } // End Method
 
-
     public function GetProduct(Request $request)
     {
 
@@ -37,7 +36,6 @@ class DefaultController extends Controller
 
     } // End Method
 
-
     public function GetStock(Request $request)
     {
 
@@ -48,7 +46,6 @@ class DefaultController extends Controller
         return response()->json($stock);
 
     } // End Method
-
 
     public function GetBuyingUnitPrice(Request $request)
     {
@@ -67,7 +64,6 @@ class DefaultController extends Controller
             return response()->json(['error' => 'No purchase found for this product.']);
         }
     } // End Method
-
 
     public function GetServicePrice(Request $request)
     {
@@ -89,35 +85,70 @@ class DefaultController extends Controller
         }
     } // End Method
 
-
-
     public function AutocompleteSuppliers(Request $request)
     {
 
-        $data = Product::select("supplier_name")
-            ->where('supplier_name', 'LIKE', '%' . $request->get('query') . '%')
-            ->get();
+        $currrent_location = Auth::user()->location_id;
+
+        if ($currrent_location == 1) {
+
+            $data = Product::select("supplier_name")
+                ->where('supplier_name', 'LIKE', '%' . $request->get('query') . '%')
+                ->get();
+
+        } else {
+
+            $data = Product::select("supplier_name")
+                ->where('supplier_name', 'LIKE', '%' . $request->get('query') . '%')
+                ->where('location_id', $currrent_location)
+                ->get();
+
+        }
 
         return response()->json($data);
 
     } // End Method
-
 
     public function AutocompleteCategories(Request $request)
     {
-        $data = Category::select("name")
-            ->where('name', 'LIKE', '%' . $request->get('query') . '%')
-            ->get();
+        $currrent_location = Auth::user()->location_id;
+
+        if ($currrent_location == 1) {
+
+            $data = Category::select("name")
+                ->where('name', 'LIKE', '%' . $request->get('query') . '%')
+                ->get();
+
+        } else {
+
+            $data = Category::select("name")
+                ->where('name', 'LIKE', '%' . $request->get('query') . '%')
+                ->where('location_id', $currrent_location)
+                ->get();
+
+        }
 
         return response()->json($data);
     } // End Method
 
-
     public function AutocompleteProducts(Request $request)
     {
-        $data = Product::select("name")
-            ->where('name', 'LIKE', '%' . $request->get('query') . '%')
-            ->get();
+        $currrent_location = Auth::user()->location_id;
+
+        if ($currrent_location == 1) {
+
+            $data = Product::select("name")
+                ->where('name', 'LIKE', '%' . $request->get('query') . '%')
+                ->get();
+
+        } else {
+
+            $data = Product::select("name")
+                ->where('name', 'LIKE', '%' . $request->get('query') . '%')
+                ->where('location_id', $currrent_location)
+                ->get();
+
+        }
 
         return response()->json($data);
     } // End Method

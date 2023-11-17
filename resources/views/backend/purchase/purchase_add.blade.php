@@ -108,7 +108,11 @@
                                     <div class="row mb-3 ">
                                         <div class=" form-group col-md-2">
                                             <input type="submit" class="btn btn-info waves-effect waves-light"
-                                                value="Add Purchase">
+                                                value="Save Purchase">
+                                        </div>
+
+                                        <div class=" form-group col-md-2">
+                                            <input type="submit" name="submit_and_new" class="btn btn-info waves-effect waves-light" value="Save & Create Another">
                                         </div>
 
                                     </div>

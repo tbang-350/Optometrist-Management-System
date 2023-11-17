@@ -24,6 +24,7 @@ return new class extends Migration
             $table->double('total_amount')->nullable();
             $table->double('discount_amount')->nullable();
             $table->integer('created_by')->nullable();
+            $table->integer('location_id')->nullable();
             $table->timestamps();
         });
     }

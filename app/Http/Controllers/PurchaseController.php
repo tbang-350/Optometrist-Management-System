@@ -18,7 +18,20 @@ class PurchaseController extends Controller
     public function PurchaseAll()
     {
 
-        $allData = Purchase::orderBy('date', 'desc')->orderBy('id', 'desc')->get();
+        $current_location = Auth::user()->location_id;
+
+        if ($current_location == 1) {
+
+            $allData = Purchase::orderBy('date', 'desc')->orderBy('id', 'desc')->get();
+
+        } else {
+
+            $allData = Purchase::where('location_id', $current_location)
+                ->orderBy('date', 'desc')
+                ->orderBy('id', 'desc')
+                ->get();
+
+        }
 
         return view('backend.purchase.purchase_all', compact('allData'));
 
@@ -61,7 +74,6 @@ class PurchaseController extends Controller
         $product->quantity = $purchase_qty;
         $product->save();
 
-
         $purchase = new Purchase();
         $purchase->date = date('Y-m-d', strtotime($request->date));
         $purchase->supplier_name = $request->supplier_name;
@@ -88,7 +100,15 @@ class PurchaseController extends Controller
             'alert-type' => 'success',
         );
 
-        return redirect()->route('purchase.all')->with($notification);
+        if ($request->has('submit_and_new')) {
+
+            return redirect()->route('purchase.add')->with($notification);
+
+        } else {
+
+            return redirect()->route('purchase.all')->with($notification);
+
+        }
 
         // dd([$purchase,$supplier,$category,$product]);
     }
@@ -112,7 +132,20 @@ class PurchaseController extends Controller
     public function PurchasePending()
     {
 
-        $allData = Purchase::orderBy('date', 'desc')->orderBy('id', 'desc')->where('status', '0')->get();
+        $current_location = Auth::user()->location_id;
+
+        if (condition) {
+
+            $allData = Purchase::orderBy('date', 'desc')->orderBy('id', 'desc')->get();
+
+        } else {
+
+            $allData = Purchase::where('location_id', $current_location)
+                ->orderBy('date', 'desc')
+                ->orderBy('id', 'desc')
+                ->get();
+
+        }
 
         return view('backend.purchase.purchase_pending', compact('allData'));
 
@@ -151,17 +184,28 @@ class PurchaseController extends Controller
 
     public function DailyPurchasePdf(Request $request)
     {
+        $current_location = Auth::user()->location_id;
 
         $sdate = date('Y-m-d', strtotime($request->start_date));
         $edate = date('Y-m-d', strtotime($request->end_date));
 
-        $allData = Purchase::whereBetween('date', [$sdate, $edate])->where('status', '1')->get();
+        if ($current_location == 1) {
+
+            $allData = Purchase::whereBetween('date', [$sdate, $edate])->where('status', '1')->get();
+
+        } else {
+
+            $allData = Purchase::where('location_id', $current_location)
+                ->whereBetween('date', [$sdate, $edate])
+                ->where('status', '1')
+                ->get();
+
+        }
 
         $start_date = date('Y-m-d', strtotime($request->start_date));
         $end_date = date('Y-m-d', strtotime($request->end_date));
 
         return view('backend.pdf.daily_purchase_report_pdf', compact('allData', 'start_date', 'end_date'));
-
-    } // End Method
+    }
 
 }

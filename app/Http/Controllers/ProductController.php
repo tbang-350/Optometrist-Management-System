@@ -16,8 +16,19 @@ class ProductController extends Controller
     public function ProductAll()
     {
 
-        $products = Product::latest()->get();
+        $current_location = Auth::user()->location_id;
 
+        if ($current_location == 1) {
+
+            $products = Product::latest()->get();
+
+        } else {
+
+            $products = Product::latest()->where("location_id", $current_location)->get();
+
+        }
+
+        
         return view('backend.product.product_all', compact('products'));
 
     } // End Method
@@ -27,7 +38,7 @@ class ProductController extends Controller
         $supplier = Supplier::all();
         $category = Category::all();
 
-        return view('backend.product.product_add', compact('supplier','category'));
+        return view('backend.product.product_add', compact('supplier', 'category'));
 
     } // End Method
 
@@ -42,6 +53,7 @@ class ProductController extends Controller
             'quantity' => '0',
             'created_by' => Auth::user()->id,
             'created_at' => Carbon::now(),
+            'location_id' => Auth::user()->location_id,
 
         ]);
 
@@ -62,7 +74,7 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($id);
 
-        return view('backend.product.product_edit', compact('supplier','category', 'product'));
+        return view('backend.product.product_edit', compact('supplier', 'category', 'product'));
 
     } //End Method
 

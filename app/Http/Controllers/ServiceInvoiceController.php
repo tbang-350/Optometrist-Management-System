@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
-use App\Models\Payment;
-use App\Models\Prescription;
 use App\Models\Service;
 use App\Models\ServiceInvoice;
-use App\Models\ServiceInvoiceDetail;
 use App\Models\ServiceInvoiceDetails;
 use App\Models\ServicePayment;
 use App\Models\ServicePaymentDetail;
@@ -22,7 +19,17 @@ class ServiceInvoiceController extends Controller
     public function ServiceInvoiceAll()
     {
 
-        $allData = ServiceInvoice::orderBy('date', 'desc')->orderBy('id', 'desc')->get();
+        $current_location = Auth::user()->location_id;
+
+        if ($current_location == 1) {
+
+            $allData = ServiceInvoice::orderBy('date', 'desc')->orderBy('id', 'desc')->get();
+
+        } else {
+
+            $allData = ServiceInvoice::orderBy('date', 'desc')->orderBy('id', 'desc')->where('location_id',$current_location)->get();
+
+        }
 
         return view('backend.service_invoice.service_invoice_all', compact('allData'));
 
@@ -31,9 +38,21 @@ class ServiceInvoiceController extends Controller
     public function ServiceInvoiceAdd()
     {
 
+        $current_location = Auth::user()->location_id;
+
         //Retrieve all categories and customers
         $service = Service::all();
         $customer = Customer::all();
+
+        if ($current_location == 1) {
+
+            $customer = Customer::all();
+
+        } else {
+
+            $customer = Customer::where('location_id', $current_location)->get();
+
+        }
 
         // Get the last prescription number and increment it by 1
         $service_invoice_data = ServiceInvoice::orderBy('id', 'desc')->first();
@@ -76,6 +95,7 @@ class ServiceInvoiceController extends Controller
                 $service_invoice->status = '0';
                 $service_invoice->created_by = Auth::user()->id;
                 $service_invoice->created_at = Carbon::now();
+                $service_invoice->location_id = Auth::user()->location_id;
                 // $prescription->save();
 
                 //  dd($service_invoice);
@@ -197,13 +217,20 @@ class ServiceInvoiceController extends Controller
     public function DailyServiceInvoicePdf(Request $request)
     {
 
+        $current_location = Auth::user()->location_id;
+
         $sdate = date('Y-m-d', strtotime($request->start_date));
         $edate = date('Y-m-d', strtotime($request->end_date));
 
-        $allData = ServiceInvoice::whereBetween('date', [$sdate, $edate])->get();
+        if ($current_location == 1) {
 
-        $start_date = date('Y-m-d', strtotime($request->start_date));
-        $end_date = date('Y-m-d', strtotime($request->end_date));
+            $allData = ServiceInvoice::whereBetween('date', [$sdate, $edate])->get();
+
+        } else {
+
+            $allData = ServiceInvoice::whereBetween('date', [$sdate, $edate])->where('location_id', $current_location)->get();
+
+        }
 
         // dd($sdate,$edate);
 
@@ -222,10 +249,19 @@ class ServiceInvoiceController extends Controller
 
     public function ServicePaymentOptionReport(Request $request)
     {
+        $current_location = Auth::user()->location_id;
 
         $payment_option = $request->payment_option;
 
-        $allData = ServicePayment::where('payment_option', $request->payment_option)->get();
+        if ($current_location == 1) {
+
+            $allData = ServicePayment::where('payment_option', $payment_option)->get();
+
+        } else {
+
+            $allData = ServicePayment::where('payment_option', $payment_option)->where('location_id', $current_location)->get();
+
+        }
 
         // dd($allData);
 

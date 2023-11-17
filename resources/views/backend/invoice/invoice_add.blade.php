@@ -41,7 +41,7 @@
                                 </div>
 
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="md-3">
                                         <label for="example-text-input" class="form-label">Category</label>
                                         <div class=" form-group col-sm-10">
@@ -58,7 +58,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="md-3">
                                         <label for="example-text-input" class="form-label">Product</label>
                                         <div class=" form-group col-sm-10">

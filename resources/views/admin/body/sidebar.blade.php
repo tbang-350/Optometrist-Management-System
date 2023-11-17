@@ -114,7 +114,6 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('purchase.all') }}">All Purchases</a></li>
                         {{-- <li><a href="{{ route('purchase.pending') }}">Purchase Approval</a></li> --}}
-                        <li><a href="{{ route('daily.purchase.report') }}">Daily Purchase Report</a></li>
                     </ul>
 
                 </li>
@@ -130,7 +129,6 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('invoice.all') }}">All Invoices</a></li>
                         <li><a href="{{ route('invoice.pending.list') }}">Invoice Approval</a></li>
-                        <li><a href="{{ route('daily.invoice.report') }}">Daily Invoice Report</a></li>
                     </ul>
 
                 </li>
@@ -168,39 +166,20 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-profile-line"></i>
-                        <span>Invoice</span>
+                        <span>All Reports</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('daily.service.invoice.report') }}">Daily Service Invoice Report</a></li>
-
-                    </ul>
-                </li>
-
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-profile-line"></i>
-                        <span>Payment</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('service.invoice.payment.report') }}">Service Payment Option Report</a></li>
-
-                    </ul>
-                </li>
-
-
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-safe-2-fill"></i>
-                        <span>Stock</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('stock.report') }}">Stock Report</a></li>
-                        {{-- <li><a href="{{ route('stock.supplier.wise') }}">Supplier/Product wise</a></li> --}}
+                        <li><a href="{{ route('daily.invoice.report') }}">Daily Invoice Report</a></li>
+                        <li><a href="{{ route('daily.purchase.report') }}">Daily Purchase Report</a></li>
 
                     </ul>
                 </li>
+
+
+                
 
                 {{-- <li class="mm-active">
                     <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="true">

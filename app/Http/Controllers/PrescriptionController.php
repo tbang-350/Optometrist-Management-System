@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Consultation;
 use App\Models\Prescription;
-use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class PrescriptionController extends Controller
@@ -14,7 +14,17 @@ class PrescriptionController extends Controller
     public function PrescriptionAll()
     {
 
-        $prescription = Prescription::latest()->get();
+        $current_location = Auth::user()->location_id;
+
+        if ($current_location == 1) {
+
+            $prescription = Prescription::latest()->get();
+
+        } else {
+
+            $prescription = Prescription::latest()->where("location_id", $current_location)->get();
+
+        }
 
         return view('backend.prescription.prescription_all', compact('prescription'));
 
@@ -63,10 +73,11 @@ class PrescriptionController extends Controller
         $prescription->next_appointment = date('Y-m-d', strtotime($request->next_appointment));
         $prescription->created_by = Auth::user()->id;
         $prescription->created_at = Carbon::now();
+        $prescription->location_id = Auth::user()->location_id;
 
         $prescription->save();
 
-        if($prescription->save()){
+        if ($prescription->save()) {
             Consultation::findOrFail($consultation_id)->update([
                 'status' => '1',
             ]);
@@ -80,20 +91,18 @@ class PrescriptionController extends Controller
 
         return redirect()->route('consultation.all')->with($notification);
 
-
         // dd($prescription);
 
     }
 
-
-    public function PrescriptionView($id){
+    public function PrescriptionView($id)
+    {
 
         $data = Prescription::findOrFail($id);
 
         // dd($data);
 
-        return view('backend.pdf.prescription_view',compact('data'));
-
+        return view('backend.pdf.prescription_view', compact('data'));
 
     }
 

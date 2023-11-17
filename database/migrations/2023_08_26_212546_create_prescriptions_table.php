@@ -31,6 +31,7 @@ return new class extends Migration
             $table->date('next_appointment')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
+            $table->integer('location_id')->nullable();
             $table->timestamps();
         });
     }

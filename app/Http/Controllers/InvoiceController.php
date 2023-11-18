@@ -202,6 +202,7 @@ class InvoiceController extends Controller
 
                         $payment_details->invoice_id = $invoice->id;
                         $payment_details->date = date('Y-m-d', strtotime($request->date));
+                        $payment_details->location_id = Auth::user()->location_id;
                         $payment_details->save();
 
                     }

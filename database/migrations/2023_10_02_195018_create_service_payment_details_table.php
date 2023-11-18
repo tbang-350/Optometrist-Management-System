@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('current_paid_amount')->nullable();
             $table->date('date')->nullable();
             $table->integer('updated_by')->nullable();
+            $table->integer('location_id')->nullable();
             $table->timestamps();
         });
     }

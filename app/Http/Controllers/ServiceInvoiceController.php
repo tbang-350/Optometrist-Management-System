@@ -175,6 +175,7 @@ class ServiceInvoiceController extends Controller
 
                         $service_payment_detail->service_invoice_id = $service_invoice->id;
                         $service_payment_detail->date = date('Y-m-d', strtotime($request->date));
+                        $service_payment_detail->location_id = Auth::user()->location_id;
                         $service_payment_detail->save();
 
                     }

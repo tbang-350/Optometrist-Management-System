@@ -6,12 +6,12 @@ on:
     types:
       - closed
 
-name: 🚀 Deploy website on push
+name: 🚀 Deploy website on push to sub domain
 
 jobs:
 
   web-deploy:
-    name: 🎉 Deploy
+    name: 🎉 Deploy on subdomain
     runs-on: ubuntu-latest
 
     steps:

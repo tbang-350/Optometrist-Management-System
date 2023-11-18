@@ -245,7 +245,7 @@ class CustomerController extends Controller
                 'alert-type' => 'success',
             );
 
-            return redirect()->route('credit.service.customer')->with($notification);
+            return redirect()->route('credit.customer')->with($notification);
 
         }
 
@@ -310,7 +310,7 @@ class CustomerController extends Controller
                 'alert-type' => 'success',
             );
 
-            return redirect()->route('credit.customer')->with($notification);
+            return redirect()->route('credit.service.customer')->with($notification);
 
         }
 

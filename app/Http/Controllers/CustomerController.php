@@ -302,6 +302,8 @@ class CustomerController extends Controller
 
             $payment_details->service_invoice_id = $service_invoice_id;
             $payment_details->date = date('Y-m-d', strtotime($request->date));
+            $payment_details->payment_option = $request->payment_option;
+            $payment_details->location_id = Auth::user()->location_id;
             $payment_details->updated_by = Auth::user()->id;
             $payment_details->save();
 

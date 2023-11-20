@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('invoice_id')->nullable();
             $table->integer('current_paid_amount')->nullable();
+            $table->string('payment_option')->nullable();
             $table->date('date')->nullable();
             $table->integer('updated_by')->nullable();
             $table->integer('location_id')->nullable();

@@ -44,12 +44,12 @@
                         $total_locations = App\Models\Location::count();
 
                         $total_customers = App\Models\Customer::count();
-                        
+
                     } else {
 
-                        $total_sales = App\Models\PaymentDetails::sum('current_paid_amount')->where('location_id', $current_location);
+                        $total_sales = App\Models\PaymentDetails::where('location_id',$current_location)->sum('current_paid_amount');
 
-                        $total_service_sales = App\Models\ServicePaymentDetail::sum('current_paid_amount')->where('location_id', $current_location);
+                        $total_service_sales = App\Models\ServicePaymentDetail::where('location_id',$current_location)->sum('current_paid_amount');
 
                         $total_services = App\Models\Service::count();
 

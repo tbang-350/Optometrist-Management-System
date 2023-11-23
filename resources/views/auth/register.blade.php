@@ -28,10 +28,6 @@
             <div class="card">
                 <div class="card-body">
 
-                    @php
-                        $company_detail = App\Models\Company::latest()->get();
-                    @endphp
-
                     <div class="text-center mt-4">
                         <div class="mb-3">
                             <a href="index.html" class="auth-logo">
@@ -58,8 +54,7 @@
                             </div>
                         @endif
 
-                        <form class="form-horizontal mt-3" method="POST" id="myForm"
-                            action="{{ route('register') }}">
+                        <form class="form-horizontal mt-3" method="POST" id="myForm" action="{{ route('register') }}">
                             @csrf
 
                             <div class="form-group mb-3 row">
@@ -80,51 +75,45 @@
                                 <div class="col-12">
                                     <input class="form-control" id="email" type="email" name="email"
                                         required="" placeholder="Email">
-                                    <p id="email-error" class="text-sm text-danger"
-                                        style="display: none; font-size:small;">Please enter valid email</p>
+                                        <p id="email-error" class="text-sm text-danger" style="display: none; font-size:small;">Please enter valid email</p>
 
                                 </div>
                             </div>
 
-                            @if ($company_detail->isEmpty())
-                                <div class="form-group mb-3 row">
-                                    <div class="col-12">
-                                        <input class="form-control" id="company_name" type="text" name="company_name"
-                                            placeholder="Company name">
-                                    </div>
+                            <div class="form-group mb-3 row">
+                                <div class="col-12">
+                                    <input class="form-control" id="company_name" type="text" name="company_name"
+                                         placeholder="Company name">
                                 </div>
+                            </div>
 
-                                <div class="form-group mb-3 row">
-                                    <div class="col-12">
-                                        <input class="form-control" id="company_email" type="email"
-                                            name="company_email" placeholder="Company Email">
-                                    </div>
+                            <div class="form-group mb-3 row">
+                                <div class="col-12">
+                                    <input class="form-control" id="company_email" type="email" name="company_email"
+                                         placeholder="Company Email">
                                 </div>
+                            </div>
 
-                                <div class="form-group mb-3 row">
-                                    <div class="col-12">
-                                        <input class="form-control" id="company_address" type="text"
-                                            name="company_address" placeholder="Company Address">
-                                    </div>
+                            <div class="form-group mb-3 row">
+                                <div class="col-12">
+                                    <input class="form-control" id="company_address" type="text" name="company_address"
+                                         placeholder="Company Address">
                                 </div>
+                            </div>
 
-                                <div class="form-group mb-3 row">
-                                    <div class="col-12">
-                                        <input class="form-control" id="company_phone" type="text"
-                                            name="company_phone" placeholder="Company Phone">
-                                    </div>
+                            <div class="form-group mb-3 row">
+                                <div class="col-12">
+                                    <input class="form-control" id="company_phone" type="text" name="company_phone"
+                                         placeholder="Company Phone">
                                 </div>
-                            @endif
-
+                            </div>
 
                             <div class="form-group mb-3 row">
                                 <div class="col-12">
                                     <input class="form-control" id="password" type="password" name="password"
-                                        placeholder="Password">
+                                         placeholder="Password">
 
-                                    <p id="password-error" class="text-sm text-danger"
-                                        style="display: none; font-size:small;">Password must be at least 8 characters
-                                        long</p>
+                                         <p id="password-error" class="text-sm text-danger" style="display: none; font-size:small;">Password must be at least 8 characters long</p>
 
                                 </div>
 
@@ -134,8 +123,7 @@
                             <div class="form-group mb-3 row">
                                 <div class="col-12">
                                     <input class="form-control" id="password_confirmation" type="password"
-                                        name="password_confirmation" required=""
-                                        placeholder="Password Confirmation">
+                                        name="password_confirmation" required="" placeholder="Password Confirmation">
                                 </div>
                             </div>
 
@@ -149,8 +137,8 @@
 
                             <div class="form-group text-center row mt-3 pt-1">
                                 <div class="col-12">
-                                    <button class="btn btn-info w-100 waves-effect waves-light"
-                                        onsubmit="validateForm()" type="submit">Register
+                                    <button class="btn btn-info w-100 waves-effect waves-light" onsubmit="validateForm()"
+                                        type="submit">Register
                                     </button>
                                 </div>
                             </div>

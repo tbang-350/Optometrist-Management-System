@@ -56,7 +56,7 @@ class DefaultController extends Controller
             ->first();
 
         if ($latestPurchase) {
-            $unit_price = $latestPurchase->buying_unit_price;
+            $unit_price = $latestPurchase->selling_unit_price;
             return response()->json($unit_price);
         } else {
             // Handle the case where there are no purchases for the specified product.

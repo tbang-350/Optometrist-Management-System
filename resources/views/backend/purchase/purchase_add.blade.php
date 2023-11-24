@@ -31,7 +31,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="date" class="form-label">Date</label>
                                         <input name="date" class="form-control example-date-input" type="date"
-                                            id="date">
+                                            id="date" value={{ $date }}>
                                     </div>
 
                                     <div class=" form-group col-md-6">

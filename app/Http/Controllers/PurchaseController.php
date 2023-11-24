@@ -48,7 +48,10 @@ class PurchaseController extends Controller
         $purchase_data = Purchase::orderBy('id', 'desc')->first();
         $purchase_no = $purchase_data ? $purchase_data->purchase_no + 1 : 1;
 
-        return view('backend.purchase.purchase_add', compact('supplier', 'unit', 'category', 'purchase_no'));
+        // Get the current date
+        $date = date('Y-m-d');
+
+        return view('backend.purchase.purchase_add', compact('supplier', 'unit', 'category', 'purchase_no', 'date'));
 
     } // End Method
 

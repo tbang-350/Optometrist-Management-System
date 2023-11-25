@@ -46,7 +46,7 @@
                                         <th>In Qty</th>
                                         <th>Out Qty</th>
                                         <th>Stock</th>
-                                        {{-- <th>Status</th> --}}
+                                        <th>Status</th>
 
                                 </thead>
 
@@ -75,13 +75,13 @@
                                             <td> {{ $buying_total }} </td>
                                             <td> {{ $selling_total }} </td>
                                             <td> {{ $item->quantity }} </td>
-                                            {{-- <td>
-                                                @if ($item->reorder_level >= $item->quantity)
+                                            <td>
+                                                @if ($item->quantity > 0)
                                                     <span class="btn btn-success">In Stock</span>
                                                 @else
                                                     <span class="btn btn-warning">Out of Stock</span>
                                                 @endif
-                                            </td> --}}
+                                            </td>
                                         </tr>
                                     @endforeach
 

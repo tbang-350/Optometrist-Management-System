@@ -18,9 +18,7 @@ class PurchasesImport implements ToModel, WithHeadingRow
     {
         Log::info($row);
 
-        if (in_array(null, $row) || in_array(' ', $row)) {
-            return null;
-        }
+        
 
        $date = Date::excelToDateTimeObject($row['date']);
 

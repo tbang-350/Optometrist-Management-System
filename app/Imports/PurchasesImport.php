@@ -18,42 +18,45 @@ class PurchasesImport implements ToModel, WithHeadingRow
     {
         Log::info($row);
 
-        
+        // Skip rows with NULL values
+        // if (in_array(null, $row)) {
+        //     return null;
+        // }
 
-       $date = Date::excelToDateTimeObject($row['date']);
+        $date = Date::excelToDateTimeObject($row['date']);
 
-       $lastPurchase = Purchase::orderBy('id', 'desc')->first();
-       $purchase_no = $lastPurchase ? $lastPurchase->purchase_no + 1 : 1;
+        $lastPurchase = Purchase::orderBy('id', 'desc')->first();
+        $purchase_no = $lastPurchase ? $lastPurchase->purchase_no + 1 : 1;
 
-       $category = Category::firstOrCreate(
-           ['name' => $row['category_name'], 'location_id' => Auth::user()->location_id],
-           ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
-       );
+        $category = Category::firstOrCreate(
+            ['name' => $row['category_name'], 'location_id' => Auth::user()->location_id],
+            ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
+        );
 
-       $product = Product::firstOrCreate(
-           ['name' => $row['product_name'], 'supplier_name' => $row['supplier_name'], 'category_id' => $category->id, 'location_id' => Auth::user()->location_id],
-           ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
-       );
+        $product = Product::firstOrCreate(
+            ['name' => $row['product_name'], 'supplier_name' => $row['supplier_name'], 'category_id' => $category->id, 'location_id' => Auth::user()->location_id],
+            ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
+        );
 
-       // Update the quantity of the product
-       $purchase_qty = ((float) $row['buying_qty']) + ((float) $product->quantity);
-       $product->quantity = $purchase_qty;
-       $product->save();
+        // Update the quantity of the product
+        $purchase_qty = ((float) $row['buying_qty']) + ((float) $product->quantity);
+        $product->quantity = $purchase_qty;
+        $product->save();
 
-       return new Purchase([
-           'date' => $date->format('Y-m-d'),
-           'supplier_name' => $row['supplier_name'],
-           'category_id' => $category->id,
-           'product_id' => $product->id,
-           'purchase_no' => $purchase_no,
-           'buying_qty' => $row['buying_qty'],
-           'buying_unit_price' => $row['buying_unit_price'],
-           'selling_unit_price' => $row['selling_unit_price'],
-           'total_buying_amount' => $row['buying_qty'] * $row['buying_unit_price'],
-           'status' => $row['status'],
-           'location_id' => Auth::user()->location_id,
-           'created_by' => Auth::user()->id,
-           'created_at' => Carbon::now(),
-       ]);
+        return new Purchase([
+            'date' => $date->format('Y-m-d'),
+            'supplier_name' => $row['supplier_name'],
+            'category_id' => $category->id,
+            'product_id' => $product->id,
+            'purchase_no' => $purchase_no,
+            'buying_qty' => (float) $row['buying_qty'],
+            'buying_unit_price' => (float) $row['buying_unit_price'],
+            'selling_unit_price' => (float) $row['selling_unit_price'],
+            'total_buying_amount' => (float) $row['buying_qty'] * (float) $row['buying_unit_price'],
+            'status' => (float) $row['status'],
+            'location_id' => Auth::user()->location_id,
+            'created_by' => Auth::user()->id,
+            'created_at' => Carbon::now(),
+        ]);
     }
 }

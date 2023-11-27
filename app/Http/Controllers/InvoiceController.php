@@ -155,6 +155,9 @@ class InvoiceController extends Controller
                             $customer->address = $request->address;
                             $customer->age = $request->age;
                             $customer->sex = $request->sex;
+                            $customer->location_id = Auth::user()->location_id;
+                            $customer->created_by = Auth::user()->id;
+                            $customer->created_at = Carbon::now();
                             $customer->save();
 
                             $customer_id = $customer->id;

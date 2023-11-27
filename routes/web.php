@@ -178,6 +178,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/purchase/approve/{id}', 'PurchaseApprove')->name('purchase.approve');
         Route::get('/daily/purchase/report', 'DailyPurchaseReport')->name('daily.purchase.report');
         Route::get('/daily/purchase/pdf', 'DailyPurchasePdf')->name('daily.purchase.pdf');
+
+        Route::post('/purchase/upload', 'PurchaseUpload')->name('purchase.upload');
     });
 
     // Invoice Routes

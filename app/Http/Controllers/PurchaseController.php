@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Imports\PurchasesImport;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Purchase;
@@ -11,6 +12,7 @@ use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PurchaseController extends Controller
 {
@@ -57,10 +59,6 @@ class PurchaseController extends Controller
 
     public function PurchaseStore(Request $request)
     {
-        // $supplier = Supplier::firstOrCreate(
-        //     ['name' => $request->supplier_name, 'location_id' => Auth::user()->location_id],
-        //     ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
-        // );
 
         $category = Category::firstOrCreate(
             ['name' => $request->category_name, 'location_id' => Auth::user()->location_id],
@@ -69,7 +67,7 @@ class PurchaseController extends Controller
 
         $product = Product::firstOrCreate(
             ['name' => $request->product_name, 'supplier_name' => $request->supplier_name, 'category_id' => $category->id, 'location_id' => Auth::user()->location_id],
-            ['reorder_level' => $request->reorder_level, 'created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
+            ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
         );
 
         // Update the quantity of the product
@@ -79,7 +77,6 @@ class PurchaseController extends Controller
 
         $purchase = new Purchase();
         $purchase->date = date('Y-m-d', strtotime($request->date));
-        $purchase->supplier_name = $request->supplier_name;
         $purchase->category_id = $category->id;
         $purchase->product_id = $product->id;
         $purchase->purchase_no = $request->purchase_no;
@@ -137,7 +134,7 @@ class PurchaseController extends Controller
 
         $current_location = Auth::user()->location_id;
 
-        if (condition) {
+        if ($current_location == 1) {
 
             $allData = Purchase::orderBy('date', 'desc')->orderBy('id', 'desc')->get();
 
@@ -209,6 +206,30 @@ class PurchaseController extends Controller
         $end_date = date('Y-m-d', strtotime($request->end_date));
 
         return view('backend.pdf.daily_purchase_report_pdf', compact('allData', 'start_date', 'end_date'));
+    }
+
+
+    public function PurchaseUpload(Request $request){
+
+        // Validate the uploaded file
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls',
+        ]);
+
+        // Get the uploaded file
+        $file = $request->file('file');
+
+        Excel::import(new PurchasesImport, $request->file('file'));
+
+        $notification = array(
+            'message' => 'Purchase imported successfully',
+            'alert-type' => 'success',
+        );
+
+        return back()->with($notification);
+
+        dd($excel_data);
+
     }
 
 }

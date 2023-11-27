@@ -31,7 +31,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="date" class="form-label">Date</label>
                                         <input name="date" class="form-control example-date-input" type="date"
-                                            id="date" value={{ $date }}>
+                                            id="date">
                                     </div>
 
                                     <div class=" form-group col-md-6">
@@ -112,7 +112,8 @@
                                         </div>
 
                                         <div class=" form-group col-md-2">
-                                            <input type="submit" name="submit_and_new" class="btn btn-info waves-effect waves-light" value="Save & Create Another">
+                                            <input type="submit" name="submit_and_new"
+                                                class="btn btn-info waves-effect waves-light" value="Save & Create Another">
                                         </div>
 
                                     </div>
@@ -135,6 +136,23 @@
 
 
     <script type="text/javascript">
+        // var path = "{{ route('autocomplete.suppliers') }}";
+
+        // $('#supplier_name').typeahead({
+        //     source: function(query, process) {
+        //         return $.get(path, {
+        //             query: query
+        //         }, function(data) {
+        //             if (data.length > 0) {
+        //                 var supplierNames = data.map(function(item) {
+        //                     return item.supplier_name;
+        //                 });
+        //                 return process(supplierNames);
+        //             }
+        //         });
+        //     }
+        // });
+
         var path = "{{ route('autocomplete.suppliers') }}";
 
         $('#supplier_name').typeahead({
@@ -142,12 +160,7 @@
                 return $.get(path, {
                     query: query
                 }, function(data) {
-                    if (data.length > 0) {
-                        var supplierNames = data.map(function(item) {
-                            return item.supplier_name;
-                        });
-                        return process(supplierNames);
-                    }
+                    return process(data);
                 });
             }
         });

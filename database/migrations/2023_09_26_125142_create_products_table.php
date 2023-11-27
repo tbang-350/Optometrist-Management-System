@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('category_id');
             $table->string('name')->nullable();
             $table->double('quantity')->default('0');
-            $table->double("reorder_level")->default(5);
+            $table->double("reorder_level")->default(1);
             $table->integer('location_id')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

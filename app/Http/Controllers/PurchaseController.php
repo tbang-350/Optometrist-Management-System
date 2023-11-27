@@ -80,7 +80,7 @@ class PurchaseController extends Controller
         $purchase->category_id = $category->id;
         $purchase->product_id = $product->id;
         $purchase->purchase_no = $request->purchase_no;
-
+        $purchase->supplier_name = $request->supplier_name;
         $purchase->buying_qty = $request->buying_qty;
         $purchase->buying_unit_price = $request->buying_unit_price;
         $purchase->selling_unit_price = $request->selling_unit_price;

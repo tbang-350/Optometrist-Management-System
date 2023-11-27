@@ -29,7 +29,7 @@
                                 <!-- Small modal -->
                                 <button type="button" class="btn btn-primary waves-effect waves-light"
                                     data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                    Import
+                                    Import Purchases
                                 </button>
 
                             </a>

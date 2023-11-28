@@ -5,6 +5,7 @@ on:
   pull_request:
     types:
       - closed
+      
 
 name: 🚀 Deploy website on push to sub domain
 

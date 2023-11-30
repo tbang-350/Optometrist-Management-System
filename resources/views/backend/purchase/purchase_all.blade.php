@@ -81,11 +81,11 @@
                                             <td> {{ $item->purchase_no }} </td>
                                             <td> {{ date('d-m-Y', strtotime($item->date)) }} </td>
                                             <td> {{ $item->supplier_name }} </td>
-                                            <td> {{ $item['category']['name'] }} </td>
+                                            <td> {{ $item['category']['name'] ?? '-' }} </td>
                                             <td> {{ $item->buying_qty }} </td>
                                             <td> {{ $item->buying_unit_price }} </td>
                                             <td> {{ $item->total_buying_amount }} </td>
-                                            <td> {{ $item['product']['name'] }} </td>
+                                            <td> {{ $item['product']['name'] ?? '-' }} </td>
                                             <td>
                                                 @if ($item->status == '0')
                                                     <span class="btn btn-warning">Pending</span>

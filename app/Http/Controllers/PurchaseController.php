@@ -276,14 +276,19 @@ class PurchaseController extends Controller
                 $lastPurchase = Purchase::orderBy('id', 'desc')->first();
                 $purchase_no = $lastPurchase ? $lastPurchase->purchase_no + 1 : 1;
 
-                $category = Category::firstOrCreate(
-                    ['name' => $row['category_name'], 'location_id' => Auth::user()->location_id],
-                    ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
-                );
-                $product = Product::firstOrCreate(
+                if(trim(!empty($row['category_name']))){
+                    $category = Category::firstOrCreate(
+                        ['name' => $row['category_name'], 'location_id' => Auth::user()->location_id],
+                        ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
+                    );
+                }
+                if(trim(!empty($row['category_name']))){
+                    $product = Product::firstOrCreate(
                     ['name' => $row['product_name'], 'supplier_name' => $row['supplier_name'], 'category_id' => $category->id, 'location_id' => Auth::user()->location_id],
                     ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
                 );
+                }
+                
                 $purchase_qty = ((float) $row['buying_qty']) + ((float) $product->quantity);
                 $product->quantity = $purchase_qty;
                 $product->save();

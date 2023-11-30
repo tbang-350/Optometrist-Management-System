@@ -282,7 +282,7 @@ class PurchaseController extends Controller
                         ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
                     );
                 }
-                if(trim(!empty($row['category_name']))){
+                if(trim(!empty($row['product_name']))){
                     $product = Product::firstOrCreate(
                     ['name' => $row['product_name'], 'supplier_name' => $row['supplier_name'], 'category_id' => $category->id, 'location_id' => Auth::user()->location_id],
                     ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]

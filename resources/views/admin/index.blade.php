@@ -32,6 +32,7 @@
                     $current_location = Auth::user()->location_id;
 
                     if ($current_location == 1) {
+
                         $total_sales = App\Models\PaymentDetails::sum('current_paid_amount');
 
                         $total_service_sales = App\Models\ServicePaymentDetail::sum('current_paid_amount');
@@ -43,7 +44,11 @@
                         $total_locations = App\Models\Location::count();
 
                         $total_customers = App\Models\Customer::count();
+
+                        $total_stock = App\Models\Product::count();
+
                     } else {
+
                         $total_sales = App\Models\PaymentDetails::where('location_id', $current_location)->sum('current_paid_amount');
 
                         $total_service_sales = App\Models\ServicePaymentDetail::where('location_id', $current_location)->sum('current_paid_amount');
@@ -55,6 +60,9 @@
                         $total_locations = App\Models\Location::count();
 
                         $total_customers = App\Models\Customer::where('location_id', $current_location)->count();
+
+                        $total_stock = App\Models\Product::where('location_id', $current_location)->count();
+                        
                     }
 
                 @endphp
@@ -140,6 +148,26 @@
                             </div><!-- end cardbody -->
                         </div><!-- end card -->
                     </div><!-- end col -->
+
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <p class="text-truncate font-size-14 mb-2">Stock</p>
+                                        <h4 class="mb-2">{{ $total_stock }}</h4>
+
+                                    </div>
+                                    <div class="avatar-sm">
+                                        <span class="avatar-title bg-light text-primary rounded-3">
+                                            <i class=" ri-user-line font-size-24"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div><!-- end cardbody -->
+                        </div><!-- end card -->
+                    </div><!-- end col -->
+
                 @endif
 
 

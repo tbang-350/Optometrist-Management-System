@@ -272,10 +272,10 @@ class PurchaseController extends Controller
             //tuendelee na import ya data zetu sasa
             DB::beginTransaction();
             $i = 0;
+            $j = 0;
             foreach ($data as $row) {
                 
                 $date = Date::excelToDateTimeObject($row['date']);
-
                 $lastPurchase = Purchase::orderBy('id', 'desc')->first();
                 $purchase_no = $lastPurchase ? $lastPurchase->purchase_no + 1 : 1;
 
@@ -293,12 +293,8 @@ class PurchaseController extends Controller
                 //check if the purchase already exists in the database before inserting
                 $purchase = Purchase::where('date', $date->format('Y-m-d'))
                     ->where('category_id', $category->id)
-                    ->where('product_id', $product->id)
-                    ->where('purchase_no', $purchase_no) //hapa kidogo nimeweka ila ninawasiwasi , coz i think eachtime purchase_no will be different kwa sababu ya auto increment
+                    ->where('product_id', $product->id) 
                     ->where('supplier_name', $row['supplier_name'])
-                    ->where('buying_qty', $row['buying_qty'])
-                    ->where('buying_unit_price', $row['buying_unit_price'])
-                    ->where('selling_unit_price', $row['selling_unit_price'])
                     ->where('location_id', Auth::user()->location_id)
                     ->first();
                 if (!$purchase && !empty(trim($row['supplier_name'])) && !empty(trim($row['buying_qty'])) && !empty(trim($row['buying_unit_price'])) && !empty(trim($row['selling_unit_price'])) && !empty(trim($row['category_name'])) && !empty(trim($row['product_name']))) {
@@ -317,11 +313,27 @@ class PurchaseController extends Controller
                     $purchase->created_by = Auth::user()->id;
                     $purchase->created_at = Carbon::now();
                     $purchase->save();
+                }else{
+                    //update the purchase incase it exists ()
+                    //update buying_qty by adding the new buying_qty to the existing buying_qty
+                    //update total_buying_amount by adding the new total_buying_amount to the existing total_buying_amount
+                    //update the updated_at column
+                    if($purchase){
+                        $j++;
+                      $purchase->update([
+                        'buying_qty' => $purchase->buying_qty + (float) $row['buying_qty'],
+                        'total_buying_amount' => $purchase->total_buying_amount + ((float) $row['buying_qty'] * (float) $row['buying_unit_price']),
+                        'updated_at' => Carbon::now()
+
+                    ]);  
+                    }
+                    
+
                 }
             }
             DB::commit();
             $notification = array(
-                'message' => $i.' Purchase imported successfully',
+                'message' => $i.' Purchase imported successfully'. ($j > 0 ? ' and '.$j.' Existing purchases updated' : ''),
                 'alert-type' => 'success',
             );
             return back()->with($notification);

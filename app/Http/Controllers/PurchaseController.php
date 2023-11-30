@@ -210,10 +210,8 @@ class PurchaseController extends Controller
         return view('backend.pdf.daily_purchase_report_pdf', compact('allData', 'start_date', 'end_date'));
     }
 
-
     public function PurchaseUpload_old(Request $request)
     {
-
 
         // Validate the uploaded file
         $request->validate([
@@ -238,7 +236,6 @@ class PurchaseController extends Controller
 
     public function PurchaseUpload(Request $request)
     {
-
 
         // Validate the uploaded file
         $request->validate([
@@ -274,7 +271,7 @@ class PurchaseController extends Controller
             $i = 0;
             $j = 0;
             foreach ($data as $row) {
-                
+
                 $date = Date::excelToDateTimeObject($row['date']);
                 $lastPurchase = Purchase::orderBy('id', 'desc')->first();
                 $purchase_no = $lastPurchase ? $lastPurchase->purchase_no + 1 : 1;
@@ -293,7 +290,7 @@ class PurchaseController extends Controller
                 //check if the purchase already exists in the database before inserting
                 $purchase = Purchase::where('date', $date->format('Y-m-d'))
                     ->where('category_id', $category->id)
-                    ->where('product_id', $product->id) 
+                    ->where('product_id', $product->id)
                     ->where('supplier_name', $row['supplier_name'])
                     ->where('location_id', Auth::user()->location_id)
                     ->first();
@@ -313,32 +310,39 @@ class PurchaseController extends Controller
                     $purchase->created_by = Auth::user()->id;
                     $purchase->created_at = Carbon::now();
                     $purchase->save();
-                }else{
+                } else {
                     //update the purchase incase it exists ()
                     //update buying_qty by adding the new buying_qty to the existing buying_qty
                     //update total_buying_amount by adding the new total_buying_amount to the existing total_buying_amount
                     //update the updated_at column
-                    if($purchase){
+                    if ($purchase) {
                         $j++;
-                      $purchase->update([
-                        'buying_qty' => $purchase->buying_qty + (float) $row['buying_qty'],
-                        'total_buying_amount' => $purchase->total_buying_amount + ((float) $row['buying_qty'] * (float) $row['buying_unit_price']),
-                        'updated_at' => Carbon::now()
+                        $purchase->insert([
+                            'date' => $date->format('Y-m-d'),
+                            'supplier_name' => $row['supplier_name'],
+                            'category_id' => $category->id,
+                            'product_id' => $product->id,
+                            'purchase_no' => $purchase_no,
+                            'buying_qty' => (float) $row['buying_qty'],
+                            'buying_unit_price' => (float) $row['buying_unit_price'],
+                            'selling_unit_price' => (float) $row['selling_unit_price'],
+                            'total_buying_amount' => (float) $row['buying_qty'] * (float) $row['buying_unit_price'],
+                            'status' => (float) $row['status'],
+                            'location_id' => Auth::user()->location_id,
+                            'created_by' => Auth::user()->id,
+                            'created_at' => Carbon::now(),
 
-                    ]);  
+                        ]);
                     }
-                    
 
                 }
             }
             DB::commit();
             $notification = array(
-                'message' => $i.' Purchase imported successfully'. ($j > 0 ? ' and '.$j.' Existing purchases updated' : ''),
+                'message' => $i . ' Purchase imported successfully' . ($j > 0 ? ' and ' . $j . ' Existing purchases updated' : ''),
                 'alert-type' => 'success',
             );
             return back()->with($notification);
-
-
 
         } else {
             $notification = array(

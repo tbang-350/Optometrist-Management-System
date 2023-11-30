@@ -12,7 +12,9 @@ use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class PurchaseController extends Controller
 {
@@ -209,7 +211,9 @@ class PurchaseController extends Controller
     }
 
 
-    public function PurchaseUpload(Request $request){
+    public function PurchaseUpload_old(Request $request)
+    {
+
 
         // Validate the uploaded file
         $request->validate([
@@ -229,6 +233,108 @@ class PurchaseController extends Controller
         return back()->with($notification);
 
         dd($excel_data);
+
+    }
+
+    public function PurchaseUpload(Request $request)
+    {
+
+
+        // Validate the uploaded file
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls',
+        ]);
+
+        ini_set('max_execution_time', 300);
+        $data = uploadExcel();
+        $status = checkKeysExists($data, ['supplier_name', 'category_name', 'product_name', 'date', 'buying_qty', 'buying_unit_price', 'selling_unit_price', 'status']);
+        if ($status == 1) {
+            $supplier_name = [];
+            $category_name = [];
+            $product_name = [];
+            $date = [];
+            $buying_qty = [];
+            $buying_unit_price = [];
+            $selling_unit_price = [];
+            $status = [];
+
+            foreach ($data as $row) {
+                $supplier_name[] = $row['supplier_name'];
+                $category_name[] = $row['category_name'];
+                $product_name[] = $row['product_name'];
+                $date[] = $row['date'];
+                $buying_qty[] = $row['buying_qty'];
+                $buying_unit_price[] = $row['buying_unit_price'];
+                $selling_unit_price[] = $row['selling_unit_price'];
+                $status[] = $row['status'];
+            } //kama kuna validation yoyote kuhusiana na group ya data i mean each column basi hapa ndio unaweza kuweka coz each array inabeba data zote za column husika.
+
+            //tuendelee na import ya data zetu sasa
+            DB::beginTransaction();
+            $i = 0;
+            foreach ($data as $row) {
+                
+                $date = Date::excelToDateTimeObject($row['date']);
+
+                $lastPurchase = Purchase::orderBy('id', 'desc')->first();
+                $purchase_no = $lastPurchase ? $lastPurchase->purchase_no + 1 : 1;
+
+                $category = Category::firstOrCreate(
+                    ['name' => $row['category_name'], 'location_id' => Auth::user()->location_id],
+                    ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
+                );
+                $product = Product::firstOrCreate(
+                    ['name' => $row['product_name'], 'supplier_name' => $row['supplier_name'], 'category_id' => $category->id, 'location_id' => Auth::user()->location_id],
+                    ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
+                );
+                $purchase_qty = ((float) $row['buying_qty']) + ((float) $product->quantity);
+                $product->quantity = $purchase_qty;
+                $product->save();
+                //check if the purchase already exists in the database before inserting
+                $purchase = Purchase::where('date', $date->format('Y-m-d'))
+                    ->where('category_id', $category->id)
+                    ->where('product_id', $product->id)
+                    ->where('purchase_no', $purchase_no) //hapa kidogo nimeweka ila ninawasiwasi , coz i think eachtime purchase_no will be different kwa sababu ya auto increment
+                    ->where('supplier_name', $row['supplier_name'])
+                    ->where('buying_qty', $row['buying_qty'])
+                    ->where('buying_unit_price', $row['buying_unit_price'])
+                    ->where('selling_unit_price', $row['selling_unit_price'])
+                    ->where('location_id', Auth::user()->location_id)
+                    ->first();
+                if (!$purchase && !empty(trim($row['supplier_name'])) && !empty(trim($row['buying_qty'])) && !empty(trim($row['buying_unit_price'])) && !empty(trim($row['selling_unit_price'])) && !empty(trim($row['category_name'])) && !empty(trim($row['product_name']))) {
+                    $i++;
+                    $purchase = new Purchase();
+                    $purchase->date = $date->format('Y-m-d');
+                    $purchase->category_id = $category->id;
+                    $purchase->product_id = $product->id;
+                    $purchase->purchase_no = $purchase_no;
+                    $purchase->supplier_name = $row['supplier_name'];
+                    $purchase->buying_qty = (float) $row['buying_qty'];
+                    $purchase->buying_unit_price = (float) $row['buying_unit_price'];
+                    $purchase->selling_unit_price = (float) $row['selling_unit_price'];
+                    $purchase->total_buying_amount = (float) $row['buying_qty'] * (float) $row['buying_unit_price'];
+                    $purchase->location_id = Auth::user()->location_id;
+                    $purchase->created_by = Auth::user()->id;
+                    $purchase->created_at = Carbon::now();
+                    $purchase->save();
+                }
+            }
+            DB::commit();
+            $notification = array(
+                'message' => $i.' Purchase imported successfully',
+                'alert-type' => 'success',
+            );
+            return back()->with($notification);
+
+
+
+        } else {
+            $notification = array(
+                'message' => $status,
+                'alert-type' => 'error',
+            );
+            return back()->with($notification);
+        }
 
     }
 

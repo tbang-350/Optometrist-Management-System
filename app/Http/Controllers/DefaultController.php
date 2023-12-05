@@ -30,7 +30,9 @@ class DefaultController extends Controller
 
         $category_id = $request->category_id;
 
-        $allProduct = Product::where('category_id', $category_id)->get();
+        $allProduct = Product::where('category_id', $category_id)
+            ->where('quantity', '>', 0) // Fetch products with quantity greater than zero
+            ->get();
 
         return response()->json($allProduct);
 

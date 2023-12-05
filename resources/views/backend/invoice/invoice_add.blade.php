@@ -155,6 +155,14 @@
                                         </tr>
 
                                         <tr>
+                                            <td colspan="4">Mark Up</td>
+                                            <td>
+                                                <input type="text" name="markup_amount" id="markup_amount"
+                                                    class="form-control estimated_amount" placeholder="Markup Amount">
+                                            </td>
+                                        </tr>
+
+                                        <tr>
                                             <td colspan="4">Grand Total</td>
                                             <td>
                                                 <input type="text" name="estimated_amount" value="0"
@@ -554,6 +562,7 @@
                 var total = unit * parseFloat($("#buying_unit_price").val()); // Use the buying_unit_price
                 $(this).closest("tr").find("input.selling_price").val(total);
                 $('#discount_amount').trigger('keyup');
+                $('#markup_amount').trigger('keyup');
             });
 
 
@@ -562,6 +571,10 @@
 
 
             $(document).on('keyup click', '#discount_amount', function() {
+                totalAmountPrice();
+            });
+
+            $(document).on('keyup click', '#markup_amount', function() {
                 totalAmountPrice();
             });
 
@@ -598,13 +611,22 @@
                     }
                 });
 
-                var discount_amount = parseFloat($('#discount_amount').val())
+                var discount_amount = parseFloat($('#discount_amount').val());
+                var markup_amount = parseFloat($('#markup_amount').val()); // Get markup_amount value
+
                 if (!isNaN(discount_amount) && discount_amount.length != 0) {
                     sum -= parseFloat(discount_amount);
                 }
 
+                console.log({'the markup:':markup_amount})
+
+                if (!isNaN(markup_amount) && markup_amount.length != 0) {
+                    sum += parseFloat(markup_amount); // Add markup_amount to the sum
+                }
+
                 $('#estimated_amount').val(sum);
             }
+
 
 
         });

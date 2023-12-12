@@ -27,7 +27,7 @@ class ConsultationController extends Controller
 
         }
 
-        
+
         return view('backend.consultation.consultation_all', compact('consultation'));
 
     }
@@ -88,6 +88,7 @@ class ConsultationController extends Controller
             $consultation->status = 0;
             $consultation->consultation_fee = $request->consultation_fee;
             $consultation->created_by = Auth::user()->id;
+            $consultation->location_id = Auth::user()->location_id;
 
             $consultation->save();
 

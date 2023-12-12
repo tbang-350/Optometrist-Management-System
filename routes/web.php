@@ -8,13 +8,13 @@ use App\Http\Controllers\DefaultController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LocationController;
-use App\Http\Controllers\StockController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceInvoiceController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
@@ -122,10 +122,12 @@ Route::middleware('auth')->group(function () {
     Route::controller(PrescriptionController::class)->group(function () {
         Route::get('/prescription/all', 'PrescriptionAll')->name('prescription.all');
         Route::get('/prescription/add/{id}', 'PrescriptionAdd')->name('prescription.add');
+        Route::get('/prescription/add/', 'PrescriptionAddPlain')->name('prescription.add.plain');
         Route::post('/prescription/store', 'PrescriptionStore')->name('prescription.store');
+        Route::post('/prescription/plain', 'PrescriptionStorePlain')->name('prescription.store.plain');
         Route::get('/prescription/view/{id}', 'PrescriptionView')->name('prescription.view');
-//        Route::post('/service/update', 'ServiceUpdate')->name('service.update');
-//        Route::get('/service/delete/{id}', 'ServiceDelete')->name('service.delete');
+        Route::get('/service/delete/{id}', 'ServiceDelete')->name('service.delete');
+        // Route::post('/service/update', 'ServiceUpdate')->name('service.update');
     });
 
     //Supplier Routes
@@ -210,7 +212,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/service/payment/option/report', 'servicePaymentOptionReport')->name('service.payment.option.report');
 
     });
-
 
     // Stock Routes
     Route::controller(StockController::class)->group(function () {

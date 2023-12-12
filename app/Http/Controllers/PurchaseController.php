@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use Illuminate\Support\Facades\Response;
 
 class PurchaseController extends Controller
 {
@@ -288,7 +289,7 @@ class PurchaseController extends Controller
                     ['created_by' => Auth::user()->id, 'created_at' => Carbon::now()]
                 );
                 }
-                
+
                 $purchase_qty = ((float) $row['buying_qty']) + ((float) $product->quantity);
                 $product->quantity = $purchase_qty;
                 $product->save();
@@ -357,6 +358,17 @@ class PurchaseController extends Controller
             return back()->with($notification);
         }
 
+    }
+
+
+
+    public function TemplateDownload()
+    {
+        $filePath = storage_path('download/purchase_import_template.xlsx');
+
+        return Response::download($filePath, 'import_template.xlsx', [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ]);
     }
 
 }

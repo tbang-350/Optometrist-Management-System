@@ -21,12 +21,12 @@
                     <div class="card">
                         <div class="card-body">
 
-                            {{-- <a href="{{ route('consultation.add') }}"
+                            <a href="{{ route('prescription.add.plain') }}"
                                 class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right">
                                 <i class="fas fa-plus-circle">
-                                    Add Consultation
+                                    Add Prescription
                                 </i>
-                            </a> --}}
+                            </a>
 
                             <br>
                             <br>

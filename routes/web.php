@@ -122,7 +122,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(PrescriptionController::class)->group(function () {
         Route::get('/prescription/all', 'PrescriptionAll')->name('prescription.all');
         Route::get('/prescription/add/{id}', 'PrescriptionAdd')->name('prescription.add');
-        Route::get('/prescription/add/', 'PrescriptionAddPlain')->name('prescription.add.plain');
+        Route::get('/prescription/plain/add/', 'PrescriptionAddPlain')->name('prescription.add.plain');
         Route::post('/prescription/store', 'PrescriptionStore')->name('prescription.store');
         Route::post('/prescription/plain', 'PrescriptionStorePlain')->name('prescription.store.plain');
         Route::get('/prescription/view/{id}', 'PrescriptionView')->name('prescription.view');
@@ -182,6 +182,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/daily/purchase/pdf', 'DailyPurchasePdf')->name('daily.purchase.pdf');
 
         Route::post('/purchase/upload', 'PurchaseUpload')->name('purchase.upload');
+        Route::get('/download-template', 'TemplateDownload')->name('download.template');
+
     });
 
     // Invoice Routes

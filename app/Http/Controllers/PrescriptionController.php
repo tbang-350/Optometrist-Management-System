@@ -150,7 +150,7 @@ class PrescriptionController extends Controller
             'alert-type' => 'success',
         );
 
-        return redirect()->route('consultation.all')->with($notification);
+        return redirect()->route('prescription.all')->with($notification);
 
         // dd($prescription);
 

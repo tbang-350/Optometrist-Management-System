@@ -64,7 +64,7 @@
                                                     <i class="fas fa-eye"></i>
                                                 </a>
 
-                                                <a href=" {{ route('customer.delete', $item->id) }} "
+                                                <a href=" {{ route('prescription.delete', $item->id) }} "
                                                     class="btn btn-danger sm" title="Delete Data" id="delete"> <i
                                                         class="fas fa-trash-alt"></i>
                                                 </a>

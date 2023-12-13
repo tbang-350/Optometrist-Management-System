@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Service;
@@ -154,5 +155,24 @@ class DefaultController extends Controller
 
         return response()->json($data);
     } // End Method
+
+    public function GetCustomerDetails(Request $request)
+    {
+        $customer_id = $request->customer_id;
+
+        // Fetch customer details from the database based on $customer_id
+        $customer = Customer::find($customer_id);
+
+        // Prepare the response data
+        $data = [
+            'name' => $customer->name,
+            'age' => $customer->age,
+            'sex' => $customer->sex,
+            'address' => $customer->address,
+            'phonenumber' => $customer->phonenumber,
+        ];
+
+        return response()->json($data);
+    }
 
 }

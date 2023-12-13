@@ -21,6 +21,32 @@
 
 
                                 <div class="row new_customer">
+
+
+
+                                    <div class="form-group col-md-4">
+                                        <label for="date" class="form-label">Select Existing Customer</label>
+                                        <select name="customer_id" id="customer_id" class="form-control select2">
+                                            <option value="">Select Customer</option>
+
+                                            @foreach ($customer as $cust)
+                                                <option value="{{ $cust->id }}">{{ $cust->name }}
+                                                </option>
+                                            @endforeach
+
+
+
+                                        </select>
+
+                                    </div>
+
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <br>
+                                    <hr>
+
+
                                     <h6 class="card-title">Customer Information</h6>
 
                                     <br>
@@ -57,7 +83,7 @@
 
                                     <div class="form-group col-md-6">
                                         <br>
-                                        
+
                                         <select name="sex" id="sex" class="form-select"
                                             aria-label="Select gender">
                                             <option value="" selected>Select gender</option>
@@ -393,20 +419,36 @@
             }
         });
 
-        // $(document).ready(function() {
-        //     // Add an event listener to the payment option dropdown
-        //     $('#payment_option').change(function() {
-        //         var selectedOption = $(this).val();
-        //         var paidStatusField = $('#paid_status');
+        $(document).ready(function() {
+            $('#customer_id').change(function() {
+                var customer_id = $(this).val();
 
-        //         // Show the paid status field only if a payment option is selected
-        //         if (selectedOption !== '') {
-        //             paidStatusField.show();
-        //         } else {
-        //             paidStatusField.hide();
-        //         }
-        //     });
-        // });
+                // Make an AJAX request to fetch customer details
+                $.ajax({
+                    url: '/get-customer-details', // Replace with your endpoint to fetch customer details
+                    method: 'GET',
+                    data: {
+                        customer_id: customer_id
+                    },
+                    success: function(response) {
+                        // Fill the retrieved data into respective input fields
+                        $('#name').val(response.name).prop('readonly', true);
+                        $('#age').val(response.age).prop('readonly', true);
+                        $('#sex').val(response.sex).prop('disabled', true).change(); // Trigger change event for dropdown
+                        $('#address').val(response.address).prop('readonly', true);
+                        $('#phonenumber').val(response.phonenumber).prop('readonly', true);
+
+
+                        console.log(response)
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors if any
+                        console.error(error);
+                    }
+                });
+            });
+        });
+
 
         $(document).on('change', '#payment_option', function() {
             var payment_option = $(this).val();

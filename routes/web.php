@@ -126,7 +126,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/prescription/store', 'PrescriptionStore')->name('prescription.store');
         Route::post('/prescription/plain', 'PrescriptionStorePlain')->name('prescription.store.plain');
         Route::get('/prescription/view/{id}', 'PrescriptionView')->name('prescription.view');
-        Route::get('/service/delete/{id}', 'ServiceDelete')->name('service.delete');
+        Route::get('/prescription/delete/{id}', 'PrescriptionDelete')->name('prescription.delete');
         // Route::post('/service/update', 'ServiceUpdate')->name('service.update');
     });
 
@@ -237,6 +237,8 @@ Route::controller(DefaultController::class)->group(function () {
     Route::get('/autocomplete/suppliers', 'AutocompleteSuppliers')->name('autocomplete.suppliers');
     Route::get('/autocomplete/categories', 'AutocompleteCategories')->name('autocomplete.categories');
     Route::get('/autocomplete/products', 'AutocompleteProducts')->name('autocomplete.products');
+    Route::get('/get-customer-details', 'GetCustomerDetails')->name('get.customer.details');
+
 
 });
 

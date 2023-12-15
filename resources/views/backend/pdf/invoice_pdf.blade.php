@@ -93,7 +93,7 @@
                                                         <!-- foreach ($order->lineItems as $line) or some such thing here -->
                                                         <tr>
                                                             <td>{{ $payment['customer']['name'] }}</td>
-                                                            <td class="text-center">{{ $payment['customer']['mobile_no'] }}
+                                                            <td class="text-center">{{ $payment['customer']['phonenumber'] }}
                                                             </td>
                                                             <td class="text-center">{{ $payment['customer']['address'] }}
                                                             </td>

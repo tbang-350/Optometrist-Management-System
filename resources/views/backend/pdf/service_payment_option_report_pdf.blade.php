@@ -122,7 +122,7 @@
                                                                 <td class="text-center">
                                                                     {{ date('d-m-Y', strtotime($item['service_invoice']['date'])) }}
                                                                 </td>
-                                                                <td class="text-center"> {{ $item->paid_amount }} </td>
+                                                                <td class="text-center"> {{ number_format($item->paid_amount,2) }} </td>
 
                                                             </tr>
 
@@ -140,7 +140,7 @@
                                                                 <strong>Grand Paid Amount(Tshs)</strong>
                                                             </td>
                                                             <td class="no-line text-center">
-                                                                <h4 class="m-0">{{ $total_paid }}</h4>
+                                                                <h4 class="m-0">{{ number_format($total_paid,2) }}</h4>
                                                             </td>
                                                         </tr>
                                                     </tbody>

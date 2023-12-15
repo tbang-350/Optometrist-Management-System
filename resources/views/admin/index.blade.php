@@ -15,7 +15,6 @@
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Upcube</a></li>
                                 <li class="breadcrumb-item active">Dashboard</li>
                             </ol>
                         </div>
@@ -62,7 +61,7 @@
                         $total_customers = App\Models\Customer::where('location_id', $current_location)->count();
 
                         $total_stock = App\Models\Product::where('location_id', $current_location)->count();
-                        
+
                     }
 
                 @endphp
@@ -74,7 +73,7 @@
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
                                         <p class="text-truncate font-size-14 mb-2">Total Product Sales</p>
-                                        <h4 class="mb-2">{{ $total_sales }}</h4>
+                                        <h4 class="mb-2">{{ number_format($total_sales, 2) }}</h4>
 
                                     </div>
                                     <div class="avatar-sm">
@@ -93,7 +92,7 @@
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
                                         <p class="text-truncate font-size-14 mb-2">Total Service Sales</p>
-                                        <h4 class="mb-2">{{ $total_service_sales }}</h4>
+                                        <h4 class="mb-2">{{ number_format($total_service_sales, 2) }}</h4>
 
                                     </div>
                                     <div class="avatar-sm">
@@ -280,13 +279,13 @@
                                                     <td> #{{ $item->invoice_no }} </td>
                                                     <td> {{ date('d-m-Y', strtotime($item->date)) }} </td>
 
-                                                    <td> Tsh {{ $item['payment']['total_amount'] }} </td>
-                                                    <td> Tsh {{ $item['payment']['paid_amount'] }} </td>
+                                                    <td> Tsh {{ number_format($item['payment']['total_amount'],2) }} </td>
+                                                    <td> Tsh {{ number_format($item['payment']['paid_amount'],2) }} </td>
 
                                                     @if ($item['payment']['due_amount'] == 0)
                                                         <td> Null </td>
                                                     @else
-                                                        <td> Tsh {{ $item['payment']['due_amount'] }} </td>
+                                                        <td> Tsh {{ number_format(($item['payment']['due_amount']),2) }} </td>
                                                     @endif
                                                     <td>
                                                         <a href=" {{ route('print.invoice', $item->id) }} "

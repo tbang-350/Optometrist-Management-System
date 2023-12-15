@@ -27,9 +27,9 @@
                         <div class="card-body">
 
                             @php
-                                
+
                                 $company_info = App\Models\Company::first();
-                                
+
                             @endphp
 
                             <div class="row">
@@ -124,7 +124,7 @@
                                                                 <td class="text-center">
                                                                     {{ date('d-m-Y', strtotime($item->date)) }}</td>
                                                                 <td class="text-center">
-                                                                    {{ $item['payment']['total_amount'] }}</td>
+                                                                    {{ number_format($item['payment']['total_amount'],2) }}</td>
 
                                                             </tr>
 
@@ -141,7 +141,7 @@
                                                                 <strong>Grand Total(Tshs)</strong>
                                                             </td>
                                                             <td class="no-line text-center">
-                                                                <h4 class="m-0">{{ $total_sum }}</h4>
+                                                                <h4 class="m-0">{{ number_format($total_sum,2) }}</h4>
                                                             </td>
                                                         </tr>
                                                     </tbody>

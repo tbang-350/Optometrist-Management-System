@@ -143,7 +143,7 @@
                                                                     {{ $details['service']['name'] }}
                                                                 </td>
 
-                                                                <td class="text-center">{{ $details->service_price }}
+                                                                <td class="text-center">{{ number_format($details->service_price,2) }}
                                                                 </td>
 
                                                             </tr>
@@ -162,7 +162,7 @@
                                                             </td>
                                                             <td class="thick-line text-center">
                                                                 <h6>
-                                                                    {{ $total_sum }}
+                                                                    {{ number_format($total_sum,2) }}
                                                                 </h6>
                                                             </td>
                                                         </tr>
@@ -177,7 +177,7 @@
                                                             </td>
                                                             <td class="no-line text-center">
                                                                 <h6>
-                                                                    {{ $payment->discount_amount }}
+                                                                    {{ number_format($payment->discount_amount,2) }}
                                                                 </h6>
                                                             </td>
                                                         </tr>
@@ -192,7 +192,7 @@
                                                             </td>
                                                             <td class="no-line text-center" colspan="5">
                                                                 <h6>
-                                                                    {{ $payment->paid_amount }}
+                                                                    {{ number_format($payment->paid_amount,2) }}
                                                                 </h6>
                                                             </td>
                                                         </tr>
@@ -205,7 +205,7 @@
                                                             </td>
                                                             <td class="no-line text-center">
                                                                 <h6>
-                                                                    {{ $payment->due_amount }}
+                                                                    {{ number_format($payment->due_amount,2) }}
                                                                 </h6>
                                                             </td>
                                                             <input type="hidden" name="new_paid_amount"
@@ -220,7 +220,7 @@
                                                                 </h6>
                                                             </td>
                                                             <td class="no-line text-center">
-                                                                <h4 class="m-0">{{ $payment->total_amount }}</h4>
+                                                                <h4 class="m-0">{{ number_format($payment->total_amount,2) }}</h4>
                                                             </td>
                                                         </tr>
 
@@ -255,7 +255,7 @@
 
                                                                 <td
                                                                     style="text-align:center; font-weight:bold;">
-                                                                    {{ $item->current_paid_amount }}</td>
+                                                                    {{ number_format($item->current_paid_amount,2) }}</td>
                                                             </tr>
                                                         @endforeach
 

@@ -83,8 +83,8 @@
                                             <td> {{ $item->supplier_name }} </td>
                                             <td> {{ $item['category']['name'] ?? '-' }} </td>
                                             <td> {{ $item->buying_qty }} </td>
-                                            <td> {{ $item->buying_unit_price }} </td>
-                                            <td> {{ $item->total_buying_amount }} </td>
+                                            <td> {{ number_format($item->buying_unit_price,2) }} </td>
+                                            <td> {{ number_format($item->total_buying_amount,2) }} </td>
                                             <td> {{ $item['product']['name'] ?? '-' }} </td>
                                             <td>
                                                 @if ($item->status == '0')

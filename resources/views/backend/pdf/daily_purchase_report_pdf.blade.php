@@ -128,8 +128,10 @@
                                                                     {{ date('d-m-Y', strtotime($item->date)) }}</td>
                                                                 <td class="text-center">{{ $item['product']['name'] }}</td>
                                                                 <td class="text-center">{{ $item->buying_qty }} Pcs </td>
-                                                                <td class="text-center">{{ $item->buying_unit_price }}</td>
-                                                                <td class="text-center">{{ $item->total_buying_amount }}</td>
+                                                                <td class="text-center">
+                                                                    {{ number_format($item->buying_unit_price, 2) }}</td>
+                                                                <td class="text-center">
+                                                                    {{ number_format($item->total_buying_amount, 2) }}</td>
 
                                                             </tr>
 
@@ -137,7 +139,7 @@
                                                                 $total_sum += $item->total_buying_amount;
                                                             @endphp
                                                         @endforeach
-                                                        
+
                                                         <tr>
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
@@ -148,7 +150,7 @@
                                                                 <strong>Grand Total(Tshs)</strong>
                                                             </td>
                                                             <td class="no-line text-center">
-                                                                <h4 class="m-0">{{ $total_sum }}</h4>
+                                                                <h4 class="m-0">{{ number_format($total_sum, 2) }}</h4>
                                                             </td>
                                                         </tr>
                                                     </tbody>

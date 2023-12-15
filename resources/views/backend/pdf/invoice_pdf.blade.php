@@ -154,8 +154,8 @@
                                                                 <td class="text-center">{{ $details['product']['name'] }}
                                                                 </td>
                                                                 <td class="text-center">{{ $details->selling_qty }}</td>
-                                                                <td class="text-center">{{ $details->unit_price }}</td>
-                                                                <td class="text-center">{{ $details->selling_price }}</td>
+                                                                <td class="text-center">{{ number_format($details->unit_price,2) }}</td>
+                                                                <td class="text-center">{{ number_format($details->selling_price,2) }}</td>
 
                                                             </tr>
 
@@ -173,7 +173,7 @@
                                                             <td class="thick-line text-center">
                                                                 <strong>Subtotal(Tshs)</strong>
                                                             </td>
-                                                            <td class="thick-line text-center">{{ $total_sum }}</td>
+                                                            <td class="thick-line text-center">{{ number_format($total_sum,2) }}</td>
                                                         </tr>
                                                         <tr>
 
@@ -184,7 +184,7 @@
                                                             <td class="no-line text-center">
                                                                 <strong>Discount Amount(Tshs)</strong>
                                                             </td>
-                                                            <td class="no-line text-center">{{ $payment->discount_amount }}
+                                                            <td class="no-line text-center">{{ number_format($payment->discount_amount,2) }}
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -196,7 +196,7 @@
                                                             <td class="no-line text-center">
                                                                 <strong>Paid Amount(Tshs)</strong>
                                                             </td>
-                                                            <td class="no-line text-center">{{ $payment->paid_amount }}
+                                                            <td class="no-line text-center">{{ number_format($payment->paid_amount,2) }}
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -208,11 +208,11 @@
                                                             <td class="no-line text-center">
                                                                 <strong>Due Amount(Tshs)</strong>
                                                             </td>
-                                                            <td class="no-line text-center">{{ $payment->due_amount }}</td>
+                                                            <td class="no-line text-center">{{ number_format($payment->due_amount,2) }}</td>
                                                         </tr>
 
                                                         <tr>
-                                                            
+
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
@@ -221,7 +221,7 @@
                                                                 <strong>Grand Total(Tshs)</strong>
                                                             </td>
                                                             <td class="no-line text-center">
-                                                                <h4 class="m-0">{{ $payment->total_amount }}</h4>
+                                                                <h4 class="m-0">{{ number_format($payment->total_amount,2) }}</h4>
                                                             </td>
                                                         </tr>
                                                     </tbody>

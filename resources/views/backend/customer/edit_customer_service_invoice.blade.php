@@ -141,7 +141,7 @@
                                                                         {{ $details['service']['name'] }}
                                                                     </td>
 
-                                                                    <td class="text-center">{{ $details->service_price }}
+                                                                    <td class="text-center">{{ number_format($details->service_price,2) }}
                                                                     </td>
 
                                                                 </tr>
@@ -160,7 +160,7 @@
                                                                 </td>
                                                                 <td class="thick-line text-center">
                                                                     <h6>
-                                                                        {{ $total_sum }}
+                                                                        {{ number_format($total_sum,2) }}
                                                                     </h6>
                                                                 </td>
                                                             </tr>
@@ -174,7 +174,7 @@
                                                                 </td>
                                                                 <td class="no-line text-center">
                                                                     <h6>
-                                                                        {{ $service_payment->discount_amount }}
+                                                                        {{ number_format($service_payment->discount_amount,2) }}
                                                                     </h6>
                                                                 </td>
                                                             </tr>
@@ -188,7 +188,7 @@
                                                                 </td>
                                                                 <td class="no-line text-center" colspan="5">
                                                                     <h6>
-                                                                        {{ $service_payment->paid_amount }}
+                                                                        {{ number_format($service_payment->paid_amount,2) }}
                                                                     </h6>
                                                                 </td>
                                                             </tr>
@@ -204,7 +204,7 @@
                                                                     value="{{ $service_payment->due_amount }}">
                                                                 <td class="no-line text-center">
                                                                     <h6>
-                                                                        {{ $service_payment->due_amount }}
+                                                                        {{ number_format($service_payment->due_amount,2) }}
                                                                     </h6>
                                                                 </td>
                                                             </tr>
@@ -217,7 +217,7 @@
                                                                     </h6>
                                                                 </td>
                                                                 <td class="no-line text-center">
-                                                                    <h4 class="m-0">{{ $service_payment->total_amount }}
+                                                                    <h4 class="m-0">{{ number_format($service_payment->total_amount,2) }}
                                                                     </h4>
                                                                 </td>
                                                             </tr>

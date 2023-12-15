@@ -64,7 +64,7 @@
                                             <td> {{ $item['customer']['name'] }} </td>
                                             <td> #{{ $item['service_invoice']['service_invoice_no'] }} </td>
                                             <td> {{ date('d-m-Y', strtotime($item['service_invoice']['date'])) }} </td>
-                                            <td> Tsh {{ $item->due_amount }} </td>
+                                            <td> Tsh {{ number_format($item->due_amount,2) }} </td>
 
                                             <td>
                                                 <a href="{{ route('customer.edit.service.invoice',$item->service_invoice_id) }}"

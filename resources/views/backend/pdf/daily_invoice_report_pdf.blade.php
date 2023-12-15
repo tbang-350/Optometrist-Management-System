@@ -102,8 +102,6 @@
                                                             </td>
                                                             <td class="text-center"><strong>Date</strong>
                                                             </td>
-                                                            <td class="text-center"><strong>Description</strong>
-                                                            </td>
                                                             <td class="text-center"><strong>Amount</strong>
                                                             </td>
 
@@ -125,9 +123,8 @@
                                                                 <td class="text-center">{{ $item->invoice_no }}</td>
                                                                 <td class="text-center">
                                                                     {{ date('d-m-Y', strtotime($item->date)) }}</td>
-                                                                <td class="text-center">{{ $item->description }}</td>
                                                                 <td class="text-center">
-                                                                    {{ $item['payment']['total_amount'] }}</td>
+                                                                    {{ number_format($item['payment']['total_amount'],2) }}</td>
 
                                                             </tr>
 
@@ -140,12 +137,12 @@
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
-                                                            <td class="no-line"></td>
+                                                            
                                                             <td class="no-line text-center">
                                                                 <strong>Grand Total(Tshs)</strong>
                                                             </td>
                                                             <td class="no-line text-center">
-                                                                <h4 class="m-0">{{ $total_sum }}</h4>
+                                                                <h4 class="m-0">{{ number_format($total_sum,2) }}</h4>
                                                             </td>
                                                         </tr>
                                                     </tbody>

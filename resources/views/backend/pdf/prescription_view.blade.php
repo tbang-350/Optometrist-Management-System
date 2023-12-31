@@ -111,6 +111,10 @@
                                                         <td>{{ $data->customer->address ?? '' }}</td>
                                                     </tr>
                                                     <tr>
+                                                        <th>Phone Number</th>
+                                                        <td>{{ $data->customer->phonenumber ?? '' }}</td>
+                                                    </tr>
+                                                    <tr>
                                                         <th>Sex</th>
                                                         <td>
                                                             <select name="sex" id="sex" class="form-select" aria-label="Select gender" disabled>

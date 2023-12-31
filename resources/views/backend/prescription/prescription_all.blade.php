@@ -57,11 +57,17 @@
                                             <td> {{ $key + 1 }} </td>
                                             <td>{{ date('d-m-Y', strtotime($item->date)) }}</td>
                                             <td>{{ $item['customer']['name'] }}</td>
-                                            <td>{{ $item->next_appointment }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($item->next_appointment)) }}</td>
+                                            
                                             <td>
-                                                <a href=" {{ route('prescription.view', $item->id) }} " class="btn btn-info sm"
+                                                <a href=" {{ route('prescription.view', $item->id) }} " class="btn btn-dark sm"
                                                     title="View Data">
                                                     <i class="fas fa-eye"></i>
+                                                </a>
+
+                                                <a href=" {{ route('prescription.edit', $item->id) }} " class="btn btn-info sm"
+                                                    title="Edit Data">
+                                                    <i class="fas fa-edit"></i>
                                                 </a>
 
                                                 <a href=" {{ route('prescription.delete', $item->id) }} "

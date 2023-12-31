@@ -34,6 +34,10 @@
 
                             {{-- <h4 class="card-title"> All Supplier Data </h4> --}}
 
+                            @php
+                                $role = Auth::user()->role;
+                            @endphp
+
 
                             <table id="datatable" class="table table-bordered dt-responsive nowrap"
                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -45,7 +49,10 @@
                                         <th>Sex</th>
                                         <th>Phone Number</th>
                                         <th>Address</th>
-                                        <th>Location</th>
+                                        @if ($role == '1')
+                                            <th>Location</th>
+                                        @endif
+
                                         <th>Action</th>
 
                                 </thead>
@@ -61,18 +68,58 @@
                                             <td> {{ $item->sex }} </td>
                                             <td> {{ $item->phonenumber }} </td>
                                             <td> {{ $item->address }} </td>
-                                            <td> {{ $item['location']['location_name'] }} </td>
+
+                                            @if ($role == '1')
+                                                <td> {{ $item['location']['location_name'] }} </td>
+                                            @endif
 
                                             <td>
+
+                                                <a href=" {{ route('customer.prescription.history', $item->id) }} " class="btn btn-warning sm"
+                                                    title="Prescription History">
+                                                    <i class=" fas fa-clinic-medical"></i>
+                                                </a>
+
+
+                                                <a href=" {{ route('customer.purchase.history', $item->id) }} " class="btn btn-dark sm"
+                                                    title="Purchase History">
+                                                    <i class="fas fa-cart-arrow-down"></i>
+                                                </a>
+
                                                 <a href=" {{ route('customer.edit', $item->id) }} " class="btn btn-info sm"
                                                     title="Edit Data">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
 
+
+
                                                 <a href=" {{ route('customer.delete', $item->id) }} "
                                                     class="btn btn-danger sm" title="Delete Data" id="delete"> <i
                                                         class="fas fa-trash-alt"></i>
                                                 </a>
+
+                                                {{-- <div class="dropdown float-end">
+                                                    <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="mdi mdi-dots-vertical"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <!-- item-->
+                                                        <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
+
+                                                        <a href=" {{ route('customer.prescription.history', $item->id) }} " class="dropdown-item">
+                                                            Prescription History
+                                                        </a>
+
+                                                        <!-- item-->
+                                                        <a href="javascript:void(0);" class="">Export Report</a>
+                                                        <!-- item-->
+                                                        <a href="javascript:void(0);" class="dropdown-item">Profit</a>
+                                                        <!-- item-->
+                                                        <a href="javascript:void(0);" class="dropdown-item">Action</a>
+
+                                                    </div>
+
+                                                </div> --}}
 
                                             </td>
 

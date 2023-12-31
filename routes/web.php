@@ -96,6 +96,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/customer/wise/credit/report', 'CustomerWiseCreditReport')->name('customer.wise.credit.report');
         Route::get('/customer/wise/paid/report', 'CustomerWisePaidReport')->name('customer.wise.paid.report');
 
+        Route::get('/customer/prescription_history/{id}', 'CustomerPrescriptionHistory')->name('customer.prescription.history');
+        Route::get('/customer/purchase_history/{id}', 'CustomerPurchaseHistory')->name('customer.purchase.history');
+
+
+
     });
 
     //Service Routes
@@ -127,7 +132,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/prescription/plain', 'PrescriptionStorePlain')->name('prescription.store.plain');
         Route::get('/prescription/view/{id}', 'PrescriptionView')->name('prescription.view');
         Route::get('/prescription/delete/{id}', 'PrescriptionDelete')->name('prescription.delete');
-        // Route::post('/service/update', 'ServiceUpdate')->name('service.update');
+
+        Route::get('/prescription/edit/{id}', 'PrescriptionEdit')->name('prescription.edit');
+        Route::post('/perscription/update', 'PrescriptionUpdate')->name('prescription.update');
     });
 
     //Supplier Routes

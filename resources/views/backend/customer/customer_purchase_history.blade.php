@@ -33,7 +33,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
-                                        <th>Customer Name</th>
+
                                         <th>Invoice No</th>
                                         <th>Date</th>
                                         <th>Payment Option</th>
@@ -50,7 +50,7 @@
                                     @foreach ($allData as $key => $item)
                                         <tr>
                                             <td> {{ $key + 1 }} </td>
-                                            <td> {{ $item['payment']['customer']['name'] }} </td>
+                                            
                                             <td> #{{ $item->invoice_no }} </td>
                                             <td> {{ date('d-m-Y', strtotime($item->date)) }} </td>
                                             <td> {{ $item['payment']['payment_option'] }} </td>

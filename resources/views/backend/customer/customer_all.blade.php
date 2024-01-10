@@ -53,7 +53,7 @@
                                             <th>Location</th>
                                         @endif
 
-                                        <th>Action</th>
+                                        <th width="10%" >Action</th>
 
                                 </thead>
 
@@ -98,28 +98,7 @@
                                                         class="fas fa-trash-alt"></i>
                                                 </a>
 
-                                                {{-- <div class="dropdown float-end">
-                                                    <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="mdi mdi-dots-vertical"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <!-- item-->
-                                                        <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
 
-                                                        <a href=" {{ route('customer.prescription.history', $item->id) }} " class="dropdown-item">
-                                                            Prescription History
-                                                        </a>
-
-                                                        <!-- item-->
-                                                        <a href="javascript:void(0);" class="">Export Report</a>
-                                                        <!-- item-->
-                                                        <a href="javascript:void(0);" class="dropdown-item">Profit</a>
-                                                        <!-- item-->
-                                                        <a href="javascript:void(0);" class="dropdown-item">Action</a>
-
-                                                    </div>
-
-                                                </div> --}}
 
                                             </td>
 

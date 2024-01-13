@@ -208,4 +208,16 @@ class PrescriptionController extends Controller
 
     }
 
+
+    public function PrescriptionEdit ($id){
+
+        $prescription = Prescription::findOrFail($id);
+
+
+        // dd($prescription);
+
+        return view('backend.prescription.prescription_edit', compact('prescription'));
+
+    }
+
 }

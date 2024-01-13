@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">All Prescriptions</h4>
+                        <h4 class="mb-sm-0">Prescription History</h4>
 
 
 
@@ -21,29 +21,29 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <a href="{{ route('prescription.add.plain') }}"
+                            {{-- <a href="{{ route('prescription.add.plain') }}"
                                 class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right">
                                 <i class="fas fa-plus-circle">
                                     Add Prescription
                                 </i>
-                            </a>
+                            </a> --}}
+
+
+
+                            <h1 class="card-title font-size-24"> Customer Name : {{ $customer->name }} </h1>
 
                             <br>
                             <br>
-                            <br>
-
-                            {{-- <h4 class="card-title"> All Supplier Data </h4> --}}
 
 
                             <table id="datatable" class="table table-bordered dt-responsive nowrap"
                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th>Sl</th>
+                                        <th width="10%">Sl</th>
                                         <th>Date</th>
-                                        <th>Customer Name</th>
                                         <th>Next Appointment</th>
-                                        <th>Action</th>
+                                        <th width="10%">Action</th>
 
 
                                 </thead>
@@ -56,16 +56,16 @@
 
                                             <td> {{ $key + 1 }} </td>
                                             <td>{{ date('d-m-Y', strtotime($item->date)) }}</td>
-                                            <td>{{ $item['customer']['name'] }}</td>
+
                                             <td>{{ date('d-m-Y', strtotime($item->next_appointment)) }}</td>
-                                            
+
                                             <td>
                                                 <a href=" {{ route('prescription.view', $item->id) }} " class="btn btn-dark sm"
                                                     title="View Data">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
 
-                                                <a href=" {{ route('prescription.edit', $item->id) }} " class="btn btn-info sm"
+                                                {{-- <a href=" {{ route('prescription.edit', $item->id) }} " class="btn btn-info sm"
                                                     title="Edit Data">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
@@ -73,7 +73,7 @@
                                                 <a href=" {{ route('prescription.delete', $item->id) }} "
                                                     class="btn btn-danger sm" title="Delete Data" id="delete"> <i
                                                         class="fas fa-trash-alt"></i>
-                                                </a>
+                                                </a> --}}
                                             </td>
 
 

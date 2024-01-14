@@ -438,24 +438,25 @@ class CustomerController extends Controller
 
         $customer_id = $id;
 
+//        dd($customer_id);
 
+        $prescription = Prescription::latest()->where('customer_id', $customer_id)->get();
 
-        $current_location = Auth::user()->location_id;
+        if ($prescription->isEmpty()) {
+            // Prescription not found, display toast notification
+            $notification = array(
+                'message' => 'Sorry, customer has no such history',
+                'alert-type' => 'error',
+            );
 
-        if ($current_location == 1) {
-
-            $prescription = Prescription::where('customer_id', $customer_id)->get();
-
-        } else {
-
-            // $prescription = Prescription::latest()->where("location_id", $current_location)->get();
-
-            $prescription = Prescription::where('customer_id', $customer_id)->where("location_id", $current_location)->get();
-
+            // Redirect back to the previous page
+            return redirect()->back()->with($notification);
         }
 
         // Get the customer associated with the first prescription
         $customer = $prescription->first()->customer;
+
+//        dd($customer);
 
         return view('backend.customer.customer_prescription_history', compact(['prescription', 'customer']));
 
@@ -466,28 +467,24 @@ class CustomerController extends Controller
 
         $customer_id = $id;
 
+
+
         // Fetch invoice IDs for the customer from payments
         $invoice_ids = Payment::where('customer_id', $customer_id)->pluck('invoice_id');
 
         // Retrieve purchase history based on the invoice IDs
-        // $purchase_history = Invoice::whereIn('id', $invoice_ids)->get();
+        $purchase_history = Invoice::whereIn('id', $invoice_ids)->get();
 
-        // dd($purchase_history);
+        $allData = Invoice::whereIn('id', $invoice_ids)->where('status', '1')->orderBy('date', 'desc')->orderBy('id', 'desc')->get();
 
-        $current_location = Auth::user()->location_id;
+        if ($allData->isEmpty()) {
+            $notification = array(
+                'message' => 'Sorry, customer has no such history',
+                'alert-type' => 'error',
+            );
 
-        if ($current_location == 1) {
-
-            $allData = Invoice::whereIn('id', $invoice_ids)->where('status', '1')->orderBy('date', 'desc')->orderBy('id', 'desc')->get();
-
-        } else {
-
-            $allData = Invoice::whereIn('id', $invoice_ids)->where('location_id', $current_location)
-                ->where('status', '1')
-                ->orderBy('date', 'desc')
-                ->orderBy('id', 'desc')
-                ->get();
-
+            // Redirect back to the previous page
+            return redirect()->back()->with($notification);
         }
 
         // Get the customer associated with the first prescription
@@ -496,7 +493,7 @@ class CustomerController extends Controller
 
 
         // Return the view with the invoice data
-        return view('backend.customer.customer_purchase_history', compact(['allData','customer']));
+        return view('backend.customer.customer_purchase_history', compact(['allData', 'customer']));
 
     }
 

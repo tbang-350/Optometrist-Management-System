@@ -75,7 +75,7 @@
 
                                             <td>
 
-                                                {{-- <a href=" {{ route('customer.prescription.history', $item->id) }} " class="btn btn-warning sm"
+                                                 <a href=" {{ route('customer.prescription.history', $item->id) }} " class="btn btn-warning sm"
                                                     title="Prescription History">
                                                     <i class=" fas fa-clinic-medical"></i>
                                                 </a>
@@ -84,7 +84,7 @@
                                                 <a href=" {{ route('customer.purchase.history', $item->id) }} " class="btn btn-dark sm"
                                                     title="Purchase History">
                                                     <i class="fas fa-cart-arrow-down"></i>
-                                                </a> --}}
+                                                </a>
 
                                                 <a href=" {{ route('customer.edit', $item->id) }} " class="btn btn-info sm"
                                                     title="Edit Data">

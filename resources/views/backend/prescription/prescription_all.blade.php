@@ -21,12 +21,12 @@
                     <div class="card">
                         <div class="card-body">
 
-                            {{-- <a href="{{ route('consultation.add') }}"
+                            <a href="{{ route('prescription.add.plain') }}"
                                 class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right">
                                 <i class="fas fa-plus-circle">
-                                    Add Consultation
+                                    Add Prescription
                                 </i>
-                            </a> --}}
+                            </a>
 
                             <br>
                             <br>
@@ -57,14 +57,20 @@
                                             <td> {{ $key + 1 }} </td>
                                             <td>{{ date('d-m-Y', strtotime($item->date)) }}</td>
                                             <td>{{ $item['customer']['name'] }}</td>
-                                            <td>{{ $item->next_appointment }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($item->next_appointment)) }}</td>
+                                            
                                             <td>
-                                                <a href=" {{ route('prescription.view', $item->id) }} " class="btn btn-info sm"
+                                                <a href=" {{ route('prescription.view', $item->id) }} " class="btn btn-dark sm"
                                                     title="View Data">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
 
-                                                <a href=" {{ route('customer.delete', $item->id) }} "
+                                                <a href=" {{ route('prescription.edit', $item->id) }} " class="btn btn-info sm"
+                                                    title="Edit Data">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+
+                                                <a href=" {{ route('prescription.delete', $item->id) }} "
                                                     class="btn btn-danger sm" title="Delete Data" id="delete"> <i
                                                         class="fas fa-trash-alt"></i>
                                                 </a>

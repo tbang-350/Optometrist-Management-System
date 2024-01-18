@@ -61,13 +61,13 @@
                                             <td> #{{ $item->service_invoice_no }} </td>
                                             <td> {{ date('d-m-Y', strtotime($item->date)) }} </td>
                                             <td> {{ $item['service_payment']['payment_option'] }} </td>
-                                            <td> Tsh {{ $item['service_payment']['total_amount'] }} </td>
-                                            <td> Tsh {{ $item['service_payment']['paid_amount'] }} </td>
+                                            <td> Tsh {{ number_format($item['service_payment']['total_amount'],2) }} </td>
+                                            <td> Tsh {{ number_format($item['service_payment']['paid_amount'],2) }} </td>
 
                                             @if ($item['service_payment']['due_amount'] == 0)
                                                 <td> Null </td>
                                             @else
-                                                <td> Tsh {{ $item['service_payment']['due_amount'] }} </td>
+                                                <td> Tsh {{ number_format($item['service_payment']['due_amount'],2) }} </td>
                                             @endif
 
                                             <td>

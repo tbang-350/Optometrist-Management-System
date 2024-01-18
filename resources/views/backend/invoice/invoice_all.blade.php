@@ -43,7 +43,7 @@
                                         <th>Customer Name</th>
                                         <th>Invoice No</th>
                                         <th>Date</th>
-                                        <th>Description</th>
+                                        <th>Payment Option</th>
                                         <th>Total Amount</th>
                                         <th>Paid Amount</th>
                                         <th>Due Amount</th>
@@ -60,14 +60,14 @@
                                             <td> {{ $item['payment']['customer']['name'] }} </td>
                                             <td> #{{ $item->invoice_no }} </td>
                                             <td> {{ date('d-m-Y', strtotime($item->date)) }} </td>
-                                            <td> {{ $item->description }} </td>
-                                            <td> Tsh {{ $item['payment']['total_amount'] }} </td>
-                                            <td> Tsh {{ $item['payment']['paid_amount'] }} </td>
+                                            <td> {{ $item['payment']['payment_option'] }} </td>
+                                            <td> Tsh {{ number_format($item['payment']['total_amount'],2) }} </td>
+                                            <td> Tsh {{ number_format($item['payment']['paid_amount'],2) }} </td>
 
                                             @if ($item['payment']['due_amount'] == 0)
                                                 <td> Null </td>
                                             @else
-                                                <td> Tsh {{ $item['payment']['due_amount'] }} </td>
+                                                <td> Tsh {{ number_format($item['payment']['due_amount'],2) }} </td>
                                             @endif
 
                                             <td>

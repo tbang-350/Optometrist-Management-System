@@ -27,7 +27,22 @@ class InvoiceController extends Controller
     {
         // Retrieve all invoices sorted by date and ID in descending order
         // where the status is '1' (approved)
-        $allData = Invoice::orderBy('date', 'desc')->orderBy('id', 'desc')->where('status', '1')->get();
+
+        $current_location = Auth::user()->location_id;
+
+        if ($current_location == 1) {
+
+            $allData = Invoice::where('status', '1')->orderBy('date', 'desc')->orderBy('id', 'desc')->get();
+
+        } else {
+
+            $allData = Invoice::where('location_id', $current_location)
+                ->where('status', '1')
+                ->orderBy('date', 'desc')
+                ->orderBy('id', 'desc')
+                ->get();
+
+        }
 
         // Return the view with the invoice data
         return view('backend.invoice.invoice_all', compact('allData'));
@@ -36,14 +51,26 @@ class InvoiceController extends Controller
 
     /**
      * Show the form for creating a new invoice.
-     *
+     *$current_location = Auth::user()->location_id;
      * @return \Illuminate\View\View
      */
     public function InvoiceAdd()
     {
+        $current_location = Auth::user()->location_id;
+
         // Retrieve all categories and customers
-        $category = Category::all();
-        $customer = Customer::all();
+
+        if ($current_location == 1) {
+
+            $category = Category::all();
+            $customer = Customer::all();
+
+        } else {
+
+            $category = Category::where('location_id', $current_location)->get();
+            $customer = Customer::where('location_id', $current_location)->get();
+
+        }
 
         // Get the last invoice number and increment it by 1
         $invoice_data = Invoice::orderBy('id', 'desc')->first();
@@ -96,6 +123,7 @@ class InvoiceController extends Controller
                 $invoice->status = '0';
                 $invoice->created_by = Auth::user()->id;
                 $invoice->created_at = Carbon::now();
+                $invoice->location_id = Auth::user()->location_id;
 
                 DB::transaction(function () use ($request, $invoice) {
 
@@ -127,6 +155,9 @@ class InvoiceController extends Controller
                             $customer->address = $request->address;
                             $customer->age = $request->age;
                             $customer->sex = $request->sex;
+                            $customer->location_id = Auth::user()->location_id;
+                            $customer->created_by = Auth::user()->id;
+                            $customer->created_at = Carbon::now();
                             $customer->save();
 
                             $customer_id = $customer->id;
@@ -145,9 +176,11 @@ class InvoiceController extends Controller
                         $payment->paid_status = $request->paid_status;
                         $payment->payment_option = $request->payment_option;
                         $payment->discount_amount = $request->discount_amount;
+                        $payment->markup_amount = $request->markup_amount;
                         $payment->total_amount = $request->estimated_amount;
                         $payment->created_at = Carbon::now();
                         $payment->created_by = Auth::user()->id;
+                        $payment->location_id = Auth::user()->location_id;
 
                         if ($request->paid_status == 'full_paid') {
 
@@ -173,6 +206,7 @@ class InvoiceController extends Controller
 
                         $payment_details->invoice_id = $invoice->id;
                         $payment_details->date = date('Y-m-d', strtotime($request->date));
+                        $payment_details->location_id = Auth::user()->location_id;
                         $payment_details->save();
 
                     }
@@ -192,7 +226,6 @@ class InvoiceController extends Controller
 
     } // End Method
 
-
     /**
      * Display a listing of pending invoices.
      *
@@ -202,6 +235,19 @@ class InvoiceController extends Controller
     {
         // Retrieve all pending invoices sorted by date and ID in descending order
         // where the status is '0' (pending)
+
+        $current_location = Auth::user()->location_id;
+
+        if ($current_location == 1) {
+
+            $allData = Invoice::orderBy('date', 'desc')->orderBy('id', 'desc')->where('status', '0')->get();
+
+        } else {
+
+            $allData = Invoice::where('location_id', $current_location)->orderBy('date', 'desc')->orderBy('id', 'desc')->where('status', '0')->get();
+
+        }
+
         $allData = Invoice::orderBy('date', 'desc')->orderBy('id', 'desc')->where('status', '0')->get();
 
         // Return the view with the pending invoice data
@@ -371,10 +417,23 @@ class InvoiceController extends Controller
     public function DailyInvoicePdf(Request $request)
     {
 
+        $current_location = Auth::user()->location_id;
+
         $sdate = date('Y-m-d', strtotime($request->start_date));
         $edate = date('Y-m-d', strtotime($request->end_date));
 
-        $allData = Invoice::whereBetween('date', [$sdate, $edate])->where('status', '1')->get();
+        if ($current_location == 1) {
+
+            $allData = Invoice::whereBetween('date', [$sdate, $edate])->where('status', '1')->get();
+
+        } else {
+
+            $allData = Invoice::where('location_id', $current_location)
+                ->whereBetween('date', [$sdate, $edate])
+                ->where('status', '1')
+                ->get();
+
+        }
 
         $start_date = date('Y-m-d', strtotime($request->start_date));
         $end_date = date('Y-m-d', strtotime($request->end_date));

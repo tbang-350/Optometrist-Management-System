@@ -3,28 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Category;
 use Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class CategoryController extends Controller
 {
 
-    public function CategoryAll(){
+    public function CategoryAll()
+    {
 
-        $categories = Category::latest()->get();
+        $current_location = Auth::user()->location_id;
+
+        if ($current_location == 1) {
+
+            $categories = Category::latest()->get();
+
+        } else {
+
+            $categories = Category::latest()->where("location_id", $current_location)->get();
+
+        }
 
         return view('backend.category.category_all', compact('categories'));
 
     } // End Method
 
-
-    public function CategoryAdd(){
+    public function CategoryAdd()
+    {
 
         return view('backend.category.category_add');
 
-    }// End Method
+    } // End Method
 
     public function CategoryStore(Request $request)
     {
@@ -41,8 +52,7 @@ class CategoryController extends Controller
         );
 
         return redirect()->route('category.all')->with($notification);
-    }// End Method
-
+    } // End Method
 
     public function CategoryEdit($id)
     {
@@ -51,7 +61,6 @@ class CategoryController extends Controller
         return view('backend.category.category_edit', compact('category'));
 
     } // End Method
-
 
     public function CategoryUpdate(Request $request)
     {
@@ -71,8 +80,7 @@ class CategoryController extends Controller
 
         return redirect()->route('category.all')->with($notification);
 
-    }// End Method
-
+    } // End Method
 
     public function CategoryDelete($id)
     {
@@ -86,6 +94,6 @@ class CategoryController extends Controller
 
         return redirect()->back()->with($notification);
 
-    }// End Method
+    } // End Method
 
 }

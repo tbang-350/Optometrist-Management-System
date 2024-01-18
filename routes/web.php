@@ -8,13 +8,13 @@ use App\Http\Controllers\DefaultController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LocationController;
-use App\Http\Controllers\StockController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceInvoiceController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
@@ -96,6 +96,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/customer/wise/credit/report', 'CustomerWiseCreditReport')->name('customer.wise.credit.report');
         Route::get('/customer/wise/paid/report', 'CustomerWisePaidReport')->name('customer.wise.paid.report');
 
+        Route::get('/customer/prescription_history/{id}', 'CustomerPrescriptionHistory')->name('customer.prescription.history');
+        Route::get('/customer/purchase_history/{id}', 'CustomerPurchaseHistory')->name('customer.purchase.history');
+
+
+
     });
 
     //Service Routes
@@ -122,10 +127,14 @@ Route::middleware('auth')->group(function () {
     Route::controller(PrescriptionController::class)->group(function () {
         Route::get('/prescription/all', 'PrescriptionAll')->name('prescription.all');
         Route::get('/prescription/add/{id}', 'PrescriptionAdd')->name('prescription.add');
+        Route::get('/prescription/plain/add/', 'PrescriptionAddPlain')->name('prescription.add.plain');
         Route::post('/prescription/store', 'PrescriptionStore')->name('prescription.store');
+        Route::post('/prescription/plain', 'PrescriptionStorePlain')->name('prescription.store.plain');
         Route::get('/prescription/view/{id}', 'PrescriptionView')->name('prescription.view');
-//        Route::post('/service/update', 'ServiceUpdate')->name('service.update');
-//        Route::get('/service/delete/{id}', 'ServiceDelete')->name('service.delete');
+        Route::get('/prescription/delete/{id}', 'PrescriptionDelete')->name('prescription.delete');
+
+        Route::get('/prescription/edit/{id}', 'PrescriptionEdit')->name('prescription.edit');
+        Route::post('/perscription/update', 'PrescriptionUpdate')->name('prescription.update');
     });
 
     //Supplier Routes
@@ -178,6 +187,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/purchase/approve/{id}', 'PurchaseApprove')->name('purchase.approve');
         Route::get('/daily/purchase/report', 'DailyPurchaseReport')->name('daily.purchase.report');
         Route::get('/daily/purchase/pdf', 'DailyPurchasePdf')->name('daily.purchase.pdf');
+
+        Route::post('/purchase/upload', 'PurchaseUpload')->name('purchase.upload');
+        Route::get('/download-template', 'TemplateDownload')->name('download.template');
+
     });
 
     // Invoice Routes
@@ -209,7 +222,6 @@ Route::middleware('auth')->group(function () {
 
     });
 
-
     // Stock Routes
     Route::controller(StockController::class)->group(function () {
         Route::get('/stock/report', 'StockReport')->name('stock.report');
@@ -232,6 +244,8 @@ Route::controller(DefaultController::class)->group(function () {
     Route::get('/autocomplete/suppliers', 'AutocompleteSuppliers')->name('autocomplete.suppliers');
     Route::get('/autocomplete/categories', 'AutocompleteCategories')->name('autocomplete.categories');
     Route::get('/autocomplete/products', 'AutocompleteProducts')->name('autocomplete.products');
+    Route::get('/get-customer-details', 'GetCustomerDetails')->name('get.customer.details');
+
 
 });
 

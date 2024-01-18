@@ -43,7 +43,7 @@
                                         <th>Customer Name</th>
                                         <th>Invoice No</th>
                                         <th>Date</th>
-                                        <th>Description</th>
+                                        <th>Payment Option</th>
                                         <th>Amount</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -59,9 +59,9 @@
                                             <td> {{$item['payment']['customer']['name']}} </td>
                                             <td> #{{ $item->invoice_no }} </td>
                                             <td> {{ date('d-m-Y', strtotime($item->date)) }} </td>
-                                            <td> {{ $item->description }} </td>
+                                            <td> {{ $item['payment']['payment_option'] }} </td>
 
-                                            <td> Tsh {{$item['payment']['total_amount']}} </td>
+                                            <td> Tsh {{number_format($item['payment']['total_amount'],2)}} </td>
 
                                             <td>
                                                 @if ($item->status == '0')

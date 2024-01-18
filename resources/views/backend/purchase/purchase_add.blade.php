@@ -108,7 +108,12 @@
                                     <div class="row mb-3 ">
                                         <div class=" form-group col-md-2">
                                             <input type="submit" class="btn btn-info waves-effect waves-light"
-                                                value="Add Purchase">
+                                                value="Save Purchase">
+                                        </div>
+
+                                        <div class=" form-group col-md-2">
+                                            <input type="submit" name="submit_and_new"
+                                                class="btn btn-info waves-effect waves-light" value="Save & Create Another">
                                         </div>
 
                                     </div>
@@ -131,6 +136,23 @@
 
 
     <script type="text/javascript">
+        // var path = "{{ route('autocomplete.suppliers') }}";
+
+        // $('#supplier_name').typeahead({
+        //     source: function(query, process) {
+        //         return $.get(path, {
+        //             query: query
+        //         }, function(data) {
+        //             if (data.length > 0) {
+        //                 var supplierNames = data.map(function(item) {
+        //                     return item.supplier_name;
+        //                 });
+        //                 return process(supplierNames);
+        //             }
+        //         });
+        //     }
+        // });
+
         var path = "{{ route('autocomplete.suppliers') }}";
 
         $('#supplier_name').typeahead({
@@ -138,12 +160,7 @@
                 return $.get(path, {
                     query: query
                 }, function(data) {
-                    if (data.length > 0) {
-                        var supplierNames = data.map(function(item) {
-                            return item.supplier_name;
-                        });
-                        return process(supplierNames);
-                    }
+                    return process(data);
                 });
             }
         });

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->tinyInteger('status')->default('0')->comment('0 = pending , 1 = approved');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
+            $table->integer('location_id')->nullable();
             $table->timestamps();
         });
     }

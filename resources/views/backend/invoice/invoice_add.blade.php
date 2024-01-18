@@ -155,6 +155,14 @@
                                         </tr>
 
                                         <tr>
+                                            <td colspan="4">Mark Up</td>
+                                            <td>
+                                                <input type="text" name="markup_amount" id="markup_amount"
+                                                    class="form-control estimated_amount" placeholder="Markup Amount">
+                                            </td>
+                                        </tr>
+
+                                        <tr>
                                             <td colspan="4">Grand Total</td>
                                             <td>
                                                 <input type="text" name="estimated_amount" value="0"
@@ -444,6 +452,15 @@
                     return false;
                 }
 
+                // Check if selling_qty is larger than current_stock_qty
+                if (parseFloat(selling_qty) > parseFloat(current_stock_qty)) {
+                    $.notify("Stock is not enough to meet the order", {
+                        globalPosition: 'top-right',
+                        className: 'error'
+                    });
+                    return false;
+                }
+
             });
         });
     </script>
@@ -460,6 +477,9 @@
                 var product_id = $('#product_id').val();
                 var product_name = $('#product_id').find('option:selected').text();
                 var buying_unit_price = $('#buying_unit_price').val();
+                var selling_qty = $('#selling_qty').val(); // Get the selling_qty
+                var current_stock_qty = $('#current_stock_qty').val(); // Get the current_stock_qty
+
 
                 if (date == '') {
                     $.notify("Date not set", {
@@ -479,6 +499,23 @@
 
                 if (product_name == '') {
                     $.notify("Product not set", {
+                        globalPosition: 'top-right',
+                        className: 'error'
+                    });
+                    return false;
+                }
+
+                // if (selling_qty === '') {
+                //     $.notify("Selling quantity not set", {
+                //         globalPosition: 'top-right',
+                //         className: 'error'
+                //     });
+                //     return false;
+                // }
+
+                // Check if selling_qty is larger than current_stock_qty
+                if (parseFloat(selling_qty) > parseFloat(current_stock_qty)) {
+                    $.notify("Stock is not enough to meet the order", {
                         globalPosition: 'top-right',
                         className: 'error'
                     });
@@ -525,6 +562,7 @@
                 var total = unit * parseFloat($("#buying_unit_price").val()); // Use the buying_unit_price
                 $(this).closest("tr").find("input.selling_price").val(total);
                 $('#discount_amount').trigger('keyup');
+                $('#markup_amount').trigger('keyup');
             });
 
 
@@ -533,6 +571,10 @@
 
 
             $(document).on('keyup click', '#discount_amount', function() {
+                totalAmountPrice();
+            });
+
+            $(document).on('keyup click', '#markup_amount', function() {
                 totalAmountPrice();
             });
 
@@ -569,13 +611,22 @@
                     }
                 });
 
-                var discount_amount = parseFloat($('#discount_amount').val())
+                var discount_amount = parseFloat($('#discount_amount').val());
+                var markup_amount = parseFloat($('#markup_amount').val()); // Get markup_amount value
+
                 if (!isNaN(discount_amount) && discount_amount.length != 0) {
                     sum -= parseFloat(discount_amount);
                 }
 
+                console.log({'the markup:':markup_amount})
+
+                if (!isNaN(markup_amount) && markup_amount.length != 0) {
+                    sum += parseFloat(markup_amount); // Add markup_amount to the sum
+                }
+
                 $('#estimated_amount').val(sum);
             }
+
 
 
         });

@@ -46,6 +46,7 @@
                                         <th>In Qty</th>
                                         <th>Out Qty</th>
                                         <th>Stock</th>
+                                        <th>Status</th>
 
                                 </thead>
 
@@ -56,24 +57,31 @@
                                         @php
                                             $buying_total = App\Models\Purchase::where('category_id', $item->category_id)
                                                 ->where('product_id', $item->id)
-                                                ->where('status', '1')->sum('buying_qty');
+                                                ->where('status', '1')
+                                                ->sum('buying_qty');
 
-                                            $selling_total = App\Models\InvoiceDetail::where('category_id',$item->category_id)
+                                            $selling_total = App\Models\InvoiceDetail::where('category_id', $item->category_id)
                                                 ->where('product_id', $item->id)
-                                                ->where('status','1')->sum('selling_qty')
+                                                ->where('status', '1')
+                                                ->sum('selling_qty');
 
                                         @endphp
 
                                         <tr>
                                             <td> {{ $key + 1 }} </td>
                                             <td> {{ $item->name }} </td>
-                                            <td> {{ $item->spplier_name }} </td>
-
+                                            <td> {{ $item->supplier_name }} </td>
                                             <td> {{ $item['category']['name'] }} </td>
                                             <td> {{ $buying_total }} </td>
                                             <td> {{ $selling_total }} </td>
                                             <td> {{ $item->quantity }} </td>
-
+                                            <td>
+                                                @if ($item->quantity > 0)
+                                                    <span class="btn btn-success">In Stock</span>
+                                                @else
+                                                    <span class="btn btn-warning">Out of Stock</span>
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
 

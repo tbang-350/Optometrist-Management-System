@@ -52,7 +52,7 @@
                                             <p>Mobile No: <strong>{{ $payment['customer']['phonenumber'] }}</strong></p>
                                         </td>
                                         <td>
-                                            <p>Email: <strong>{{ $payment['customer']['email'] }}</strong></p>
+                                            <p>address: <strong>{{ $payment['customer']['address'] }}</strong></p>
                                         </td>
                                     </tr>
 
@@ -114,23 +114,23 @@
 
                                         <tr>
                                             <td colspan="6">Sub Total</td>
-                                            <td class="text-center">{{ $total_sum }}</td>
+                                            <td class="text-center">{{ number_format($total_sum,2) }}</td>
                                         </tr>
                                         <tr>
                                             <td colspan="6">Discount</td>
-                                            <td class="text-center">{{ $payment->discount_amount }}</td>
+                                            <td class="text-center">{{ number_format($payment->discount_amount,2) }}</td>
                                         </tr>
                                         <tr>
                                             <td colspan="6">Paid Amount</td>
-                                            <td class="text-center">{{ $payment->paid_amount }}</td>
+                                            <td class="text-center">{{ number_format($payment->paid_amount,2) }}</td>
                                         </tr>
                                         <tr>
                                             <td colspan="6">Due Amount</td>
-                                            <td class="text-center">{{ $payment->due_amount }}</td>
+                                            <td class="text-center">{{ number_format($payment->due_amount,2) }}</td>
                                         </tr>
                                         <tr>
                                             <td colspan="6">Grand Total</td>
-                                            <td class="text-center">{{ $payment->total_amount }}</td>
+                                            <td class="text-center">{{ number_format($payment->total_amount,2) }}</td>
                                         </tr>
 
                                     </tbody>

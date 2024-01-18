@@ -2,35 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Consultation;
 use App\Models\Customer;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Http\Request;
-use App\Models\Consultation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 
 class ConsultationController extends Controller
 {
-    public function ConsultationAll(){
+    public function ConsultationAll()
+    {
 
-        $consultation = Consultation::latest()->get();
+        $current_location = Auth::user()->location_id;
 
-        return view('backend.consultation.consultation_all',compact('consultation'));
+        if ($current_location == 1) {
+
+            $consultation = Consultation::latest()->get();
+
+        } else {
+
+            $consultation = Consultation::latest()->where("location_id", $current_location)->get();
+
+        }
+
+
+        return view('backend.consultation.consultation_all', compact('consultation'));
 
     }
 
-    public function ConsultationAdd(){
+    public function ConsultationAdd()
+    {
 
         $customer = Customer::all();
 
-        return view('backend.consultation.consultation_add',compact('customer'));
+        return view('backend.consultation.consultation_add', compact('customer'));
 
     }
 
-
-
-    public function ConsultationStore(Request $request){
+    public function ConsultationStore(Request $request)
+    {
 
         $date = new DateTime('now', new DateTimeZone('Africa/Dar_es_Salaam'));
 
@@ -46,7 +58,7 @@ class ConsultationController extends Controller
             $customer->created_by = Auth::user()->id;
             $customer->save();
 
-            $consultation  = new Consultation();
+            $consultation = new Consultation();
 
             $customer_id = $customer->id;
 
@@ -55,6 +67,7 @@ class ConsultationController extends Controller
             $consultation->status = 0;
             $consultation->consultation_fee = $request->consultation_fee;
             $consultation->created_by = Auth::user()->id;
+            $consultation->location_id = Auth::user()->location_id;
 
             $consultation->save();
 
@@ -69,12 +82,13 @@ class ConsultationController extends Controller
 
             $customer_id = $request->customer_id;
 
-            $consultation  = new Consultation();
+            $consultation = new Consultation();
             $consultation->customer_id = $customer_id;
             $consultation->date = $date;
             $consultation->status = 0;
             $consultation->consultation_fee = $request->consultation_fee;
             $consultation->created_by = Auth::user()->id;
+            $consultation->location_id = Auth::user()->location_id;
 
             $consultation->save();
 
@@ -89,9 +103,8 @@ class ConsultationController extends Controller
 
     }
 
-
-
-    public function ConsultationDelete($id){
+    public function ConsultationDelete($id)
+    {
 
         Consultation::findOrFail($id)->delete();
 
@@ -102,8 +115,6 @@ class ConsultationController extends Controller
 
         return redirect()->route('consultation.all')->with($notification);
 
-
     }
-
 
 }

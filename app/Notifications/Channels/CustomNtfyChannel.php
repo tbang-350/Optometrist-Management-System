@@ -22,6 +22,7 @@ class CustomNtfyChannel
         $message = new Message();
         $message->topic('database-backup');
         $message->title('Backup Successful');
+        $message->tags(['tada']);
         $message->body(
             "Backup for {$backupDestination->backupName()} on disk {$backupDestination->diskName()} was successful."
         );

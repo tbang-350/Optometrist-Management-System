@@ -2,10 +2,15 @@
 
 namespace App\Providers;
 
+use App\Notifications\Channels\CleanUpFailedNtfyChannel;
+use App\Notifications\Channels\CleanupSuccessfulNtfyChannel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\Channels\CustomNtfyChannel;
+use App\Notifications\Channels\FailedBackupNtfyChannel;
+use App\Notifications\Channels\HealthyBackupFoundNtfyChannel;
+use App\Notifications\Channels\UnhealthyBackupNtfyChannel;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,6 +36,28 @@ class AppServiceProvider extends ServiceProvider
         Notification::extend('customNtfy', function ($app) {
             return new CustomNtfyChannel();
         });
+
+        Notification::extend('failedBackupNtfy', function ($app) {
+            return new FailedBackupNtfyChannel();
+        });
+
+        Notification::extend('unhealthyBackupNtfy', function ($app) {
+            return new UnhealthyBackupNtfyChannel();
+        });
+
+        Notification::extend('healthyBackupNtfy', function ($app) {
+            return new HealthyBackupFoundNtfyChannel();
+        });
+
+        Notification::extend('cleanupSuccessfulNtfy', function ($app) {
+            return new CleanupSuccessfulNtfyChannel();
+        });
+
+        Notification::extend('cleanupFailedNtfy', function ($app) {
+            return new CleanUpFailedNtfyChannel();
+        });
+
+
     }
 
 

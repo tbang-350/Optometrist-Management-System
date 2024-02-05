@@ -19,6 +19,10 @@ class CustomNtfyChannel
 
         $backupDestination = $notification->backupDestination();
 
+        $new_variable = $backupDestination->usedStorage();
+
+
+
         $message = new Message();
         $message->topic('database-backup');
         $message->title('Backup Successful');
@@ -27,6 +31,8 @@ class CustomNtfyChannel
             "Backup for {$backupDestination->backupName()} on disk {$backupDestination->diskName()} was successful."
         );
         $message->priority(Message::PRIORITY_HIGH);
+
+
 
         $client = new Client($server);
         $client->send($message);

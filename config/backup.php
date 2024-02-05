@@ -152,12 +152,12 @@ return [
     'notifications' => [
 
         'notifications' => [
-            \Spatie\Backup\Notifications\Notifications\BackupHasFailedNotification::class => ['failedBackupNtfy','email'],
-            \Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFoundNotification::class => ['unhealthyBackupNtfy','mail'],
-            \Spatie\Backup\Notifications\Notifications\CleanupHasFailedNotification::class => ['cleanupFailedNtfy','mail'],
-            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessfulNotification::class => ['customNtfy','email'],
-            \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFoundNotification::class => ['healthyBackupNtfy','mail'],
-            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessfulNotification::class => ['cleanupSuccessfulNtfy','mail'],
+            \Spatie\Backup\Notifications\Notifications\BackupHasFailedNotification::class => ['failedBackupNtfy'],
+            \Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFoundNotification::class => ['unhealthyBackupNtfy'],
+            \Spatie\Backup\Notifications\Notifications\CleanupHasFailedNotification::class => ['cleanupFailedNtfy'],
+            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessfulNotification::class => ['customNtfy'],
+            \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFoundNotification::class => ['healthyBackupNtfy'],
+            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessfulNotification::class => ['cleanupSuccessfulNtfy'],
         ],
 
         /*

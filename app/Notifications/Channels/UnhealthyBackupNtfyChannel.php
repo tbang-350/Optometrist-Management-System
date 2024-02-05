@@ -23,7 +23,7 @@ class UnhealthyBackupNtfyChannel
         $message->topic('database-backup');
         $message->title('Unhealthy Backup Found');
         $message->body(
-            "One or two backups for {$backupDestination->backupName()} on disk {$backupDestination->diskName()} are unhealthy , please check what went went wrong."
+            "One or more backups for {$backupDestination->backupName()} on disk {$backupDestination->diskName()} are unhealthy , please check what went went wrong."
         );
         $message->tags(['nauseated_face','face_with_head_bandage','face_with_thermometer','mask']);
         $message->priority(Message::PRIORITY_MAX);

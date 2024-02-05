@@ -21,7 +21,7 @@ class HealthyBackupFoundNtfyChannel
         $message->topic('database-backup');
         $message->title('Healthy Backup Found');
         $message->body(
-            "Healthy Backup for {$backupDestination->backupName()} on disk {$backupDestination->diskName()} was found , please check email for more details."
+            "All Backups for {$backupDestination->backupName()} on disk {$backupDestination->diskName()} are considered healthy , please check cloud storege for more details and inspection ."
         );
         $message->tags(['white_check_mark']);
         $message->priority(Message::PRIORITY_MIN);

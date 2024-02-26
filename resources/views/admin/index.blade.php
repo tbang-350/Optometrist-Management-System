@@ -1,5 +1,16 @@
+@php
+    // Inject the DailySalesChart instance manually
+    $dailySalesChart = app()->make(App\Charts\MonthlySalesChart::class);
 
-.@extends('admin.admin_master')
+    $chart = $dailySalesChart->build();
+
+    $priceComparison = app()->make(App\Charts\PriceComparison::class);
+
+    $chart2 = $priceComparison->build();
+
+@endphp
+
+@extends('admin.admin_master')
 @section('admin')
     <div class="page-content">
         <div class="container-fluid">
@@ -32,7 +43,6 @@
                     $current_location = Auth::user()->location_id;
 
                     if ($current_location == 1) {
-
                         $total_sales = App\Models\PaymentDetails::sum('current_paid_amount');
 
                         $total_service_sales = App\Models\ServicePaymentDetail::sum('current_paid_amount');
@@ -46,9 +56,7 @@
                         $total_customers = App\Models\Customer::count();
 
                         $total_stock = App\Models\Product::count();
-
                     } else {
-
                         $total_sales = App\Models\PaymentDetails::where('location_id', $current_location)->sum('current_paid_amount');
 
                         $total_service_sales = App\Models\ServicePaymentDetail::where('location_id', $current_location)->sum('current_paid_amount');
@@ -62,8 +70,8 @@
                         $total_customers = App\Models\Customer::where('location_id', $current_location)->count();
 
                         $total_stock = App\Models\Product::where('location_id', $current_location)->count();
-
                     }
+
 
                 @endphp
 
@@ -167,7 +175,6 @@
                             </div><!-- end cardbody -->
                         </div><!-- end card -->
                     </div><!-- end col -->
-
                 @endif
 
 
@@ -224,7 +231,7 @@
 
 
                 <div class="row">
-                    <div class="col-xl-12">
+                    <div class="col-xl-8">
                         <div class="card">
                             <div class="card-body">
                                 <div class="dropdown float-end">
@@ -242,21 +249,14 @@
                                     $current_location = Auth::user()->location_id;
 
                                     if ($current_location == 1) {
-                                        $allData = App\Models\Invoice::orderBy('date', 'desc')
-                                            ->orderBy('id', 'desc')
-                                            ->take(10)
-                                            ->get();
+                                        $allData = App\Models\Invoice::orderBy('date', 'desc')->orderBy('id', 'desc')->take(10)->get();
                                     } else {
-                                        $allData = App\Models\Invoice::orderBy('date', 'desc')
-                                            ->orderBy('id', 'desc')
-                                            ->where('location_id', $current_location)
-                                            ->take(10)
-                                            ->get();
+                                        $allData = App\Models\Invoice::orderBy('date', 'desc')->orderBy('id', 'desc')->where('location_id', $current_location)->take(10)->get();
                                     }
 
                                 @endphp
 
-                                <div class="table-responsive">
+                                {{-- <div class="table-responsive">
                                     <table class="table table-centered mb-0 align-middle table-hover table-nowrap">
                                         <thead class="table-light">
                                             <tr>
@@ -301,7 +301,31 @@
 
 
                                     </table> <!-- end table -->
-                                </div>
+                                </div> --}}
+
+                                {{-- <div class="p-6 m-20 bg-white rounded shadow">
+                                    {!! $chart->container() !!}
+                                </div> --}}
+
+
+                                <div class="card">
+                                    <div class="card-body pb-0">
+
+
+                                        <div class="text-center pt-3">
+                                            <div class="row">
+
+                                            </div><!-- end row -->
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body py-0 px-2">
+                                        {!! $chart->container() !!}
+                                    </div>
+
+                                </div><!-- end card -->
+
+
                             </div><!-- end card -->
                         </div><!-- end card -->
                     </div>
@@ -314,4 +338,7 @@
             </div>
 
         </div>
+
+        <script src="{{ $chart->cdn() }}"></script>
+        {!! $chart->script() !!}
     @endsection

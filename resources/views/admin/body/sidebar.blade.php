@@ -179,6 +179,7 @@
                             <li><a href="{{ route('stock.report') }}">Stock Report</a></li>
                             <li><a href="{{ route('daily.invoice.report') }}">Daily Invoice Report</a></li>
                             <li><a href="{{ route('daily.purchase.report') }}">Daily Purchase Report</a></li>
+                            <li><a href="{{ route('sales.chart') }}">Sales Chart</a></li>
 
                         </ul>
                     </li>

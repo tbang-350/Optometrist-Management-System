@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\DailySalesChart;
+use App\Charts\PriceComparison;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Customer;
@@ -23,10 +25,12 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function InvoiceAll()
+    public function InvoiceAll(DailySalesChart $dailySalesChart)
     {
         // Retrieve all invoices sorted by date and ID in descending order
         // where the status is '1' (approved)
+
+        $chart = $dailySalesChart->build();
 
         $current_location = Auth::user()->location_id;
 
@@ -45,7 +49,7 @@ class InvoiceController extends Controller
         }
 
         // Return the view with the invoice data
-        return view('backend.invoice.invoice_all', compact('allData'));
+        return view('backend.invoice.invoice_all', compact('allData','chart'));
 
     } // End Method
 
@@ -441,5 +445,31 @@ class InvoiceController extends Controller
         return view('backend.pdf.daily_invoice_report_pdf', compact('allData', 'start_date', 'end_date'));
 
     } // End Method
+
+
+    public function SalesChart(DailySalesChart $dailySalesChart) {
+
+        $chart = $dailySalesChart->build();
+
+        return view('backend.invoice.invoice_chart', compact('chart'));
+
+    }
+
+
+    public function SalesChartIndex(DailySalesChart $dailySalesChart) {
+
+        $chart = $dailySalesChart->build();
+
+        return view('backend.invoice.invoice_all', compact('chart'));
+
+    }
+
+    public function PriceComparison(PriceComparison $priceComparison) {
+
+        $chart2 = $priceComparison->build();
+
+        return view('backend.invoice.invoice_all', compact('chart2'));
+
+    }
 
 }

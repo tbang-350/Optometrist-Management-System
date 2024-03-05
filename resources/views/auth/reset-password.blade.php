@@ -57,7 +57,10 @@
                         @endif
 
 
-                        <form class="form-horizontal mt-3" method="POST" action="{{ route('password.update') }}">
+                        <form class="form-horizontal mt-3" method="POST" action="{{ route('password.store') }}">
+
+                            @method('PUT')
+
                             @csrf
 
                             <!-- Password Reset Token -->

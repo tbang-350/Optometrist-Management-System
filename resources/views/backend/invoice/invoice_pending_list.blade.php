@@ -32,10 +32,8 @@
                             <br>
                             <br>
 
-                            {{-- <h4 class="card-title"> All Supplier Data </h4> --}}
 
-
-                            {{-- <table id="datatable" class="table table-bordered dt-responsive nowrap"
+                            <table id="datatable" class="table table-bordered dt-responsive nowrap"
                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>
@@ -90,11 +88,9 @@
                                     @endforeach
 
                                 </tbody>
-                            </table> --}}
+                            </table>
 
-                            <div class="p-6 m-20 bg-white rounded shadow">
-                                {!! $chart->container() !!}
-                            </div>
+
 
                         </div>
                     </div>
@@ -106,7 +102,6 @@
         </div> <!-- container-fluid -->
     </div>
 
-    <script src="{{ $chart->cdn() }}"></script>
-    {{ $chart->script() }}
+
 
 @endsection

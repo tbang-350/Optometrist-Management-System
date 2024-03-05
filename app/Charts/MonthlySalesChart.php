@@ -4,6 +4,7 @@ namespace App\Charts;
 
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class MonthlySalesChart
 {
@@ -32,11 +33,14 @@ class MonthlySalesChart
             $dates[] = $day;
         }
 
+        $current_location = Auth::user()->location_id;
+
         // Fetch the data
         $data = \App\Models\PaymentDetail::query()
             ->selectRaw('SUM(current_paid_amount) as total_sales, DAY(date) as day')
             ->whereYear('date', $currentYear)
             ->whereMonth('date', $currentMonth)
+            ->where('location_id', $current_location)
             ->groupBy(DB::raw('DAY(date)'))
             ->pluck('total_sales', 'day')
             ->toArray();

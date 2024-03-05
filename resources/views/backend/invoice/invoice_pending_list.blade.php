@@ -32,8 +32,6 @@
                             <br>
                             <br>
 
-                            {{-- <h4 class="card-title"> All Supplier Data </h4> --}}
-
 
                             <table id="datatable" class="table table-bordered dt-responsive nowrap"
                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -92,6 +90,8 @@
                                 </tbody>
                             </table>
 
+
+
                         </div>
                     </div>
                 </div> <!-- end col -->
@@ -101,4 +101,7 @@
 
         </div> <!-- container-fluid -->
     </div>
+
+
+
 @endsection

@@ -12,6 +12,7 @@ use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SalesChartController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceInvoiceController;
 use App\Http\Controllers\StockController;
@@ -207,6 +208,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/daily/invoice/report', 'DailyInvoiceReport')->name('daily.invoice.report');
         Route::get('/daily/invoice/pdf', 'DailyInvoicePdf')->name('daily.invoice.pdf');
 
+        Route::get('/sales-chart', 'SalesChart')->name('sales.chart');
+        Route::get('/sales-chart-index', 'SalesChartIndex')->name('sales.chart.index');
+        Route::get('/price-comparison', 'PriceComparison')->name('price.comparison');
+
     });
 
     //Service Invoice Routes
@@ -245,8 +250,6 @@ Route::controller(DefaultController::class)->group(function () {
     Route::get('/autocomplete/categories', 'AutocompleteCategories')->name('autocomplete.categories');
     Route::get('/autocomplete/products', 'AutocompleteProducts')->name('autocomplete.products');
     Route::get('/get-customer-details', 'GetCustomerDetails')->name('get.customer.details');
-
-
 });
 
 Route::get('/dashboard', function () {

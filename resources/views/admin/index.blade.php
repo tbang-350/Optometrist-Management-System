@@ -1,5 +1,16 @@
+@php
+    // Inject the DailySalesChart instance manually
+    $dailySalesChart = app()->make(App\Charts\MonthlySalesChart::class);
 
-.@extends('admin.admin_master')
+    $chart = $dailySalesChart->build();
+
+    $priceComparison = app()->make(App\Charts\PriceComparison::class);
+
+    $chart2 = $priceComparison->build();
+
+@endphp
+
+@extends('admin.admin_master')
 @section('admin')
     <div class="page-content">
         <div class="container-fluid">
@@ -32,7 +43,6 @@
                     $current_location = Auth::user()->location_id;
 
                     if ($current_location == 1) {
-
                         $total_sales = App\Models\PaymentDetails::sum('current_paid_amount');
 
                         $total_service_sales = App\Models\ServicePaymentDetail::sum('current_paid_amount');
@@ -46,12 +56,15 @@
                         $total_customers = App\Models\Customer::count();
 
                         $total_stock = App\Models\Product::count();
-
                     } else {
+                        $total_sales = App\Models\PaymentDetails::where('location_id', $current_location)->sum(
+                            'current_paid_amount',
+                        );
 
-                        $total_sales = App\Models\PaymentDetails::where('location_id', $current_location)->sum('current_paid_amount');
-
-                        $total_service_sales = App\Models\ServicePaymentDetail::where('location_id', $current_location)->sum('current_paid_amount');
+                        $total_service_sales = App\Models\ServicePaymentDetail::where(
+                            'location_id',
+                            $current_location,
+                        )->sum('current_paid_amount');
 
                         $total_services = App\Models\Service::count();
 
@@ -62,7 +75,6 @@
                         $total_customers = App\Models\Customer::where('location_id', $current_location)->count();
 
                         $total_stock = App\Models\Product::where('location_id', $current_location)->count();
-
                     }
 
                 @endphp
@@ -167,7 +179,6 @@
                             </div><!-- end cardbody -->
                         </div><!-- end card -->
                     </div><!-- end col -->
-
                 @endif
 
 
@@ -227,15 +238,7 @@
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="dropdown float-end">
-                                    <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        <i class="mdi mdi-dots-vertical"></i>
-                                    </a>
 
-                                </div>
-
-                                <h4 class="card-title mb-4">Latest Transactions</h4>
 
                                 @php
 
@@ -244,17 +247,29 @@
                                     if ($current_location == 1) {
                                         $allData = App\Models\Invoice::orderBy('date', 'desc')
                                             ->orderBy('id', 'desc')
-                                            ->take(10)
+                                            ->take(5)
                                             ->get();
                                     } else {
                                         $allData = App\Models\Invoice::orderBy('date', 'desc')
                                             ->orderBy('id', 'desc')
                                             ->where('location_id', $current_location)
-                                            ->take(10)
+                                            ->take(5)
                                             ->get();
                                     }
 
                                 @endphp
+
+
+                                {{-- render the graph --}}
+                                <div class="p-6 m-20 bg-white rounded shadow">
+                                    {!! $chart->container() !!}
+                                </div>
+
+                                <br>
+                                <br>
+
+                                <h4 class="card-title mb-4">Latest Transactions</h4>
+
 
                                 <div class="table-responsive">
                                     <table class="table table-centered mb-0 align-middle table-hover table-nowrap">
@@ -280,13 +295,14 @@
                                                     <td> #{{ $item->invoice_no }} </td>
                                                     <td> {{ date('d-m-Y', strtotime($item->date)) }} </td>
 
-                                                    <td> Tsh {{ number_format($item['payment']['total_amount'],2) }} </td>
-                                                    <td> Tsh {{ number_format($item['payment']['paid_amount'],2) }} </td>
+                                                    <td> Tsh {{ number_format($item['payment']['total_amount'], 2) }} </td>
+                                                    <td> Tsh {{ number_format($item['payment']['paid_amount'], 2) }} </td>
 
                                                     @if ($item['payment']['due_amount'] == 0)
                                                         <td> Null </td>
                                                     @else
-                                                        <td> Tsh {{ number_format(($item['payment']['due_amount']),2) }} </td>
+                                                        <td> Tsh {{ number_format($item['payment']['due_amount'], 2) }}
+                                                        </td>
                                                     @endif
                                                     <td>
                                                         <a href=" {{ route('print.invoice', $item->id) }} "
@@ -302,10 +318,33 @@
 
                                     </table> <!-- end table -->
                                 </div>
+
+
+
+                                {{-- render the graph --}}
+                                <div class="p-6 m-20 bg-white rounded shadow">
+                                    {!! $chart->container() !!}
+                                </div>
+
                             </div><!-- end card -->
                         </div><!-- end card -->
                     </div>
                     <!-- end col -->
+
+                    {{-- <div class="col-xl-4 h-auto">
+                        <div class="card">
+                            <div class="card-body">
+
+
+                                <div class="p-6 m-20 h-75 bg-white rounded shadow">
+                                    {!! $chart2->container() !!}
+                                </div>
+
+                            </div>
+                        </div><!-- end card -->
+                    </div><!-- end col --> --}}
+
+
 
 
 
@@ -314,4 +353,10 @@
             </div>
 
         </div>
+
+        <script src="{{ $chart->cdn() }}"></script>
+        {!! $chart->script() !!}
+
+        <script src="{{ $chart2->cdn() }}"></script>
+        {!! $chart2->script() !!}
     @endsection

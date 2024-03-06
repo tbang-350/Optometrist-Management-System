@@ -432,7 +432,7 @@ class InvoiceController extends Controller
 
         } else {
 
-            $allData = Invoice::where('location_id', $current_location)
+            $allData = PaymentDetail::where('location_id', $current_location)
                 ->whereBetween('date', [$sdate, $edate])
                 ->where('status', '1')
                 ->get();
@@ -456,20 +456,20 @@ class InvoiceController extends Controller
     }
 
 
-    public function SalesChartIndex(DailySalesChart $dailySalesChart) {
+    // public function SalesChartIndex(DailySalesChart $dailySalesChart) {
 
-        $chart = $dailySalesChart->build();
+    //     $chart = $dailySalesChart->build();
 
-        return view('backend.invoice.invoice_all', compact('chart'));
+    //     return view('backend.invoice.invoice_all', compact('chart'));
 
-    }
+    // }
 
-    public function PriceComparison(PriceComparison $priceComparison) {
+    // public function PriceComparison(PriceComparison $priceComparison) {
 
-        $chart2 = $priceComparison->build();
+    //     $chart2 = $priceComparison->build();
 
-        return view('backend.invoice.invoice_all', compact('chart2'));
+    //     return view('backend.invoice.invoice_all', compact('chart2'));
 
-    }
+    // }
 
 }

@@ -247,13 +247,13 @@
                                     if ($current_location == 1) {
                                         $allData = App\Models\Invoice::orderBy('date', 'desc')
                                             ->orderBy('id', 'desc')
-                                            ->take(5)
+                                            ->take(10)
                                             ->get();
                                     } else {
                                         $allData = App\Models\Invoice::orderBy('date', 'desc')
                                             ->orderBy('id', 'desc')
                                             ->where('location_id', $current_location)
-                                            ->take(5)
+                                            ->take(10)
                                             ->get();
                                     }
 
@@ -322,9 +322,9 @@
 
 
                                 {{-- render the graph --}}
-                                <div class="p-6 m-20 bg-white rounded shadow">
+                                {{-- <div class="p-6 m-20 bg-white rounded shadow">
                                     {!! $chart->container() !!}
-                                </div>
+                                </div> --}}
 
                             </div><!-- end card -->
                         </div><!-- end card -->

@@ -66,8 +66,9 @@
                                         <th>Quantity</th>
                                         <th>Unit Price</th>
                                         <th>Buying Price</th>
+                                        <th>Selling Price</th>
                                         <th>Product Name</th>
-                                        <th>Status</th>
+                                        {{-- <th>Status</th> --}}
                                         {{-- <th>Action</th> --}}
 
                                 </thead>
@@ -85,14 +86,15 @@
                                             <td> {{ $item->buying_qty }} </td>
                                             <td> {{ number_format($item->buying_unit_price,2) }} </td>
                                             <td> {{ number_format($item->total_buying_amount,2) }} </td>
+                                            <td> {{ number_format($item->selling_unit_price,2) }} </td>
                                             <td> {{ $item['product']['name'] ?? '-' }} </td>
-                                            <td>
+                                            {{-- <td>
                                                 @if ($item->status == '0')
                                                     <span class="btn btn-warning">Pending</span>
                                                 @elseif($item->status == '1')
                                                     <span class="btn btn-success">Approved</span>
                                                 @endif
-                                            </td>
+                                            </td> --}}
 
                                             {{-- <td>
 

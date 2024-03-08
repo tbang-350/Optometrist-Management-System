@@ -82,9 +82,7 @@
                                 </tbody>
                             </table>
 
-                            <div class="p-6 m-20 bg-white rounded shadow">
-                                {!! $chart->container() !!}
-                            </div>
+
 
 
                         </div>
@@ -97,7 +95,6 @@
         </div> <!-- container-fluid -->
     </div>
 
-    <script src="{{ $chart->cdn() }}"></script>
-    {{ $chart->script() }}
+
 
 @endsection

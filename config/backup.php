@@ -116,8 +116,7 @@ return [
              * The disk names on which the backups will be stored.
              */
             'disks' => [
-//                'local',
-                'google'
+               'local',
             ],
         ],
 
@@ -152,12 +151,12 @@ return [
     'notifications' => [
 
         'notifications' => [
-            \Spatie\Backup\Notifications\Notifications\BackupHasFailedNotification::class => ['failedBackupNtfy'],
-            \Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFoundNotification::class => ['unhealthyBackupNtfy'],
-            \Spatie\Backup\Notifications\Notifications\CleanupHasFailedNotification::class => ['cleanupFailedNtfy'],
-            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessfulNotification::class => ['customNtfy'],
-            \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFoundNotification::class => ['healthyBackupNtfy'],
-            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessfulNotification::class => ['cleanupSuccessfulNtfy'],
+            \Spatie\Backup\Notifications\Notifications\BackupHasFailedNotification::class => ['mail','failedBackupNtfy'],
+            \Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFoundNotification::class => ['mail','unhealthyBackupNtfy'],
+            \Spatie\Backup\Notifications\Notifications\CleanupHasFailedNotification::class => ['mail','cleanupFailedNtfy'],
+            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessfulNotification::class => ['mail','customNtfy'],
+            \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFoundNotification::class => ['mail','healthyBackupNtfy'],
+            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessfulNotification::class => ['mail','cleanupSuccessfulNtfy'],
         ],
 
         /*
@@ -170,7 +169,7 @@ return [
             'to' => 'tbway350@gmail.com',
 
             'from' => [
-                'address' => env('MAIL_FROM_ADDRESS', 'titusdave485@gmail.com'),
+                'address' => env('MAIL_FROM_ADDRESS', 'support@local.com'),
                 'name' => env('MAIL_FROM_NAME', 'Best Choice'),
             ],
         ],
@@ -212,7 +211,7 @@ return [
     'monitor_backups' => [
         [
             'name' => env('APP_NAME', 'laravel-backup'),
-            'disks' => ['google'],
+            'disks' => ['local','google'],
             'health_checks' => [
                 \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
                 \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,

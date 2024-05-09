@@ -28,7 +28,7 @@ class ProductController extends Controller
 
         }
 
-        
+
         return view('backend.product.product_all', compact('products'));
 
     } // End Method
@@ -107,9 +107,9 @@ class ProductController extends Controller
     public function ProductDelete($id)
     {
 
-        $product = Product::findOrFail($id);
-        $img = $product->product_image;
-        unlink($img);
+        // $product = Product::findOrFail($id);
+        // $img = $product->product_image;
+        // unlink($img);
 
         Product::findOrFail($id)->delete();
 

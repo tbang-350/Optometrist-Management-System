@@ -56,9 +56,9 @@
 
                                             <td> {{ $key + 1 }} </td>
                                             <td>{{ date('d-m-Y', strtotime($item->date)) }}</td>
-                                            <td>{{ $item['customer']['name'] }}</td>
+                                            <td>{{ $item->customer->name ?? 'Null' }}</td>
                                             <td>{{ date('d-m-Y', strtotime($item->next_appointment)) }}</td>
-                                            
+
                                             <td>
                                                 <a href=" {{ route('prescription.view', $item->id) }} " class="btn btn-dark sm"
                                                     title="View Data">

@@ -44,7 +44,16 @@ class CustomerController extends Controller
 
     public function CustomerStore(Request $request)
     {
+        // Validate the request data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'age' => 'required|integer|min:0',
+            'sex' => 'required|string|in:male,female,other',
+            'address' => 'required|string|max:255',
+            'phonenumber' => 'required|string|max:15',
+        ]);
 
+        // Insert the validated data into the database
         Customer::insert([
             'name' => $request->name,
             'age' => $request->age,
@@ -62,7 +71,6 @@ class CustomerController extends Controller
         );
 
         return redirect()->route('customer.all')->with($notification);
-
     }
 
     public function CustomerEdit($id)
@@ -467,8 +475,6 @@ class CustomerController extends Controller
 
         $customer_id = $id;
 
-
-
         // Fetch invoice IDs for the customer from payments
         $invoice_ids = Payment::where('customer_id', $customer_id)->pluck('invoice_id');
 
@@ -489,8 +495,6 @@ class CustomerController extends Controller
 
         // Get the customer associated with the first prescription
         $customer = $allData->first()->payment->customer;
-
-
 
         // Return the view with the invoice data
         return view('backend.customer.customer_purchase_history', compact(['allData', 'customer']));

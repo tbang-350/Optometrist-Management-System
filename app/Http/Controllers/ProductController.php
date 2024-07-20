@@ -44,9 +44,14 @@ class ProductController extends Controller
 
     public function ProductStore(Request $request)
     {
+        // Validate the request data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'supplier_name' => 'required|string|max:255',
+            'category_id' => 'required|integer|exists:categories,id',
+        ]);
 
         Product::insert([
-
             'name' => $request->name,
             'supplier_name' => $request->supplier_name,
             'category_id' => $request->category_id,
@@ -54,7 +59,6 @@ class ProductController extends Controller
             'created_by' => Auth::user()->id,
             'created_at' => Carbon::now(),
             'location_id' => Auth::user()->location_id,
-
         ]);
 
         $notification = array(
@@ -63,7 +67,6 @@ class ProductController extends Controller
         );
 
         return redirect()->route('product.all')->with($notification);
-
     } // End Method
 
     public function ProductEdit($id)
@@ -80,11 +83,18 @@ class ProductController extends Controller
 
     public function ProductUpdate(Request $request)
     {
+        // Validate the request data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'supplier_name' => 'required|string|max:255',
+            'category_id' => 'required|integer|exists:categories,id',
+            'quantity' => 'required|integer|min:0',
+            'reorder_level' => 'required|integer|min:0',
+        ]);
 
         $product_id = $request->id;
 
         Product::findOrFail($product_id)->update([
-
             'name' => $request->name,
             'supplier_name' => $request->supplier_name,
             'category_id' => $request->category_id,
@@ -92,7 +102,6 @@ class ProductController extends Controller
             'reorder_level' => $request->reorder_level,
             'updated_by' => Auth::user()->id,
             'updated_at' => Carbon::now(),
-
         ]);
 
         $notification = array(
@@ -101,8 +110,8 @@ class ProductController extends Controller
         );
 
         return redirect()->route('product.all')->with($notification);
-
     } // End Method
+
 
     public function ProductDelete($id)
     {

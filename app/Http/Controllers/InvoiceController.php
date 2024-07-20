@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Charts\DailySalesChart;
-use App\Charts\PriceComparison;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Customer;
@@ -49,7 +48,7 @@ class InvoiceController extends Controller
         }
 
         // Return the view with the invoice data
-        return view('backend.invoice.invoice_all', compact('allData','chart'));
+        return view('backend.invoice.invoice_all', compact('allData', 'chart'));
 
     } // End Method
 
@@ -97,29 +96,46 @@ class InvoiceController extends Controller
      */
     public function InvoiceStore(Request $request)
     {
+        // Validate the request inputs
+        $request->validate([
+            'invoice_no' => 'required|integer',
+            'date' => 'required|date',
+            'description' => 'nullable|string',
+            'category_id' => 'required|array',
+            'category_id.*' => 'integer|exists:categories,id',
+            'product_id' => 'required|array',
+            'product_id.*' => 'integer|exists:products,id',
+            'selling_qty' => 'required|array',
+            'selling_qty.*' => 'numeric|min:1',
+            'unit_price' => 'required|array',
+            'unit_price.*' => 'numeric|min:0',
+            'selling_price' => 'required|array',
+            'selling_price.*' => 'numeric|min:0',
+            'customer_id' => 'required|integer|exists:customers,id',
+            'paid_amount' => 'required|numeric|min:0',
+            'estimated_amount' => 'required|numeric|min:0',
+            'paid_status' => 'required|string|in:full_paid,partial_paid',
+            'payment_option' => 'required|string',
+            'discount_amount' => 'nullable|numeric|min:0',
+            'markup_amount' => 'nullable|numeric|min:0',
+        ]);
 
         if ($request->category_id === null) {
-
             $notification = array(
-                'message' => 'Sorry , no item selected',
+                'message' => 'Sorry, no item selected',
                 'alert-type' => 'error',
             );
 
             return redirect()->back()->with($notification);
-
         } else {
-
             if ($request->paid_amount > $request->estimated_amount) {
-
                 $notification = array(
                     'message' => 'Paid amount is greater than grand total',
                     'alert-type' => 'warning',
                 );
 
                 return redirect()->back()->with($notification);
-
             } else {
-
                 $invoice = new Invoice();
                 $invoice->invoice_no = $request->invoice_no;
                 $invoice->date = date('Y-m-d', strtotime($request->date));
@@ -130,13 +146,10 @@ class InvoiceController extends Controller
                 $invoice->location_id = Auth::user()->location_id;
 
                 DB::transaction(function () use ($request, $invoice) {
-
                     if ($invoice->save()) {
-
                         $count_category = count($request->category_id);
 
                         for ($i = 0; $i < $count_category; $i++) {
-
                             $invoice_detail = new InvoiceDetail();
                             $invoice_detail->date = date('Y-m-d', strtotime($request->date));
                             $invoice_detail->invoice_id = $invoice->id;
@@ -148,11 +161,9 @@ class InvoiceController extends Controller
                             $invoice_detail->status = '0';
                             $invoice_detail->created_at = Carbon::now();
                             $invoice_detail->save();
-
                         }
 
                         if ($request->customer_id == '0') {
-
                             $customer = new Customer();
                             $customer->name = $request->name;
                             $customer->phonenumber = $request->phonenumber;
@@ -165,11 +176,8 @@ class InvoiceController extends Controller
                             $customer->save();
 
                             $customer_id = $customer->id;
-
                         } else {
-
                             $customer_id = $request->customer_id;
-
                         }
 
                         $payment = new Payment();
@@ -187,23 +195,17 @@ class InvoiceController extends Controller
                         $payment->location_id = Auth::user()->location_id;
 
                         if ($request->paid_status == 'full_paid') {
-
                             $payment->paid_amount = $request->estimated_amount;
                             $payment->due_amount = '0';
                             $payment_details->current_paid_amount = $request->estimated_amount;
-
                         } elseif ($request->paid_status == 'full_paid') {
-
                             $payment->paid_amount = '0';
                             $payment->due_amount = $request->estimated_amount;
                             $payment_details->current_paid_amount = '0';
-
                         } elseif ($request->paid_status == 'partial_paid') {
-
                             $payment->paid_amount = $request->paid_amount;
                             $payment->due_amount = $request->estimated_amount - $request->paid_amount;
                             $payment_details->current_paid_amount = $request->paid_amount;
-
                         }
 
                         $payment->save();
@@ -212,13 +214,9 @@ class InvoiceController extends Controller
                         $payment_details->date = date('Y-m-d', strtotime($request->date));
                         $payment_details->location_id = Auth::user()->location_id;
                         $payment_details->save();
-
                     }
-
                 });
-
             }
-
         }
 
         $notification = array(
@@ -227,7 +225,6 @@ class InvoiceController extends Controller
         );
 
         return redirect()->route('invoice.pending.list')->with($notification);
-
     } // End Method
 
     /**
@@ -446,15 +443,14 @@ class InvoiceController extends Controller
 
     } // End Method
 
-
-    public function SalesChart(DailySalesChart $dailySalesChart) {
+    public function SalesChart(DailySalesChart $dailySalesChart)
+    {
 
         $chart = $dailySalesChart->build();
 
         return view('backend.invoice.invoice_chart', compact('chart'));
 
     }
-
 
     // public function SalesChartIndex(DailySalesChart $dailySalesChart) {
 

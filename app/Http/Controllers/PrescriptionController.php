@@ -57,14 +57,27 @@ class PrescriptionController extends Controller
 
     public function PrescriptionStore(Request $request)
     {
+        // Validate the request inputs
+        $request->validate([
+            'consultation_id' => 'required|integer',
+            'customer_id' => 'required|integer',
+            'date' => 'required|date',
+            'RE' => 'required|string',
+            'LE' => 'required|string',
+            'ADD' => 'required|string',
+            'VA' => 'required|string',
+            'PD' => 'required|string',
+            'VA2' => 'required|string',
+            'N' => 'required|string',
+            'N2' => 'required|string',
+            'SIGNS' => 'required|string',
+            'remarks' => 'required|string',
+            'treatment_given' => 'required|string',
+            'next_appointment' => 'nullable|date',
+        ]);
 
         $consultation_id = $request->consultation_id;
-
         $customer_id = $request->customer_id;
-
-        // dd($customer_id);
-
-        // dd($consultation_id);
 
         $prescription = new Prescription();
         $prescription->date = date('Y-m-d', strtotime($request->date));
@@ -80,7 +93,7 @@ class PrescriptionController extends Controller
         $prescription->SIGNS = $request->SIGNS;
         $prescription->remarks = $request->remarks;
         $prescription->treatment_given = $request->treatment_given;
-        $prescription->next_appointment = date('Y-m-d', strtotime($request->next_appointment));
+        $prescription->next_appointment = $request->next_appointment ? date('Y-m-d', strtotime($request->next_appointment)) : Carbon::now()->addMonths(6)->format('Y-m-d');
         $prescription->created_by = Auth::user()->id;
         $prescription->created_at = Carbon::now();
         $prescription->location_id = Auth::user()->location_id;
@@ -91,7 +104,6 @@ class PrescriptionController extends Controller
             Consultation::findOrFail($consultation_id)->update([
                 'status' => '1',
             ]);
-
         }
 
         $notification = array(
@@ -100,18 +112,39 @@ class PrescriptionController extends Controller
         );
 
         return redirect()->route('consultation.all')->with($notification);
-
-        // dd($prescription);
-
     }
 
     public function PrescriptionStorePlain(Request $request)
     {
+        // Validate the request inputs
+        $request->validate([
+            'customer_id' => 'nullable|integer',
+            'name' => 'required_without:customer_id|string|max:255',
+            'age' => 'required_without:customer_id|integer',
+            'sex' => 'required_without:customer_id|string|max:10',
+            'address' => 'required_without:customer_id|string|max:255',
+            'phonenumber' => 'required_without:customer_id|string|max:15',
+            'date' => 'required|date',
+            'RE' => 'required|string',
+            'LE' => 'required|string',
+            'ADD' => 'required|string',
+            'VA' => 'required|string',
+            'PD' => 'required|string',
+            'VA2' => 'required|string',
+            'N' => 'required|string',
+            'N2' => 'required|string',
+            'SIGNS' => 'required|string',
+            'remarks' => 'required|string',
+            'treatment_given' => 'required|string',
+            'next_appointment' => 'nullable|date',
+        ]);
 
         $customer_id = $request->customer_id;
 
-        if ($customer_id) {
+        // Set next_appointment to six months from now if not provided
+        $next_appointment = $request->next_appointment ? date('Y-m-d', strtotime($request->next_appointment)) : Carbon::now()->addMonths(6)->format('Y-m-d');
 
+        if ($customer_id) {
             $prescription = new Prescription();
             $prescription->date = date('Y-m-d', strtotime($request->date));
             $prescription->customer_id = $customer_id;
@@ -126,15 +159,13 @@ class PrescriptionController extends Controller
             $prescription->SIGNS = $request->SIGNS;
             $prescription->remarks = $request->remarks;
             $prescription->treatment_given = $request->treatment_given;
-            $prescription->next_appointment = date('Y-m-d', strtotime($request->next_appointment));
+            $prescription->next_appointment = $next_appointment;
             $prescription->created_by = Auth::user()->id;
             $prescription->created_at = Carbon::now();
             $prescription->location_id = Auth::user()->location_id;
 
             $prescription->save();
-
         } else {
-
             $customer = new Customer();
             $customer->name = $request->name;
             $customer->age = $request->age;
@@ -163,13 +194,12 @@ class PrescriptionController extends Controller
             $prescription->SIGNS = $request->SIGNS;
             $prescription->remarks = $request->remarks;
             $prescription->treatment_given = $request->treatment_given;
-            $prescription->next_appointment = date('Y-m-d', strtotime($request->next_appointment));
+            $prescription->next_appointment = $next_appointment;
             $prescription->created_by = Auth::user()->id;
             $prescription->created_at = Carbon::now();
             $prescription->location_id = Auth::user()->location_id;
 
             $prescription->save();
-
         }
 
         $notification = array(
@@ -178,9 +208,6 @@ class PrescriptionController extends Controller
         );
 
         return redirect()->route('prescription.all')->with($notification);
-
-        // dd($prescription);
-
     }
 
     public function PrescriptionView($id)
@@ -194,8 +221,8 @@ class PrescriptionController extends Controller
 
     }
 
-
-    public function PrescriptionDelete($id){
+    public function PrescriptionDelete($id)
+    {
 
         Prescription::findOrFail($id)->delete();
 
@@ -208,11 +235,10 @@ class PrescriptionController extends Controller
 
     }
 
-
-    public function PrescriptionEdit ($id){
+    public function PrescriptionEdit($id)
+    {
 
         $prescription = Prescription::findOrFail($id);
-
 
         // dd($prescription);
 

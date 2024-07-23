@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Consultation;
 use App\Models\Customer;
 use App\Models\Prescription;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -58,23 +58,23 @@ class PrescriptionController extends Controller
     public function PrescriptionStore(Request $request)
     {
         // Validate the request inputs
-        $request->validate([
-            'consultation_id' => 'required|integer',
-            'customer_id' => 'required|integer',
-            'date' => 'required|date',
-            'RE' => 'required|string',
-            'LE' => 'required|string',
-            'ADD' => 'required|string',
-            'VA' => 'required|string',
-            'PD' => 'required|string',
-            'VA2' => 'required|string',
-            'N' => 'required|string',
-            'N2' => 'required|string',
-            'SIGNS' => 'required|string',
-            'remarks' => 'required|string',
-            'treatment_given' => 'required|string',
-            'next_appointment' => 'nullable|date',
-        ]);
+        // $request->validate([
+        //     'consultation_id' => 'required|integer',
+        //     'customer_id' => 'required|integer',
+        //     'date' => 'required|date',
+        //     'RE' => 'required|string',
+        //     'LE' => 'required|string',
+        //     'ADD' => 'required|string',
+        //     'VA' => 'required|string',
+        //     'PD' => 'required|string',
+        //     'VA2' => 'required|string',
+        //     'N' => 'required|string',
+        //     'N2' => 'required|string',
+        //     'SIGNS' => 'required|string',
+        //     'remarks' => 'required|string',
+        //     'treatment_given' => 'required|string',
+        //     'next_appointment' => 'nullable|date',
+        // ]);
 
         $consultation_id = $request->consultation_id;
         $customer_id = $request->customer_id;

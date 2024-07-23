@@ -11,10 +11,10 @@ use App\Models\InvoiceDetail;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
 use App\Models\Product;
-use Auth;
-use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
@@ -112,7 +112,6 @@ class InvoiceController extends Controller
             'selling_price' => 'required|array',
             'selling_price.*' => 'numeric|min:0',
             'customer_id' => 'required|integer|exists:customers,id',
-            'paid_amount' => 'required|numeric|min:0',
             'estimated_amount' => 'required|numeric|min:0',
             'paid_status' => 'required|string|in:full_paid,partial_paid',
             'payment_option' => 'required|string',

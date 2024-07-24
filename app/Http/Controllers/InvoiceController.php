@@ -111,7 +111,6 @@ class InvoiceController extends Controller
             'unit_price.*' => 'numeric|min:0',
             'selling_price' => 'required|array',
             'selling_price.*' => 'numeric|min:0',
-            'customer_id' => 'required|integer|exists:customers,id',
             'estimated_amount' => 'required|numeric|min:0',
             'paid_status' => 'required|string|in:full_paid,partial_paid',
             'payment_option' => 'required|string',

@@ -13,6 +13,16 @@
 
                             <h4 class="card-title">Add Prescription </h4><br><br>
 
+                            @if ($errors->any())
+                                <div class="mb-4 validation-errors">
+                                    @foreach ($errors->all() as $error)
+                                        {{-- <p>{{ $error }}</p> --}}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            {{ $error }}
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
 
 
                             <form method="post" action="{{ route('prescription.store') }}" id="myForm"
@@ -182,7 +192,7 @@
 
                                     <div class="form-group col-md-4"
                                         style="visibility: hidden; background-color:transparent">
-                                        <input type="text" name="empty"  class="form-control">
+                                        <input type="text" name="empty" class="form-control">
                                     </div>
 
                                     <div class="form-group col-md-4"

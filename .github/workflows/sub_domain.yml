@@ -1,30 +1,30 @@
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    types:
-      - closed
-      
+# on:
+#   push:
+#     branches:
+#       - master
+#   pull_request:
+#     types:
+#       - closed
 
-name: 🚀 Deploy website on push to sub domain
 
-jobs:
+# name: 🚀 Deploy website on push to sub domain
 
-  web-deploy:
-    name: 🎉 Deploy on subdomain
-    runs-on: ubuntu-latest
+# jobs:
 
-    steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v3
+#   web-deploy:
+#     name: 🎉 Deploy on subdomain
+#     runs-on: ubuntu-latest
 
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+#     steps:
+#     - name: 🚚 Get latest code
+#       uses: actions/checkout@v3
 
-      with:
-        server: bestchoiceeyecenter.co.tz
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: /public_html/second_choice/
+#     - name: 📂 Sync files
+#       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+
+#       with:
+#         server: bestchoiceeyecenter.co.tz
+#         username: ${{ secrets.FTP_USERNAME }}
+#         password: ${{ secrets.FTP_PASSWORD }}
+#         server-dir: /public_html/second_choice/
 

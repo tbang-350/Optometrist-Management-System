@@ -2,9 +2,10 @@
 
 namespace App\Charts;
 
+use App\Models\User;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Auth;
 
 class MonthlySalesChart
 {
@@ -33,14 +34,19 @@ class MonthlySalesChart
             $dates[] = $day;
         }
 
-        $current_location = Auth::user()->location_id;
+        $currentLocationId = Auth::user()->location_id;
 
         // Fetch the data
-        $data = \App\Models\PaymentDetail::query()
+        $salesQuery = \App\Models\PaymentDetail::query()
             ->selectRaw('SUM(current_paid_amount) as total_sales, DAY(date) as day')
             ->whereYear('date', $currentYear)
-            ->whereMonth('date', $currentMonth)
-            ->where('location_id', $current_location)
+            ->whereMonth('date', $currentMonth);
+
+        if ((int) $currentLocationId !== User::SUPER_ADMIN_LOCATION_ID) {
+            $salesQuery->where('location_id', $currentLocationId);
+        }
+
+        $data = $salesQuery
             ->groupBy(DB::raw('DAY(date)'))
             ->pluck('total_sales', 'day')
             ->toArray();
@@ -55,9 +61,11 @@ class MonthlySalesChart
         // Sort the data by day
         ksort($data);
 
-        return $this->chart->lineChart()
-            ->setTitle("Daily Sales for $currentMonthName $currentYear")
-            ->addLine('Total Sales', array_values($data))
-            ->setXAxis($dates);
+        $chart = $this->chart->lineChart();
+        $chart->setTitle("Daily Sales for $currentMonthName $currentYear");
+        $chart->addLine('Total Sales', array_values($data));
+        $chart->setXAxis($dates);
+
+        return $chart;
     }
 }

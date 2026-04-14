@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DefaultController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InvoiceController;
@@ -252,9 +253,7 @@ Route::controller(DefaultController::class)->group(function () {
     Route::get('/get-customer-details', 'GetCustomerDetails')->name('get.customer.details');
 });
 
-Route::get('/dashboard', function () {
-    return view('admin.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth', 'verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

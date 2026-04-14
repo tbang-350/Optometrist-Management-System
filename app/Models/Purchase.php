@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Purchase extends Model
 {
-    use HasFactory;
+    use HasFactory, \App\Traits\LocationScoped;
 
     protected $guarded = [];
 

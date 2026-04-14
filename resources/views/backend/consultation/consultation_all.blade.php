@@ -57,9 +57,9 @@
                                         <tr>
                                             <td> {{ $key + 1 }} </td>
                                             <td>{{ date('d-m-Y', strtotime($item->date)) }}</td>
-                                            <td> {{ $item['customer']['name'] }} </td>
-                                            <td> {{ $item['customer']['age'] }} </td>
-                                            <td> {{ $item['customer']['sex'] }} </td>
+                                            <td> {{ $item->customer?->name ?? 'N/A' }} </td>
+                                            <td> {{ $item->customer?->age ?? 'N/A' }} </td>
+                                            <td> {{ $item->customer?->sex ?? 'N/A' }} </td>
                                             <td> {{ $item->consultation_fee }} </td>
 
                                             <td>
@@ -72,7 +72,7 @@
 
                                             <td>
                                                 <a href=" {{ route('prescription.add', $item->id) }} "
-                                                    class="btn btn-info sm"--}} title="Add Prescription">
+                                                    class="btn btn-info sm" title="Add Prescription">
                                                     <i class="fas fa-plus"></i>
                                                 </a>
 

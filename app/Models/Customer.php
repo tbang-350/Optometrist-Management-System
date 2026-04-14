@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Customer extends Model
 {
-    use HasFactory;
+    use HasFactory, \App\Traits\LocationScoped;
 
     protected $guarded = [];
 

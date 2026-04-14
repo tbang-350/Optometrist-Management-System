@@ -18,17 +18,12 @@ class CustomerController extends Controller
 {
     public function CustomerAll()
     {
-
-        $current_location = Auth::user()->location_id;
+        $current_location = auth()->user()->location_id;
 
         if ($current_location == 1) {
-
             $customer = Customer::latest()->get();
-
         } else {
-
             $customer = Customer::latest()->where('location_id', $current_location)->get();
-
         }
 
         return view('backend.customer.customer_all', compact('customer'));
@@ -42,16 +37,8 @@ class CustomerController extends Controller
 
     }
 
-    public function CustomerStore(Request $request)
+    public function CustomerStore(\App\Http\Requests\StoreCustomerRequest $request)
     {
-        // Validate the request data
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'age' => 'required|integer|min:0',
-            'sex' => 'required|string|in:male,female,other',
-            'address' => 'required|string|max:255',
-            'phonenumber' => 'required|string|max:15',
-        ]);
 
         // Insert the validated data into the database
         Customer::insert([
@@ -60,8 +47,8 @@ class CustomerController extends Controller
             'sex' => $request->sex,
             'address' => $request->address,
             'phonenumber' => $request->phonenumber,
-            'location_id' => Auth::user()->location_id,
-            'created_by' => Auth::user()->id,
+            'location_id' => auth()->user()->location_id,
+            'created_by' => auth()->user()->id,
             'created_at' => Carbon::now(),
         ]);
 
@@ -93,7 +80,7 @@ class CustomerController extends Controller
             'sex' => $request->sex,
             'address' => $request->address,
             'phonenumber' => $request->phonenumber,
-            'updated_by' => Auth::user()->id,
+            'updated_by' => auth()->user()->id,
             'updated_at' => Carbon::now(),
         ]);
 
@@ -122,17 +109,14 @@ class CustomerController extends Controller
 
     public function CreditCustomer()
     {
-
-        $current_location = Auth::user()->location_id;
+        $current_location = auth()->user()->location_id;
 
         if ($current_location == 1) {
-
             $allData = Payment::whereIn('paid_status', ['partial_paid'])->get();
-
         } else {
-
-            $allData = Payment::whereIn('paid_status', ['partial_paid'])->where('location_id', $current_location)->get();
-
+            $allData = Payment::whereIn('paid_status', ['partial_paid'])
+                ->where('location_id', $current_location)
+                ->get();
         }
 
         return view('backend.customer.customer_credit', compact('allData'));
@@ -141,17 +125,14 @@ class CustomerController extends Controller
 
     public function CreditServiceCustomer()
     {
-
-        $current_location = Auth::user()->location_id;
+        $current_location = auth()->user()->location_id;
 
         if ($current_location == 1) {
-
             $allServiceData = ServicePayment::whereIn('paid_status', ['partial_paid'])->get();
-
         } else {
-
-            $allServiceData = ServicePayment::whereIn('paid_status', ['partial_paid'])->where('location_id', $current_location)->get();
-
+            $allServiceData = ServicePayment::whereIn('paid_status', ['partial_paid'])
+                ->where('location_id', $current_location)
+                ->get();
         }
 
         return view('backend.customer.customer_service_credit', compact('allServiceData'));
@@ -161,17 +142,7 @@ class CustomerController extends Controller
     public function CreditCustomerPrintPdf()
     {
 
-        $current_location = Auth::user()->location_id;
-
-        if ($current_location == 1) {
-
-            $allData = Payment::whereIn('paid_status', ['full_due', 'partial_paid'])->get();
-
-        } else {
-
-            $allData = Payment::whereIn('paid_status', ['full_due', 'partial_paid'])->where('location_id', $current_location)->get();
-
-        }
+        $allData = Payment::whereIn('paid_status', ['full_due', 'partial_paid'])->get();
 
         return view('backend.pdf.customer_credit_pdf', compact('allData'));
 
@@ -180,17 +151,7 @@ class CustomerController extends Controller
     public function ServiceCreditCustomerPrintPdf()
     {
 
-        $current_location = Auth::user()->location_id;
-
-        if ($current_location == 1) {
-
-            $allData = ServicePayment::whereIn('paid_status', ['full_due', 'partial_paid'])->get();
-
-        } else {
-
-            $allData = ServicePayment::whereIn('paid_status', ['full_due', 'partial_paid'])->where('location_id', $current_location)->get();
-
-        }
+        $allData = ServicePayment::whereIn('paid_status', ['full_due', 'partial_paid'])->get();
 
         return view('backend.pdf.service_customer_credit_pdf', compact('allData'));
 
@@ -247,7 +208,7 @@ class CustomerController extends Controller
 
             $payment_details->invoice_id = $invoice_id;
             $payment_details->date = date('Y-m-d', strtotime($request->date));
-            $payment_details->updated_by = Auth::user()->id;
+            $payment_details->updated_by = auth()->user()->id;
             $payment_details->save();
 
             $notification = array(
@@ -313,8 +274,8 @@ class CustomerController extends Controller
             $payment_details->service_invoice_id = $service_invoice_id;
             $payment_details->date = date('Y-m-d', strtotime($request->date));
             $payment_details->payment_option = $request->payment_option;
-            $payment_details->location_id = Auth::user()->location_id;
-            $payment_details->updated_by = Auth::user()->id;
+            $payment_details->location_id = auth()->user()->location_id;
+            $payment_details->updated_by = auth()->user()->id;
             $payment_details->save();
 
             $notification = array(
@@ -349,17 +310,7 @@ class CustomerController extends Controller
     public function PaidCustomer()
     {
 
-        $current_location = Auth::user()->location_id;
-
-        if ($current_location == 1) {
-
-            $allData = Payment::whereIn('paid_status', ['partial_paid', 'full_paid'])->get();
-
-        } else {
-
-            $allData = Payment::whereIn('paid_status', ['partial_paid', 'full_paid'])->where('location_id', $current_location)->get();
-
-        }
+        $allData = Payment::whereIn('paid_status', ['partial_paid', 'full_paid'])->get();
 
         return view('backend.customer.customer_paid', compact('allData'));
 
@@ -368,16 +319,7 @@ class CustomerController extends Controller
     public function PaidCustomerPrintPdf()
     {
 
-        $current_location = Auth::user()->location_id;
-
-        if ($current_location == 1) {
-
-            $allData = Payment::whereIn('paid_status', ['partial_paid', 'full_paid'])->get();
-
-        } else {
-
-            $allData = Payment::whereIn('paid_status', ['partial_paid', 'full_paid'])->where('location_id', $current_location)->get();
-        }
+        $allData = Payment::whereIn('paid_status', ['partial_paid', 'full_paid'])->get();
 
         return view('backend.pdf.customer_paid_pdf', compact('allData'));
 
@@ -385,17 +327,7 @@ class CustomerController extends Controller
 
     public function CustomerWiseReport()
     {
-        $current_location = Auth::user()->location_id;
-
-        if ($current_location == 1) {
-
-            $customers = Customer::all();
-
-        } else {
-
-            $customers = Customer::where('location_id', $current_location)->get();
-
-        }
+        $customers = Customer::all();
 
         return view('backend.customer.customer_wise_report', compact('customers'));
 
@@ -404,17 +336,7 @@ class CustomerController extends Controller
     public function CustomerWiseCreditReport(Request $request)
     {
 
-        $current_location = Auth::user()->location_id;
-
-        if ($current_location == 1) {
-
-            $allData = Payment::where('customer_id', $request->customer_id)->whereIn('paid_status', ['partial_paid'])->get();
-
-        } else {
-
-            $allData = Payment::where('customer_id', $request->customer_id)->whereIn('paid_status', ['partial_paid'])->where('location_id', $current_location)->get();
-
-        }
+        $allData = Payment::where('customer_id', $request->customer_id)->whereIn('paid_status', ['partial_paid'])->get();
 
         return view('backend.pdf.customer_wise_credit_pdf', compact('allData'));
 
@@ -423,17 +345,7 @@ class CustomerController extends Controller
     public function CustomerWisePaidReport(Request $request)
     {
 
-        $current_location = Auth::user()->location_id;
-
-        if ($current_location == 1) {
-
-            $allData = Payment::where('customer_id', $request->customer_id)->whereIn('paid_status', ['partial_paid', 'full_paid'])->get();
-
-        } else {
-
-            $allData = Payment::where('customer_id', $request->customer_id)->whereIn('paid_status', ['partial_paid', 'full_paid'])->where('location_id', $current_location)->get();
-
-        }
+        $allData = Payment::where('customer_id', $request->customer_id)->whereIn('paid_status', ['partial_paid', 'full_paid'])->get();
 
         $allData = Payment::where('customer_id', $request->customer_id)->whereIn('paid_status', ['partial_paid', 'full_paid'])->get();
 

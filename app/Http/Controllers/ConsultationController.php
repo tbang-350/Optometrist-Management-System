@@ -8,7 +8,6 @@ use DateTime;
 use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Date;
 
 class ConsultationController extends Controller
 {
@@ -19,11 +18,11 @@ class ConsultationController extends Controller
 
         if ($current_location == 1) {
 
-            $consultation = Consultation::latest()->get();
+            $consultation = Consultation::with('customer')->latest()->get();
 
         } else {
 
-            $consultation = Consultation::latest()->where("location_id", $current_location)->get();
+            $consultation = Consultation::with('customer')->latest()->where("location_id", $current_location)->get();
 
         }
 

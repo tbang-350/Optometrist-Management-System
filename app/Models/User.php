@@ -17,6 +17,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    public const SUPER_ADMIN_LOCATION_ID = 1;
+
     protected $fillable = [
         'name',
         'username',
@@ -42,6 +44,11 @@ class User extends Authenticatable
 
         return $this->belongsTo(Location::class, 'location_id', 'id');
 
+    }
+
+    public function isSuperAdmin(): bool
+    {
+        return (int) $this->location_id === self::SUPER_ADMIN_LOCATION_ID;
     }
 
 

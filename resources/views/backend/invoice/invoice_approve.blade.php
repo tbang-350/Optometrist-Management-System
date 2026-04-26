@@ -99,8 +99,8 @@
 
                                                 <td class="text-center">{{ $key + 1 }}</td>
                                                 <td class="text-center">{{ $details['category']['name'] }}</td>
-                                                <td class="text-center">{{ $details['product']['name'] }}</td>
-                                                <td class="text-center" style="background-color: #8B008B">{{ $details['product']['quantity'] }}</td>
+                                                <td class="text-center">{{ $details->product->name ?? $details->product_name }}</td>
+                                                <td class="text-center" style="background-color: #8B008B">{{ $details->product->quantity ?? '-' }}</td>
                                                 <td class="text-center">{{ $details->selling_qty }}</td>
                                                 <td class="text-center">{{ $details->unit_price }}</td>
                                                 <td class="text-center">{{ $details->selling_price }}</td>

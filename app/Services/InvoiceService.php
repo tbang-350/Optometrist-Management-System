@@ -2,16 +2,16 @@
 
 namespace App\Services;
 
+use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
-use App\Models\Customer;
 use App\Models\Product;
+use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Exception;
 
 class InvoiceService
 {
@@ -34,7 +34,9 @@ class InvoiceService
                 $invoice_detail->date = date('Y-m-d', strtotime($data['date']));
                 $invoice_detail->invoice_id = $invoice->id;
                 $invoice_detail->category_id = $data['category_id'][$i];
-                $invoice_detail->product_id = $data['product_id'][$i];
+                $productId = $data['product_id'][$i] ?? null;
+                $invoice_detail->product_id = $productId !== '' ? $productId : null;
+                $invoice_detail->product_name = $data['product_name'][$i] ?? null;
                 $invoice_detail->selling_qty = $data['selling_qty'][$i];
                 $invoice_detail->unit_price = $data['unit_price'][$i];
                 $invoice_detail->selling_price = $data['selling_price'][$i];
@@ -98,16 +100,17 @@ class InvoiceService
         $invoiceDetailsIds = array_keys($sellingQuantities);
         $invoiceDetails = InvoiceDetail::whereIn('id', $invoiceDetailsIds)->get();
         if ($invoiceDetails->isEmpty()) {
-            throw new Exception("Invalid invoice details.");
+            throw new Exception('Invalid invoice details.');
         }
 
-        $productIds = $invoiceDetails->pluck('product_id')->unique()->toArray();
-        $products = Product::whereIn('id', $productIds)->get()->keyBy('id');
+        $productInvoiceDetails = $invoiceDetails->whereNotNull('product_id');
+        $productIds = $productInvoiceDetails->pluck('product_id')->unique()->toArray();
+        $products = $productIds ? Product::whereIn('id', $productIds)->get()->keyBy('id') : collect();
 
-        foreach ($invoiceDetails as $detail) {
+        foreach ($productInvoiceDetails as $detail) {
             $requestedQty = $sellingQuantities[$detail->id];
             $product = $products->get($detail->product_id);
-            if (!$product || $product->quantity < $requestedQty) {
+            if (! $product || $product->quantity < $requestedQty) {
                 throw new Exception("Insufficient stock: Product quantity is less than requested {$requestedQty}.");
             }
         }
@@ -122,9 +125,13 @@ class InvoiceService
                 $detail->status = '1';
                 $detail->save();
 
-                $product = $products->get($detail->product_id);
-                $product->quantity = ((float) $product->quantity) - ((float) $sellingQuantities[$detail->id]);
-                $product->save();
+                if ($detail->product_id !== null) {
+                    $product = $products->get($detail->product_id);
+                    if ($product) {
+                        $product->quantity = ((float) $product->quantity) - ((float) $sellingQuantities[$detail->id]);
+                        $product->save();
+                    }
+                }
             }
         });
 

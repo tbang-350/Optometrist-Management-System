@@ -78,6 +78,10 @@
                                                 <option selected="">Open this select menu</option>
 
                                             </select>
+                                            <input type="text" id="manual_product_name" class="form-control mt-2"
+                                                placeholder="Item name (if no product selected)" style="display:none">
+                                            <input type="number" id="manual_unit_price" class="form-control mt-2"
+                                                placeholder="Unit price (manual item)" min="0" style="display:none">
                                         </div>
                                     </div>
                                 </div>
@@ -353,15 +357,16 @@
 
             <td>
                 <input type="hidden" name="product_id[]" value="@{{product_id}}">
+                <input type="hidden" name="product_name[]" value="@{{product_name}}">
                 @{{product_name}}
             </td>
 
             <td>
-                <input type="number" min="1" class="text-right form-control selling_qty" id="selling_qty" name="selling_qty[]" value="">
+                <input type="number" min="1" class="text-right form-control selling_qty" name="selling_qty[]" value="">
             </td>
 
             <td>
-                <input type="number" class="text-right form-control unit_price" name="unit_price[]" id="unit_price" value="@{{buying_unit_price}}" readonly>
+                <input type="number" class="text-right form-control unit_price" name="unit_price[]" value="@{{unit_price}}" @{{readonly_attr}}>
             </td>
 
             <!--
@@ -371,7 +376,7 @@
             -->
 
             <td>
-                <input type="number" class="text-right form-control selling_price" id="selling_price[]" name="selling_price[]" value="0" readonly>
+                <input type="number" class="text-right form-control selling_price" name="selling_price[]" value="0" readonly>
             </td>
 
             <!--
@@ -407,32 +412,42 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $(document).on("click", "#storeButton", function() {
-                var buying_unit_price = $('#buying_unit_price').val();
-                var selling_qty = $('#selling_qty').val();
-                var unit_price = $('#unit_price').val();
-                var selling_price = $('#selling_price').val();
                 var customer_id = $('#customer_id').val();
                 var paid_status = $('#paid_status').find('option:selected').text();
                 var paid_amount = $('#paid_amount').val();
 
-                if (selling_qty == '') {
-                    $.notify("Selling quantity not set", {
+                var rows = $("#addRow").find("tr.delete_add_more_item");
+                if (rows.length === 0) {
+                    $.notify("No items added to invoice", {
                         globalPosition: 'top-right',
                         className: 'error'
                     });
                     return false;
                 }
 
-                if (unit_price == '') {
-                    $.notify("Unit Price not set", {
-                        globalPosition: 'top-right',
-                        className: 'error'
-                    });
-                    return false;
-                }
+                var invalidRow = false;
+                rows.each(function() {
+                    var row = $(this);
+                    var selling_qty = row.find("input.selling_qty").val();
+                    var unit_price = row.find("input.unit_price").val();
+                    var product_id = row.find("input[name='product_id[]']").val();
+                    var product_name = row.find("input[name='product_name[]']").val();
 
-                if (selling_price == '') {
-                    $.notify("Selling Price not set", {
+                    if (selling_qty === '' || parseFloat(selling_qty) <= 0) {
+                        invalidRow = true;
+                    }
+
+                    if (unit_price === '' || parseFloat(unit_price) < 0) {
+                        invalidRow = true;
+                    }
+
+                    if ((product_id === null || String(product_id).trim() === '') && (product_name === null || String(product_name).trim() === '')) {
+                        invalidRow = true;
+                    }
+                });
+
+                if (invalidRow) {
+                    $.notify("Please check item quantity, price, and name", {
                         globalPosition: 'top-right',
                         className: 'error'
                     });
@@ -463,15 +478,6 @@
                     return false;
                 }
 
-                // Check if selling_qty is larger than current_stock_qty
-                if (parseFloat(selling_qty) > parseFloat(current_stock_qty)) {
-                    $.notify("Stock is not enough to meet the order", {
-                        globalPosition: 'top-right',
-                        className: 'error'
-                    });
-                    return false;
-                }
-
             });
         });
     </script>
@@ -488,8 +494,9 @@
                 var product_id = $('#product_id').val();
                 var product_name = $('#product_id').find('option:selected').text();
                 var buying_unit_price = $('#buying_unit_price').val();
-                var selling_qty = $('#selling_qty').val(); // Get the selling_qty
-                var current_stock_qty = $('#current_stock_qty').val(); // Get the current_stock_qty
+                var isManualItem = (product_id === null || String(product_id).trim() === '');
+                var manual_product_name = $('#manual_product_name').val();
+                var manual_unit_price = $('#manual_unit_price').val();
 
 
                 if (date == '') {
@@ -508,7 +515,23 @@
                     return false;
                 }
 
-                if (product_name == '') {
+                if (isManualItem) {
+                    if (manual_product_name === null || String(manual_product_name).trim() === '') {
+                        $.notify("Item name not set", {
+                            globalPosition: 'top-right',
+                            className: 'error'
+                        });
+                        return false;
+                    }
+
+                    if (manual_unit_price === null || String(manual_unit_price).trim() === '') {
+                        $.notify("Unit price not set", {
+                            globalPosition: 'top-right',
+                            className: 'error'
+                        });
+                        return false;
+                    }
+                } else if (product_id === null || String(product_id).trim() === '') {
                     $.notify("Product not set", {
                         globalPosition: 'top-right',
                         className: 'error'
@@ -516,22 +539,9 @@
                     return false;
                 }
 
-                // if (selling_qty === '') {
-                //     $.notify("Selling quantity not set", {
-                //         globalPosition: 'top-right',
-                //         className: 'error'
-                //     });
-                //     return false;
-                // }
-
-                // Check if selling_qty is larger than current_stock_qty
-                if (parseFloat(selling_qty) > parseFloat(current_stock_qty)) {
-                    $.notify("Stock is not enough to meet the order", {
-                        globalPosition: 'top-right',
-                        className: 'error'
-                    });
-                    return false;
-                }
+                var resolvedProductName = isManualItem ? manual_product_name : product_name;
+                var resolvedUnitPrice = isManualItem ? manual_unit_price : buying_unit_price;
+                var readonly_attr = isManualItem ? '' : 'readonly';
 
                 var source = $("#document-template").html();
                 var template = Handlebars.compile(source);
@@ -541,9 +551,10 @@
                     invoice_no: invoice_no,
                     category_id: category_id,
                     category_name: category_name,
-                    product_id: product_id,
-                    product_name: product_name,
-                    buying_unit_price: buying_unit_price
+                    product_id: isManualItem ? '' : product_id,
+                    product_name: resolvedProductName,
+                    unit_price: resolvedUnitPrice,
+                    readonly_attr: readonly_attr
                 };
 
                 var html = template(data);
@@ -569,13 +580,24 @@
 
 
             $(document).on('keyup click', '.selling_qty', function() {
-                var unit = $(this).closest("tr").find("input.selling_qty").val();
-                var total = unit * parseFloat($("#buying_unit_price").val()); // Use the buying_unit_price
-                $(this).closest("tr").find("input.selling_price").val(total);
+                var row = $(this).closest("tr");
+                var unit = row.find("input.selling_qty").val();
+                var unit_price = row.find("input.unit_price").val();
+                var total = parseFloat(unit || 0) * parseFloat(unit_price || 0);
+                row.find("input.selling_price").val(total);
                 $('#discount_amount').trigger('keyup');
                 $('#markup_amount').trigger('keyup');
             });
 
+            $(document).on('keyup click', '.unit_price', function() {
+                var row = $(this).closest("tr");
+                var unit = row.find("input.selling_qty").val();
+                var unit_price = row.find("input.unit_price").val();
+                var total = parseFloat(unit || 0) * parseFloat(unit_price || 0);
+                row.find("input.selling_price").val(total);
+                $('#discount_amount').trigger('keyup');
+                $('#markup_amount').trigger('keyup');
+            });
 
 
 
@@ -622,19 +644,17 @@
                     }
                 });
 
-                var discount_amount = parseFloat($('#discount_amount').val());
-                var markup_amount = parseFloat($('#markup_amount').val()); // Get markup_amount value
+                var discount_raw = $('#discount_amount').val();
+                var markup_raw = $('#markup_amount').val();
+                var discount_amount = parseFloat(discount_raw);
+                var markup_amount = parseFloat(markup_raw);
 
-                if (!isNaN(discount_amount) && discount_amount.length != 0) {
+                if (!isNaN(discount_amount) && String(discount_raw).length != 0) {
                     sum -= parseFloat(discount_amount);
                 }
 
-                console.log({
-                    'the markup:': markup_amount
-                })
-
-                if (!isNaN(markup_amount) && markup_amount.length != 0) {
-                    sum += parseFloat(markup_amount); // Add markup_amount to the sum
+                if (!isNaN(markup_amount) && String(markup_raw).length != 0) {
+                    sum += parseFloat(markup_amount);
                 }
 
                 $('#estimated_amount').val(sum);
@@ -688,6 +708,8 @@
                                 '</option>';
                         });
                         $('#product_id').html(html);
+                        $('#manual_product_name').show();
+                        $('#manual_unit_price').show();
                     }
                 })
             });
@@ -699,6 +721,16 @@
         $(function() {
             $(document).on('change', '#product_id', function() {
                 var product_id = $(this).val();
+                if (product_id === null || String(product_id).trim() === '') {
+                    $('#manual_product_name').show();
+                    $('#manual_unit_price').show();
+                    $('#current_stock_qty').val('');
+                    $('#buying_unit_price').val('');
+                    return;
+                } else {
+                    $('#manual_product_name').hide();
+                    $('#manual_unit_price').hide();
+                }
                 $.ajax({
                     url: "{{ route('check_product_stock') }}",
                     type: "GET",
@@ -719,6 +751,10 @@
         $(function() {
             $(document).on('change', '#product_id', function() {
                 var product_id = $(this).val();
+                if (product_id === null || String(product_id).trim() === '') {
+                    $('#buying_unit_price').val('');
+                    return;
+                }
                 $.ajax({
                     url: "{{ route('get_buying_unit_price') }}",
                     type: "GET",

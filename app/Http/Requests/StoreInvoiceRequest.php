@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class StoreInvoiceRequest extends FormRequest
 {
@@ -30,7 +31,9 @@ class StoreInvoiceRequest extends FormRequest
             'category_id' => 'required|array',
             'category_id.*' => 'integer|exists:categories,id',
             'product_id' => 'required|array',
-            'product_id.*' => 'integer|exists:products,id',
+            'product_id.*' => 'nullable|integer|exists:products,id',
+            'product_name' => 'required|array',
+            'product_name.*' => 'nullable|string',
             'selling_qty' => 'required|array',
             'selling_qty.*' => 'numeric|min:1',
             'unit_price' => 'required|array',
@@ -50,5 +53,61 @@ class StoreInvoiceRequest extends FormRequest
             'sex' => 'nullable|string',
             'customer_id' => 'required',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $productIds = $this->input('product_id', []);
+        $productNames = $this->input('product_name', []);
+
+        $normalizedProductIds = array_map(function ($value) {
+            if ($value === null) {
+                return null;
+            }
+
+            if (is_string($value)) {
+                $trimmed = trim($value);
+                if ($trimmed === '' || $trimmed === '0' || $trimmed === 'manual') {
+                    return null;
+                }
+
+                return $trimmed;
+            }
+
+            if (is_int($value) && $value === 0) {
+                return null;
+            }
+
+            return $value;
+        }, $productIds);
+
+        $normalizedProductNames = array_map(function ($value) {
+            if ($value === null) {
+                return null;
+            }
+
+            return is_string($value) ? trim($value) : $value;
+        }, $productNames);
+
+        $this->merge([
+            'product_id' => $normalizedProductIds,
+            'product_name' => $normalizedProductNames,
+        ]);
+    }
+
+    public function withValidator(Validator $validator)
+    {
+        $validator->after(function (Validator $validator) {
+            $productIds = $this->input('product_id', []);
+            $productNames = $this->input('product_name', []);
+
+            foreach ($productIds as $index => $productId) {
+                $productName = $productNames[$index] ?? null;
+
+                if ($productId === null && ($productName === null || trim((string) $productName) === '')) {
+                    $validator->errors()->add("product_name.$index", 'Product name is required when no product is selected.');
+                }
+            }
+        });
     }
 }

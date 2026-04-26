@@ -127,7 +127,7 @@
                                                                         {{ $details['category']['name'] }}
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        {{ $details['product']['name'] }}
+                                                                        {{ $details->product->name ?? $details->product_name }}
                                                                     </td>
                                                                     <td class="text-center">{{ $details->selling_qty }}
                                                                     </td>

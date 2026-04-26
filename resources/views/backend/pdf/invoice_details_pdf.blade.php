@@ -148,10 +148,10 @@
                                                                 <td class="text-center">{{ $key + 1 }}</td>
                                                                 <td class="text-center">{{ $details['category']['name'] }}
                                                                 </td>
-                                                                <td class="text-center">{{ $details['product']['name'] }}
+                                                                <td class="text-center">{{ $details->product->name ?? $details->product_name }}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    {{ $details['product']['quantity'] }}</td>
+                                                                    {{ $details->product->quantity ?? '-' }}</td>
                                                                 <td class="text-center">{{ $details->selling_qty }}</td>
                                                                 <td class="text-center">{{ number_format($details->unit_price,2) }}</td>
                                                                 <td class="text-center">{{ number_format($details->selling_price,2) }}</td>

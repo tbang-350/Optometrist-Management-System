@@ -1,5 +1,7 @@
 @extends('admin.admin_master')
 @section('admin')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <div class="page-content">
         <div class="container-fluid">
 
@@ -8,9 +10,6 @@
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0">All Customers</h4>
-
-
-
                     </div>
                 </div>
             </div>
@@ -23,23 +22,16 @@
 
                             <a href="{{ route('customer.add') }}" class="btn btn-dark btn-rounded waves-effect waves-light"
                                 style="float:right">
-                                <i class="fas fa-plus-circle">
-                                    Add Customer
-                                </i>
+                                <i class="fas fa-plus-circle"> Add Customer </i>
                             </a>
 
-                            <br>
-                            <br>
-                            <br>
-
-                            {{-- <h4 class="card-title"> All Supplier Data </h4> --}}
+                            <br><br><br>
 
                             @php
                                 $role = Auth::user()->role;
                             @endphp
 
-
-                            <table id="datatable" class="table table-bordered dt-responsive nowrap"
+                            <table id="customer-datatable" class="table table-bordered dt-responsive nowrap"
                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>
@@ -52,64 +44,11 @@
                                         @if ($role == '1')
                                             <th>Location</th>
                                         @endif
-
-                                        <th width="10%" >Action</th>
-
+                                        <th width="15%">Action</th>
+                                    </tr>
                                 </thead>
-
-
                                 <tbody>
-
-                                    @foreach ($customer as $key => $item)
-                                        <tr>
-                                            <td> {{ $key + 1 }} </td>
-                                            <td> {{ $item->name }} </td>
-                                            <td> {{ $item->age }} </td>
-                                            <td> {{ $item->sex }} </td>
-                                            <td> {{ $item->phonenumber }} </td>
-                                            <td> {{ $item->address }} </td>
-
-                                            @if ($role == '1')
-                                                <td> {{ $item['location']['location_name'] }} </td>
-                                            @endif
-
-                                            <td>
-
-                                                 <a href=" {{ route('customer.prescription.history', $item->id) }} " class="btn btn-warning sm"
-                                                    title="Prescription History">
-                                                    <i class=" fas fa-clinic-medical"></i>
-                                                </a>
-
-
-                                                <a href=" {{ route('customer.purchase.history', $item->id) }} " class="btn btn-dark sm"
-                                                    title="Purchase History">
-                                                    <i class="fas fa-cart-arrow-down"></i>
-                                                </a>
-
-                                                <a href=" {{ route('customer.examination.history', $item->id) }} " class="btn btn-secondary sm"
-                                                    title="Examination History">
-                                                    <i class="fas fa-stethoscope"></i>
-                                                </a>
-
-                                                <a href=" {{ route('customer.edit', $item->id) }} " class="btn btn-info sm"
-                                                    title="Edit Data">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-
-
-
-                                                <a href=" {{ route('customer.delete', $item->id) }} "
-                                                    class="btn btn-danger sm" title="Delete Data" id="delete"> <i
-                                                        class="fas fa-trash-alt"></i>
-                                                </a>
-
-
-
-                                            </td>
-
-                                        </tr>
-                                    @endforeach
-
+                                    <!-- Data will be loaded via AJAX -->
                                 </tbody>
                             </table>
 
@@ -118,8 +57,42 @@
                 </div> <!-- end col -->
             </div> <!-- end row -->
 
-
-
         </div> <!-- container-fluid -->
     </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#customer-datatable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "{{ route('customer.data') }}",
+                    "type": "GET"
+                },
+                "columns": [
+                    { "data": 0, "orderable": false }, // Sl
+                    { "data": 1 }, // Name
+                    { "data": 2 }, // Age
+                    { "data": 3 }, // Sex
+                    { "data": 4 }, // Phone Number
+                    { "data": 5 }, // Address
+                    @if ($role == '1')
+                        { "data": 6 }, // Location
+                        { "data": 7, "orderable": false } // Action
+                    @else
+                        { "data": 6, "orderable": false } // Action
+                    @endif
+                ],
+                "language": {
+                    "paginate": {
+                        "previous": "<i class='mdi mdi-chevron-left'>",
+                        "next": "<i class='mdi mdi-chevron-right'>"
+                    }
+                },
+                "drawCallback": function() {
+                    $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+                }
+            });
+        });
+    </script>
 @endsection

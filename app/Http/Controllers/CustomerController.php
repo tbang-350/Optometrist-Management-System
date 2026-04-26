@@ -424,4 +424,84 @@ class CustomerController extends Controller
         return view('backend.customer.customer_examination_history', compact('customer', 'examinations'));
     }
 
+    public function CustomerData(Request $request)
+    {
+        $current_location = auth()->user()->location_id;
+        // DataTables sends columns starting from 0. Match them to our DB columns.
+        $columns = ['id', 'name', 'age', 'sex', 'phonenumber', 'address', 'location_id', 'id'];
+
+        $query = Customer::with('location');
+
+        if ($current_location != 1) {
+            $query->where('location_id', $current_location);
+        }
+
+        $totalData = $query->count();
+        $totalFiltered = $totalData;
+
+        // Search
+        if ($request->input('search.value')) {
+            $search = $request->input('search.value');
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                  ->orWhere('phonenumber', 'LIKE', "%{$search}%")
+                  ->orWhere('address', 'LIKE', "%{$search}%");
+            });
+            $totalFiltered = $query->count();
+        }
+
+        // Ordering
+        $orderColumnIndex = $request->input('order.0.column');
+        $orderDir = $request->input('order.0.dir');
+        $orderColumn = $columns[$orderColumnIndex] ?? 'id';
+        $query->orderBy($orderColumn, $orderDir);
+
+        // Pagination
+        $start = $request->input('start');
+        $length = $request->input('length');
+        
+        // If length is -1, it means "All", but we should probably limit it to something sane for server-side
+        if ($length == -1) {
+            $customers = $query->offset($start)->get();
+        } else {
+            $customers = $query->offset($start)->limit($length)->get();
+        }
+
+        $data = [];
+        $role = Auth::user()->role;
+
+        foreach ($customers as $key => $item) {
+            $nestedData = [];
+            $nestedData[] = $start + $key + 1;
+            $nestedData[] = $item->name;
+            $nestedData[] = $item->age;
+            $nestedData[] = $item->sex;
+            $nestedData[] = $item->phonenumber;
+            $nestedData[] = $item->address;
+
+            if ($role == '1') {
+                $nestedData[] = $item->location->location_name ?? 'N/A';
+            }
+
+            // Actions
+            $action = '
+                <a href="' . route('customer.prescription.history', $item->id) . '" class="btn btn-warning sm" title="Prescription History"><i class="fas fa-clinic-medical"></i></a>
+                <a href="' . route('customer.purchase.history', $item->id) . '" class="btn btn-dark sm" title="Purchase History"><i class="fas fa-cart-arrow-down"></i></a>
+                <a href="' . route('customer.examination.history', $item->id) . '" class="btn btn-secondary sm" title="Examination History"><i class="fas fa-stethoscope"></i></a>
+                <a href="' . route('customer.edit', $item->id) . '" class="btn btn-info sm" title="Edit Data"><i class="fas fa-edit"></i></a>
+                <a href="' . route('customer.delete', $item->id) . '" class="btn btn-danger sm" title="Delete Data" id="delete"><i class="fas fa-trash-alt"></i></a>
+            ';
+            $nestedData[] = $action;
+
+            $data[] = $nestedData;
+        }
+
+        return response()->json([
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data"            => $data,
+        ]);
+    }
+
 }

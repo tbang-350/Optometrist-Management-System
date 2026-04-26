@@ -102,6 +102,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/customer/prescription_history/{id}', 'CustomerPrescriptionHistory')->name('customer.prescription.history');
         Route::get('/customer/purchase_history/{id}', 'CustomerPurchaseHistory')->name('customer.purchase.history');
         Route::get('/customer/examination_history/{id}', 'CustomerExaminationHistory')->name('customer.examination.history');
+        Route::get('/customer/data', 'CustomerData')->name('customer.data');
 
 
 

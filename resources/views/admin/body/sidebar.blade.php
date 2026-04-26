@@ -92,6 +92,19 @@
                 </li>
 
 
+                <li>
+
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-shield-user-fill"></i>
+                        <span>Examination</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('examination.all') }}">All Examinations</a></li>
+                    </ul>
+
+                </li>
+
+
                 @if ($role == 1 || $role == 2)
                     <li class="menu-title">Product &amp; Purchase </li>
 

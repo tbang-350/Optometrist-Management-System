@@ -413,4 +413,15 @@ class CustomerController extends Controller
 
     }
 
+    public function CustomerExaminationHistory($id)
+    {
+        $customer = Customer::findOrFail($id);
+        $examinations = \App\Models\OphthalmologyEncounterRecord::with('creator')
+            ->where('customer_id', $id)
+            ->latest()
+            ->get();
+
+        return view('backend.customer.customer_examination_history', compact('customer', 'examinations'));
+    }
+
 }

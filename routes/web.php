@@ -7,6 +7,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DefaultController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ExaminationController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PrescriptionController;
@@ -100,6 +101,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/customer/prescription_history/{id}', 'CustomerPrescriptionHistory')->name('customer.prescription.history');
         Route::get('/customer/purchase_history/{id}', 'CustomerPurchaseHistory')->name('customer.purchase.history');
+        Route::get('/customer/examination_history/{id}', 'CustomerExaminationHistory')->name('customer.examination.history');
 
 
 
@@ -137,6 +139,14 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/prescription/edit/{id}', 'PrescriptionEdit')->name('prescription.edit');
         Route::post('/perscription/update', 'PrescriptionUpdate')->name('prescription.update');
+    });
+
+    //Examination Routes
+    Route::controller(ExaminationController::class)->group(function () {
+        Route::get('/examination/all', 'ExaminationAll')->name('examination.all');
+        Route::post('/examination/store', 'ExaminationStore')->name('examination.store');
+        Route::get('/examination/delete/{id}', 'ExaminationDelete')->name('examination.delete');
+        Route::get('/examination/view/{id}', 'ExaminationView')->name('examination.view');
     });
 
     //Supplier Routes

@@ -86,6 +86,11 @@
                                                     <i class="fas fa-cart-arrow-down"></i>
                                                 </a>
 
+                                                <a href=" {{ route('customer.examination.history', $item->id) }} " class="btn btn-secondary sm"
+                                                    title="Examination History">
+                                                    <i class="fas fa-stethoscope"></i>
+                                                </a>
+
                                                 <a href=" {{ route('customer.edit', $item->id) }} " class="btn btn-info sm"
                                                     title="Edit Data">
                                                     <i class="fas fa-edit"></i>

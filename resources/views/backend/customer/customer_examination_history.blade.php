@@ -48,7 +48,7 @@
                                         <tr>
                                             <td> {{ $key + 1 }} </td>
                                             <td> {{ date('d-m-Y', strtotime($item->date)) }} </td>
-                                            <td> {{ $item->creator?->name ?? 'N/A' }} </td>
+                                            <td> {{ $item->doctor_name ?: ($item->creator?->name ?? 'N/A') }} </td>
                                             <td> {{ Str::limit($item->chief_complaint, 50) }} </td>
                                             <td>
                                                 <a href="{{ route('examination.view', $item->id) }}"
@@ -120,6 +120,10 @@
                             <!-- History Tab -->
                             <div class="tab-pane active" id="history" role="tabpanel">
                                 <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label class="form-label">Doctor's Name <span class="text-danger">*</span></label>
+                                        <input type="text" name="doctor_name" class="form-control" required placeholder="Dr. ...">
+                                    </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Chief Complaint</label>
                                         <textarea name="chief_complaint" class="form-control" rows="3"></textarea>

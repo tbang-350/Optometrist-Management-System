@@ -9,7 +9,7 @@
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0">Examination Details</h4>
                         <div class="page-title-right">
-                            <a href="{{ route('examination.all') }}" class="btn btn-dark btn-rounded waves-effect waves-light">
+                            <a href="{{ url()->previous() }}" class="btn btn-dark btn-rounded waves-effect waves-light">
                                 <i class="fas fa-arrow-left"> Back</i>
                             </a>
                         </div>
@@ -32,8 +32,8 @@
                                     <p class="fw-bold">{{ date('d-m-Y', strtotime($examination->date)) }}</p>
                                 </div>
                                 <div class="col-md-3">
-                                    <h6 class="text-muted">Examined By</h6>
-                                    <p class="fw-bold">{{ $examination->creator?->name ?? 'N/A' }}</p>
+                                    <h6 class="text-muted">Examined By (Doctor)</h6>
+                                    <p class="fw-bold">{{ $examination->doctor_name ?: ($examination->creator?->name ?? 'N/A') }}</p>
                                 </div>
                                 <div class="col-md-3">
                                     <h6 class="text-muted">Location</h6>

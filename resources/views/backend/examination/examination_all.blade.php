@@ -45,7 +45,7 @@
                                             <td> {{ $key + 1 }} </td>
                                             <td> {{ date('d-m-Y', strtotime($item->date)) }} </td>
                                             <td> {{ $item->customer?->name ?? 'N/A' }} </td>
-                                            <td> {{ $item->creator?->name ?? 'N/A' }} </td>
+                                            <td> {{ $item->doctor_name ?: ($item->creator?->name ?? 'N/A') }} </td>
                                             <td> {{ Str::limit($item->chief_complaint, 30) }} </td>
                                             <td>
                                                 <a href="{{ route('examination.view', $item->id) }}"
@@ -85,31 +85,26 @@
                         <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" data-bs-toggle="tab" href="#history" role="tab">
-                                    <span class="d-block d-sm-none"><i class="fas fa-history"></i></span>
                                     <span class="d-none d-sm-block">History & Patient</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#vitals" role="tab">
-                                    <span class="d-block d-sm-none"><i class="fas fa-heartbeat"></i></span>
                                     <span class="d-none d-sm-block">Vitals</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#ocular" role="tab">
-                                    <span class="d-block d-sm-none"><i class="fas fa-eye"></i></span>
                                     <span class="d-none d-sm-block">Ocular Exam</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#sle" role="tab">
-                                    <span class="d-block d-sm-none"><i class="fas fa-microscope"></i></span>
                                     <span class="d-none d-sm-block">Slit Lamp (SLE)</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#plan" role="tab">
-                                    <span class="d-block d-sm-none"><i class="fas fa-clipboard-list"></i></span>
                                     <span class="d-none d-sm-block">Plan & Assessment</span>
                                 </a>
                             </li>
@@ -120,14 +115,18 @@
                             <!-- History & Patient Tab -->
                             <div class="tab-pane active" id="history" role="tabpanel">
                                 <div class="row">
-                                    <div class="col-md-12 mb-3">
-                                        <label for="customer_id" class="form-label">Select Patient</label>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="customer_id" class="form-label">Select Patient <span class="text-danger">*</span></label>
                                         <select name="customer_id" id="customer_id" class="form-control select2" required style="width: 100%;">
                                             <option value="">Select Patient</option>
                                             @foreach($customers as $customer)
                                                 <option value="{{ $customer->id }}">{{ $customer->name }} ({{ $customer->phonenumber }})</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Doctor's Name <span class="text-danger">*</span></label>
+                                        <input type="text" name="doctor_name" class="form-control" required placeholder="Dr. ...">
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Chief Complaint</label>

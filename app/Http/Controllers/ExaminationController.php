@@ -25,6 +25,7 @@ class ExaminationController extends Controller
 
         $record = new OphthalmologyEncounterRecord();
         $record->customer_id = $request->customer_id;
+        $record->doctor_name = $request->doctor_name; // New field
         $record->created_by = Auth::user()->id;
         $record->location_id = Auth::user()->location_id;
         $record->date = $date->format('Y-m-d');
@@ -93,7 +94,7 @@ class ExaminationController extends Controller
             'alert-type' => 'success',
         );
 
-        return redirect()->route('examination.all')->with($notification);
+        return redirect()->back()->with($notification); // Use back() to support adding from history page
     }
 
     public function ExaminationDelete($id)
@@ -105,7 +106,7 @@ class ExaminationController extends Controller
             'alert-type' => 'success',
         );
 
-        return redirect()->route('examination.all')->with($notification);
+        return redirect()->back()->with($notification);
     }
 
     public function ExaminationView($id)
